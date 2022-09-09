@@ -7,7 +7,7 @@ export const styleLogin = {
   title: {
     fontSize: 36,
     fontWeight: 'bold',
-    color: "orange",
+    color: "#9c4ef7",
     alignSelf: "center",
     paddingBottom: 24,
   },
@@ -40,7 +40,7 @@ export const styleLogin = {
     marginHorizontal: 30,
   },
   button: {
-    backgroundColor: '#f57c00',
+    backgroundColor: '#9c4ef7',
     height: 58,
     borderRadius: 10,
     justifyContent: 'center',

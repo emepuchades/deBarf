@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Button, TextInput, Image, SafeAreaView, Touchab
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../utils/firebase";
 import { styleLogin } from "./Login.style";
-const backImage = require("../../../assets/logo.png");
+const backImage = require("../../../assets/images/fondoLogin.png");
 
 export default function Login({ navigation }) {
 
@@ -50,7 +50,7 @@ export default function Login({ navigation }) {
       <View style={{marginTop: 20, flexDirection: 'row', alignItems: 'center', alignSelf: 'center'}}>
         <Text style={{color: 'gray', fontWeight: '600', fontSize: 14}}>Don't have an account? </Text>
         <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
-          <Text style={{color: '#f57c00', fontWeight: '600', fontSize: 14}}> Sign Up</Text>
+          <Text style={{color: '#9c4ef7', fontWeight: '600', fontSize: 14}}> Sign Up</Text>
         </TouchableOpacity>
       </View>
       </SafeAreaView>

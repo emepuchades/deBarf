@@ -4,3 +4,5 @@ yarn*
 .vs*
 .DS*
 .ide*
+.env
+.babel*
