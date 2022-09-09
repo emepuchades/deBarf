@@ -1,29 +1,6 @@
-import React from 'react';
-import { Text, View, Button, Platform, Image, StyleSheet, TouchableOpacity } from 'react-native'
-import { windowHeight, windowWidth } from '../../utils/Dimentions';
+import { windowWidth } from '../../utils/Dimentions';
 
-export default function Landing({ navigation })  {
-    return (
-        <View style={styles.container}>
-            <Image
-                source={require('../../assets/logo.png')}
-                style={styles.logo}
-            />
-            <Text style={styles.title1}>Barfeando</Text>
-            <Text style={styles.description}>Alimentar bien a tu animal nunca fue tan fácil</Text>
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity onPress={() => navigation.navigate("Signup")} style={styles.buttonR}>
-                    <Text style={styles.textR}>Register</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate("Login")} style={styles.buttonL}>
-                    <Text style={styles.textL}>Login</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
-    );
-};
-
-const styles = StyleSheet.create({
+export const styleLanding = {
     container: {
         alignItems: 'center',
         padding: 20,
@@ -99,4 +76,4 @@ const styles = StyleSheet.create({
     text: {
         color: 'white',
     }
-});
+}
