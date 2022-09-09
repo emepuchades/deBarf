@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
-import { View, TouchableOpacity, Text, Image, StyleSheet } from "react-native";
+import { View, TouchableOpacity, Text, Image, StyleSheet, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { signOut } from 'firebase/auth';
 import { auth } from '../../../utils/firebase';
 import { FontAwesome } from '@expo/vector-icons';
 import colors from '../../../colors';
 import { styleHome } from "./Home.style";
-import { Entypo } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import Main from "../Main";
 
 const catImageUrl = "https://i.guim.co.uk/img/media/26392d05302e02f7bf4eb143bb84c8097d09144b/446_167_3683_2210/master/3683.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=49ed3252c0b2ffb49cf8b508892e452d";
 
@@ -26,7 +27,7 @@ const Home = () => {
                     }}
                     onPress={() => onSignOut()}
                 >
-                    <AntDesign name="logout" size={24} color={colors.gray} style={{ marginRight: 10 }} />
+                    <MaterialIcons name="logout" size={24} color={colors.gray} style={{ marginRight: 10 }} />
                 </TouchableOpacity>
 
             ),
@@ -38,13 +39,16 @@ const Home = () => {
     };
 
     return (
+
         <View style={styles.container}>
-            <TouchableOpacity
-                onPress={() => navigation.navigate("Chat")}
-                style={styles.chatButton}
-            >
-                <Entypo name="chat" size={24} color={colors.lightGray} />
-            </TouchableOpacity>
+            <ScrollView
+                style={styles.scrollContainer}
+                contentContainerStyle={styles.scrollContentContainer}>
+                <TouchableOpacity style={styles.dogBlock} onPress={() => navigation.navigate("Calculator")}>
+                    <AntDesign name="plus" size={35} style={styles.icon} />
+                    <Text style={styles.text} >Añade a tu animal</Text>
+                </TouchableOpacity>
+            </ScrollView>
         </View>
     );
 };

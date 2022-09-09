@@ -9,9 +9,13 @@ import { auth } from './utils/firebase';
 import Login from './screens/auth/Login/Login';
 import Signup from './screens/auth/Register/Signup';
 import Landing from './screens/auth/Landing'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import Home from './screens/app/Home/Home';
+import Main from './screens/app/Main';
 
+const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 const AuthenticatedUserContext = createContext({});
 
@@ -67,7 +71,9 @@ function RootNavigator() {
 
   return (
     <NavigationContainer>
-      {user ? <AppStack /> : <AuthStack />}
+      {user ?
+        <Main />
+        : <AuthStack />}
     </NavigationContainer>
   );
 }

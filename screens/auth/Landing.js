@@ -1,8 +1,8 @@
 import React from 'react';
-import { Text, View, Button, Platform, Image, StyleSheet, TouchableOpacity } from 'react-native'
-import { windowHeight, windowWidth } from '../../utils/Dimentions';
+import { Text, View, Platform, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import { windowWidth } from '../../utils/Dimentions';
 
-export default function Landing({ navigation })  {
+export default function Landing({ navigation }) {
     return (
         <View style={styles.container}>
             <Image
