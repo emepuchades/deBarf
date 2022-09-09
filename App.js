@@ -1,44 +1,81 @@
-import React from "react";
+import React, { useState, createContext, useContext, useEffect } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { View, ActivityIndicator } from 'react-native';
 
-// import things related to React Navigation
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from './utils/firebase';
 
-// import screens
-import Landing from "./screens/auth/Landing";
-import RegisterScreen from "./screens/auth/Register";
-import LoginScreen from "./screens/auth/Login";
+import Login from './screens/auth/Login/Login';
+import Signup from './screens/auth/Register/Signup';
+import Landing from './screens/auth/Landing'
 
-// create a "stack"
-const MyStack = createNativeStackNavigator();
+import Home from './screens/app/Home/Home';
 
-const App = () => {
+const Stack = createStackNavigator();
+const AuthenticatedUserContext = createContext({});
+
+const AuthenticatedUserProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
   return (
-    <NavigationContainer>
-      <MyStack.Navigator initialRouteName="Landing">
-        <MyStack.Screen
-          name="Landing"
-          component={Landing}
-          options={optionsComponent}
-        />
-        <MyStack.Screen name="Register" component={RegisterScreen} options={optionsComponent}/>
-        <MyStack.Screen name="Login" component={LoginScreen} options={optionsComponent}/>
-      </MyStack.Navigator>
-    </NavigationContainer>
+    <AuthenticatedUserContext.Provider value={{ user, setUser }}>
+      {children}
+    </AuthenticatedUserContext.Provider>
   );
 };
 
-export default App;
+function AppStack() {
+  return (
+    <Stack.Navigator defaultScreenOptions={Home}>
+      <Stack.Screen name='Home' component={Home} />
+    </Stack.Navigator>
+  );
+}
 
-const optionsComponent = {
-  title: '',
-  headerTransparent: true,
-  headerStyle: {
-    backgroundColor: "#fff",
-    borderBottomWidth: 0,
-    shadowColor: 'transparent',
-  },
-  headerTitleStyle: {
-    backgroundColor: "#fff"
+function AuthStack() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name='Landing' component={Landing} />
+      <Stack.Screen name='Login' component={Login} />
+      <Stack.Screen name='Signup' component={Signup} />
+    </Stack.Navigator>
+  );
+}
+
+function RootNavigator() {
+  const { user, setUser } = useContext(AuthenticatedUserContext);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribeAuth = onAuthStateChanged(
+      auth,
+      async authenticatedUser => {
+        authenticatedUser ? setUser(authenticatedUser) : setUser(null);
+        setIsLoading(false);
+      }
+    );
+    return unsubscribeAuth;
+  }, [user]);
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size='large' />
+      </View>
+    );
   }
+
+  return (
+    <NavigationContainer>
+      {user ? <AppStack /> : <AuthStack />}
+    </NavigationContainer>
+  );
+}
+
+export default function App() {
+  return (
+    <AuthenticatedUserProvider>
+      <RootNavigator />
+    </AuthenticatedUserProvider>
+  );
 }
