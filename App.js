@@ -10,10 +10,11 @@ import Login from './screens/auth/Login/Login';
 import Signup from './screens/auth/Register/Signup';
 import Landing from './screens/auth/Landing'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import Home from './screens/app/Home/Home';
-import Main from './screens/app/Main';
+import MainScreen from './screens/app/Main';
+import AddPost from './screens/app/AddPost/AddPost';
+import PreviewScreen from './screens/app/AddPost/Preview';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -30,8 +31,11 @@ const AuthenticatedUserProvider = ({ children }) => {
 
 function AppStack() {
   return (
-    <Stack.Navigator defaultScreenOptions={Home}>
+    <Stack.Navigator defaultScreenOptions={MainScreen}>
+     <Stack.Screen name="beBarf" component={MainScreen} />
       <Stack.Screen name='Home' component={Home} />
+      <Stack.Screen name='AddPost' component={AddPost} />
+      <Stack.Screen name='Preview' component={PreviewScreen}/>
     </Stack.Navigator>
   );
 }
@@ -72,8 +76,9 @@ function RootNavigator() {
   return (
     <NavigationContainer>
       {user ?
-        <Main />
-        : <AuthStack />}
+        <MainScreen />
+        : <AuthStack />
+        }
     </NavigationContainer>
   );
 }

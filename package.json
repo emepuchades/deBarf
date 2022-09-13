@@ -18,6 +18,7 @@
     "dotenv": "^11.0.0",
     "dotenv-expand": "^9.0.0",
     "expo": "^46.0.10",
+    "expo-camera": "^12.3.0",
     "expo-constants": "~13.2.4",
     "expo-status-bar": "~1.4.0",
     "firebase": "^9.9.3",

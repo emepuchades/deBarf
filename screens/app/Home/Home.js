@@ -26,7 +26,6 @@ const Home = () => {
                 >
                     <MaterialIcons name="logout" size={24} color={colors.gray} style={{ marginRight: 10 }} />
                 </TouchableOpacity>
-
             ),
         });
     }, [navigation]);

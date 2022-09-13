@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import Home from './Home/Home';
+import AddPost from './AddPost/AddPost';
 
 const Tab = createBottomTabNavigator();
 
@@ -28,20 +29,14 @@ const MyTabs = ({ navigation }) => {
                         <MaterialCommunityIcons name="dog" color={color} size={26} />
                     ),
                 }} />
-            <Tab.Screen name="Comunidad" component={Home}
+            <Tab.Screen name="Comunidad" component={AddPost}
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <MaterialCommunityIcons name="contacts" color={color} size={26} />
                     ),
                 }} />
 
-            <Tab.Screen name="Publicar" component={Home}
-                listeners={({ navigation }) => ({
-                    tabPress: event => {
-                        event.preventDefault();
-                        navigation.navigate("Add")
-                    }
-                })}
+            <Tab.Screen name="Publicar" component={AddPost}
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <MaterialCommunityIcons name="plus-box" color={color} size={26} />
