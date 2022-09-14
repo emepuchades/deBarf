@@ -1,12 +1,11 @@
-export const PieChartColors = [
-    "#FFCB06",
-    "#34A8DF",
-    "#FF6F43",
-    "#1c8c00",
-    "#3d7eff",
-    "#ed3942"
-  ];
-  
-  const getColor = index => PieChartColors[index % PieChartColors.length];
-  
-  export default getColor;
+
+export default {
+    primary: '#9c4ef7',
+    gray: '#C5C5C7',
+    mediumGray: '#F6F7FB',
+    lightGray: '#FAFAFA',
+    hover: '#9c4ef7',
+    backgroundColorGeneral: '#FFFFFF',
+    colorText: '#000000',
+    landingBakground: '#000000'
+};

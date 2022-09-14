@@ -1,6 +1,8 @@
 import React from 'react';
-import { Text, View, Platform, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import { Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import styleLanding from './Landing.style'
 import { windowWidth } from '../../utils/Dimentions';
+import colors from '../../utils/colors';
 
 export default function Landing({ navigation }) {
     return (
@@ -60,7 +62,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#9c4ef7',
         ...Platform.select({
             ios: {
-                shadowColor: '#000',
+                shadowColor: colors.colorText,
                 shadowRadius: 2,
                 shadowOffset: { width: 0, height: 2 },
                 shadowOpacity: 0.16,
@@ -98,5 +100,4 @@ const styles = StyleSheet.create({
     },
     text: {
         color: 'white',
-    }
-});
+    }});

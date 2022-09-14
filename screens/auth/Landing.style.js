@@ -1,4 +1,5 @@
 import { windowWidth } from '../../utils/Dimentions';
+import colors from '../../utils/colors';
 
 export const styleLanding = {
     container: {
@@ -37,7 +38,7 @@ export const styleLanding = {
         backgroundColor: '#9c4ef7',
         ...Platform.select({
             ios: {
-                shadowColor: '#000',
+                shadowColor: colors.colorText,
                 shadowRadius: 2,
                 shadowOffset: { width: 0, height: 2 },
                 shadowOpacity: 0.16,

@@ -1,4 +1,4 @@
-import colors from '../../../colors'
+import colors from '../../../utils/colors'
 
 export const styleHome = {
     container: {
@@ -6,7 +6,7 @@ export const styleHome = {
         backgroundColor: 'white',
         alignItems: 'center',
         padding: 10,
-        backgroundColor: '#f9f9f9',
+        backgroundColor: 'white',
     },
     scrollContainer: {
         flex: 1,

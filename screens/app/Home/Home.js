@@ -3,8 +3,9 @@ import { View, TouchableOpacity, Text, Image, StyleSheet, ScrollView } from "rea
 import { useNavigation } from "@react-navigation/native";
 import { signOut } from 'firebase/auth';
 import { auth } from '../../../utils/firebase';
-import { FontAwesome } from '@expo/vector-icons';
-import colors from '../../../colors';
+import { Ionicons } from '@expo/vector-icons';
+
+import colors from '../../../utils/colors';
 import { styleHome } from "./Home.style";
 import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
@@ -15,7 +16,7 @@ const Home = () => {
     useEffect(() => {
         navigation.setOptions({
             headerLeft: () => (
-                <FontAwesome name="search" size={24} color={colors.gray} style={{ marginLeft: 15 }} />
+                <Ionicons name="menu-outline" size={30} color={colors.gray} style={{ marginLeft: 15 }} />
             ),
             headerRight: () => (
                 <TouchableOpacity
@@ -42,7 +43,7 @@ const Home = () => {
                 contentContainerStyle={styles.scrollContentContainer}>
                 <TouchableOpacity style={styles.dogBlock} onPress={() => navigation.navigate("Calculator")}>
                     <AntDesign name="plus" size={35} style={styles.icon} />
-                    <Text style={styles.text} >Añade a tu animal</Text>
+                    <Text style={styles.text} >Añade a tu mascota</Text>
                 </TouchableOpacity>
             </ScrollView>
         </View>
