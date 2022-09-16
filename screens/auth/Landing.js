@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 20,
         paddingTop: 130,
-        backgroundColor: 'white',
+        backgroundColor: colors.background,
         height: '100%'
     },
     logo: {
@@ -42,11 +42,11 @@ const styles = StyleSheet.create({
         textTransform: 'uppercase',
         fontSize: 20,
         fontWeight: 'bold',
-        color: 'black',
+        color: colors.textDefault,
     },
     description: {
         fontSize: 12,
-        color: 'grey',
+        color: colors.textSecondary,
     },
     buttonContainer: {
         position: 'absolute',
@@ -58,8 +58,7 @@ const styles = StyleSheet.create({
         margin: 10,
         borderRadius: 20,
         fontWeight: '400',
-        color: 'white',
-        backgroundColor: '#9c4ef7',
+        backgroundColor: colors.secondary,
         ...Platform.select({
             ios: {
                 shadowColor: colors.colorText,
@@ -77,14 +76,14 @@ const styles = StyleSheet.create({
     textR: {
         textTransform: 'uppercase',
         fontWeight: '500',
-        color: 'white',
+        color: colors.textButton,
         fontWeight: 'bold',
         textAlign: 'center',
     },
     textL: {
         textTransform: 'uppercase',
         fontWeight: '500',
-        color: '#9c4ef7',
+        color: colors.textButtonOutline,
         fontWeight: 'bold',
         textAlign: 'center',
     },
@@ -93,11 +92,11 @@ const styles = StyleSheet.create({
         padding: 20,
         margin: 10,
         borderRadius: 20,
-        backgroundColor: 'white',
-        borderColor: '#9c4ef7',
+        backgroundColor: colors.textButton,
+        borderColor: colors.secondary,
         borderWidth: 1,
         position: 'relative',
     },
     text: {
-        color: 'white',
+        color: colors.textButton,
     }});

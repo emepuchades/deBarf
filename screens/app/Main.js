@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 
 import Home from './Home/Home';
 import AddPost from './AddPost/AddPost';
+import colors from '../../utils/colors';
 
 const Tab = createBottomTabNavigator();
 
@@ -17,11 +18,11 @@ const MyTabs = () => {
                 headerShown: true,
                 tabBarShowLabel: true,
                 tabBarStyle: {
-                    backgroundColor: 'white',
+                    backgroundColor: colors.background,
                     height: 90,
                 },
-                tabBarInactiveTintColor: 'grey',
-                tabBarActiveTintColor: '#9c4ef7',
+                tabBarInactiveTintColor: colors.navColor,
+                tabBarActiveTintColor: colors.navHover,
             }}
         >
             <Tab.Screen name="Mascotas" component={Home}
@@ -65,15 +66,4 @@ export default function Main() {
     );
 }
 
-const styles = StyleSheet.create({
-    shadow: {
-        shadowColor: '#7F5DF0',
-        shadowOffset: {
-            width: 0,
-            height: 10,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.5,
-        elevation: 5
-    },
-})
+const styles = StyleSheet.create()

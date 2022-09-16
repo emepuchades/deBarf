@@ -1,18 +1,19 @@
+import colors from "../../../utils/colors";
 
 export const styleRegister = {
     container: {
         flex: 1,
-        backgroundColor: "#fff",
+        backgroundColor: colors.background,
     },
     title: {
         fontSize: 36,
         fontWeight: 'bold',
-        color: "#9c4ef7",
+        color: colors.secondary,
         alignSelf: "center",
         paddingBottom: 24,
     },
     input: {
-        backgroundColor: "#F6F7FB",
+        backgroundColor: colors.inputBackground,
         height: 58,
         marginBottom: 20,
         fontSize: 16,
@@ -31,7 +32,7 @@ export const styleRegister = {
         height: '75%',
         position: "absolute",
         bottom: 0,
-        backgroundColor: '#fff',
+        backgroundColor: colors.background,
         borderTopLeftRadius: 60,
     },
     form: {
@@ -40,11 +41,32 @@ export const styleRegister = {
         marginHorizontal: 30,
     },
     button: {
-        backgroundColor: '#9c4ef7',
+        backgroundColor: colors.secondary,
         height: 58,
         borderRadius: 10,
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 40,
+    },
+    textInput: {
+        fontWeight: 'bold', 
+        color: colors.textButton, 
+        fontSize: 18 
+    },
+    textSecondary: {
+        color: colors.textSecondary,
+        fontWeight: '600',
+        fontSize: 14 
+    },
+    containerLogIn: {
+        marginTop: 20,
+        flexDirection: 'row',
+        alignItems: 'center',
+        alignSelf: 'center'
+    },
+    textLogIn: {
+        color: colors.secondary,
+        fontWeight: '600',
+        fontSize: 14 
     },
 }

@@ -1,11 +1,15 @@
 
 export default {
-    primary: '#9c4ef7',
-    gray: '#C5C5C7',
-    mediumGray: '#F6F7FB',
-    lightGray: '#FAFAFA',
-    hover: '#9c4ef7',
-    backgroundColorGeneral: '#FFFFFF',
-    colorText: '#000000',
-    landingBakground: '#000000'
+    primary: '#FFFFFF',
+    secondary: '#9c4ef7',
+    background: '#FFFFFF',
+    button: '#9c4ef7',
+    textButton: '#FFFFFF',
+    textButtonOutline: '#9c4ef7',
+    colorText: '#111111',
+    inputBackground: '#F3F3F3',
+    textDefault: '#111111',
+    textSecondary: '#808080',
+    navColor: '#808080',
+    navHover: '#9c4ef7',
 };

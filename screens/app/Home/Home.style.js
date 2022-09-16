@@ -3,10 +3,9 @@ import colors from '../../../utils/colors'
 export const styleHome = {
     container: {
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: colors.background,
         alignItems: 'center',
         padding: 10,
-        backgroundColor: 'white',
     },
     scrollContainer: {
         flex: 1,
@@ -22,8 +21,8 @@ export const styleHome = {
         borderTopWidth: 3,
         flexDirection: "row",
         flexWrap: "wrap",
-        borderTopColor: '#9c4ef7',
-        shadowColor: "#000",
+        borderTopColor: colors.secondary,
+        shadowColor: colors.secondary,
         shadowOffset: {
             width: 0,
             height: 1,
@@ -31,7 +30,7 @@ export const styleHome = {
         shadowOpacity: 0.20,
         shadowRadius: 1.41,
         elevation: 2,
-        backgroundColor: 'white',
+        backgroundColor: colors.background,
         padding: 30,
         justifyContent: 'center',
         textAlign: 'center',
