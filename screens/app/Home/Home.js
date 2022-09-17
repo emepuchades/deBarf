@@ -9,9 +9,11 @@ import colors from '../../../utils/colors';
 import { styleHome } from "./Home.style";
 import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 
 const Home = () => {
     const navigation = useNavigation();
+    const { t } = useTranslation();
 
     useEffect(() => {
         navigation.setOptions({
@@ -43,7 +45,7 @@ const Home = () => {
                 contentContainerStyle={styles.scrollContentContainer}>
                 <TouchableOpacity style={styles.dogBlock} onPress={() => navigation.navigate("Calculator")}>
                     <AntDesign name="plus" size={35} style={styles.icon} />
-                    <Text style={styles.text} >Añade a tu mascota</Text>
+                    <Text style={styles.text} >{t('newpet')}</Text>
                 </TouchableOpacity>
             </ScrollView>
         </View>
