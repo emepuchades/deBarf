@@ -1,5 +1,12 @@
 {
     "translation": {
-      "newpet":"Añade a tu mascota"
+      "newpet":"Añade a tu mascota",
+      "navBottom": {
+        "pets": "Mascotas",
+        "community": "Comunidad",
+        "newPost": "Publicar",
+        "foods": "Alimentos",
+        "profile": "Perfil"
+      }
     }
 }

@@ -1,5 +1,12 @@
 {
     "translation": {
-      "newpet":"Add your pet"
+      "newpet":"Add your pet",
+      "navBottom": {
+        "pets": "Pets",
+        "community": "Community",
+        "newPost": "New Post",
+        "foods": "Foods",
+        "profile": "Profile"
+      }
     }
 }
