@@ -14,6 +14,7 @@ import Home from './screens/app/Home/Home';
 import MainScreen from './screens/app/Main';
 import AddPost from './screens/app/AddPost/AddPost';
 import PreviewScreen from './screens/app/AddPost/Preview';
+import DrawerNavigator from './screens/app/Navigator';
 
 const Stack = createStackNavigator();
 const AuthenticatedUserContext = createContext({});
@@ -30,10 +31,10 @@ const AuthenticatedUserProvider = ({ children }) => {
 function AppStack() {
   return (
     <Stack.Navigator defaultScreenOptions={MainScreen} screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="beBarf" component={MainScreen}/>
+      <Stack.Screen name="beBarf" component={MainScreen} />
       <Stack.Screen name='Home' component={Home} />
       <Stack.Screen name='AddPost' component={AddPost} />
-      <Stack.Screen name='Preview' component={PreviewScreen}/>
+      <Stack.Screen name='Preview' component={PreviewScreen} />
     </Stack.Navigator>
   );
 }
@@ -74,9 +75,11 @@ function RootNavigator() {
   return (
     <NavigationContainer>
       {user ?
-        <AppStack />
+        <>
+          <DrawerNavigator />
+        </>
         : <AuthStack />
-        }
+      }
     </NavigationContainer>
   );
 }

@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 import Home from './Home/Home';
 import AddPost from './AddPost/AddPost';
@@ -17,9 +18,9 @@ const MyTabs = () => {
 
     return (
         <Tab.Navigator
-            initialRouteName="Mascotas"
+            initialRouteName={t('navBottom.pets')}
             screenOptions={{
-                headerShown: true,
+                headerShown: false,
                 tabBarShowLabel: true,
                 tabBarStyle: {
                     backgroundColor: colors.background,
@@ -35,7 +36,7 @@ const MyTabs = () => {
                         <MaterialCommunityIcons name="dog" color={color} size={size} />
                     ),
                 }} />
-            <Tab.Screen name={t('navBottom.community')} component={AddPost}
+            <Tab.Screen name={t('navBottom.community')} component={Home}
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <MaterialCommunityIcons name="contacts-outline" color={color} size={size} />
@@ -48,10 +49,10 @@ const MyTabs = () => {
                         <AntDesign name="plus" color={color} size={size} />
                     ),
                 }} />
-            <Tab.Screen name={t('navBottom.foods')} component={Home}
+            <Tab.Screen name={t('navBottom.planner')} component={Home}
                 options={{
                     tabBarIcon: ({ color, size }) => (
-                        <MaterialCommunityIcons name="food-drumstick-outline" color={color} size={size} />
+                        <Ionicons name="md-calendar-sharp" size={22} color={color} />
                     ),
                 }} />
             <Tab.Screen name={t('navBottom.profile')} component={ProfileScreen}

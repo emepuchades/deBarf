@@ -15,24 +15,6 @@ const Home = () => {
     const navigation = useNavigation();
     const { t } = useTranslation();
 
-    useEffect(() => {
-        navigation.setOptions({
-            headerLeft: () => (
-                <Ionicons name="menu-outline" size={30} color={colors.gray} style={{ marginLeft: 15 }} />
-            ),
-            headerRight: () => (
-                <TouchableOpacity
-                    style={{
-                        marginRight: 10
-                    }}
-                    onPress={() => onSignOut()}
-                >
-                    <MaterialIcons name="logout" size={24} color={colors.gray} style={{ marginRight: 10 }} />
-                </TouchableOpacity>
-            ),
-        });
-    }, [navigation]);
-
     const onSignOut = () => {
         signOut(auth).catch(error => console.log('Error logging out: ', error));
     };
