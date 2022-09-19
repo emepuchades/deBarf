@@ -2,11 +2,20 @@
     "translation": {
       "newpet":"Añade a tu mascota",
       "navBottom": {
+        "home": "Inicio",
         "pets": "Mascotas",
         "community": "Comunidad",
         "newPost": "Publicar",
         "foods": "Alimentos",
-        "profile": "Perfil"
+        "profile": "Perfil",
+        "signOut": "Cerrar Sesión",
+        "planner": "Planificador",
+        "menu": "Menu",
+        "shoppingList": "Lista de la compra"
+      },
+      "languages": {
+        "en": "Inglés",
+        "es": "Español"
       }
     }
 }
