@@ -24,7 +24,8 @@ const MyTabs = () => {
                 tabBarShowLabel: true,
                 tabBarStyle: {
                     backgroundColor: colors.background,
-                    height: 90,
+                    height: Platform.OS === 'ios' ? 60 : 60,
+                    paddingBottom: 6
                 },
                 tabBarInactiveTintColor: colors.navColor,
                 tabBarActiveTintColor: colors.navHover,

@@ -12,4 +12,5 @@ export default {
     textSecondary: '#808080',
     navColor: '#808080',
     navHover: '#9c4ef7',
+    grey: "#808080"
 };
