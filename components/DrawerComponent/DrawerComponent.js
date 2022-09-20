@@ -5,20 +5,23 @@ import {
     ImageBackground,
     Image,
     TouchableOpacity,
+    StyleSheet
 } from 'react-native';
 import {
     DrawerContentScrollView,
     DrawerItemList,
 } from '@react-navigation/drawer';
-import '../languages/i18n';
+import '../../languages/i18n';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
+import { styleDrawer } from './drawerComponent.style';
+import colors from '../../utils/colors';
 
 const DrawerComponent = props => {
 
     const { t, i18n } = useTranslation();
 
-    const [currentLanguage, setLanguage] = useState('en');
+    const [currentLanguage, setLanguage] = useState('es');
 
     const changeLanguage = value => {
         i18n
@@ -31,37 +34,32 @@ const DrawerComponent = props => {
         <View style={{ flex: 1 }}>
             <DrawerContentScrollView
                 {...props}
-                contentContainerStyle={{ backgroundColor: '#8200d6' }}>
+                contentContainerStyle={{ backgroundColor: colors.primary }}>
                 <ImageBackground
-                    source={require('../assets/images/menu-bg.jpeg')}
-                    style={{ padding: 20 }}>
+                    source={require('../../assets/images/menu-bg.jpeg')}
+                    style={styles.imageBackground}>
                     <Image
-                        source={require('../assets/images/user-profile.jpeg')}
-                        style={{ height: 80, width: 80, borderRadius: 40, marginBottom: 10 }}
+                        source={require('../../assets/images/user-profile.jpeg')}
+                        style={styles.imageProfile}
                     />
-                    <Text
-                        style={{
-                            color: '#fff',
-                            fontSize: 18,
-                            marginBottom: 5,
-                        }}>
+                    <Text style={styles.textUsername}>
                         Arya Puchades
                     </Text>
                 </ImageBackground>
-                <View style={{ flex: 1, backgroundColor: '#fff', paddingTop: 10 }}>
+                <View style={styles.listNavigaton}>
                     <DrawerItemList {...props} />
                 </View>
             </DrawerContentScrollView>
-            <View style={{ padding: 20, borderTopWidth: 1, borderTopColor: '#ccc' }}>
+            <View style={styles.navBottom}>
                 <View>
-                    <TouchableOpacity onPress={() => changeLanguage('es')} style={{ paddingVertical: 15 }}>
+                    <TouchableOpacity onPress={() => changeLanguage('es')} style={styles.buttons}>
                         <Text style={{
                             fontSize: 15,
                             fontWeight: currentLanguage === 'es' ? 'bold' : 'normal',
                             marginLeft: 5,
                         }}>{t('languages.es')}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => changeLanguage('en')} style={{ paddingVertical: 15 }}>
+                    <TouchableOpacity onPress={() => changeLanguage('en')} style={styles.buttons}>
                         <Text style={{
                             fontSize: 15,
                             fontWeight: currentLanguage === 'en' ? 'bold' : 'normal',
@@ -70,14 +68,10 @@ const DrawerComponent = props => {
                     </TouchableOpacity>
 
                 </View>
-                <TouchableOpacity onPress={() => { }} style={{ paddingVertical: 15 }}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <TouchableOpacity onPress={() => { }} style={styles.buttons}>
+                    <View style={styles.containerSignOut}>
                         <Ionicons name="exit-outline" size={22} />
-                        <Text
-                            style={{
-                                fontSize: 15,
-                                marginLeft: 5,
-                            }}>
+                        <Text style={styles.textSignOut}>
                             {t('navBottom.signOut')}
                         </Text>
                     </View>
@@ -88,3 +82,5 @@ const DrawerComponent = props => {
 };
 
 export default DrawerComponent;
+
+const styles = StyleSheet.create(styleDrawer);
