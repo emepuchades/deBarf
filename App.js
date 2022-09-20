@@ -14,7 +14,7 @@ import Home from './screens/app/Home/Home';
 import MainScreen from './screens/app/Main';
 import AddPost from './screens/app/AddPost/AddPost';
 import PreviewScreen from './screens/app/AddPost/Preview';
-import DrawerNavigator from './screens/app/Navigator';
+import DrawerNavigator from './screens/app/Navigator/Navigator';
 
 const Stack = createStackNavigator();
 const AuthenticatedUserContext = createContext({});
