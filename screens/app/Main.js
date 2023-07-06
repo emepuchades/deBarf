@@ -8,6 +8,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Home from './Home/Home';
 import AddPost from './AddPost/AddPost';
 import ProfileScreen from './Profile/Profile'
+import Calendar from './Calendar/Calendar'
 import colors from '../../utils/colors';
 import { useTranslation } from 'react-i18next';
 
@@ -50,7 +51,7 @@ const MyTabs = () => {
                         <AntDesign name="plus" color={color} size={size} />
                     ),
                 }} />
-            <Tab.Screen name={t('navBottom.planner')} component={Home}
+            <Tab.Screen name={t('navBottom.planner')} component={Calendar}
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <Ionicons name="md-calendar-sharp" size={22} color={color} />
