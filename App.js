@@ -15,18 +15,9 @@ import MainScreen from './screens/app/Main';
 import AddPost from './screens/app/AddPost/AddPost';
 import PreviewScreen from './screens/app/AddPost/Preview';
 import DrawerNavigator from './screens/app/Navigator/Navigator';
+import { AuthenticatedUserContext, AuthenticatedUserProvider } from './utils/context/context';
 
 const Stack = createStackNavigator();
-const AuthenticatedUserContext = createContext({});
-
-const AuthenticatedUserProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  return (
-    <AuthenticatedUserContext.Provider value={{ user, setUser }}>
-      {children}
-    </AuthenticatedUserContext.Provider>
-  );
-};
 
 function AppStack() {
   return (

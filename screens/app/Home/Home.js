@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { View, TouchableOpacity, Text, Image, StyleSheet, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { signOut } from 'firebase/auth';
@@ -10,14 +10,12 @@ import { styleHome } from "./Home.style";
 import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
+import { AuthenticatedUserContext } from '../../../utils/context/context';
 
 const Home = () => {
-    const navigation = useNavigation();
+    //const navigation = useNavigation();
     const { t } = useTranslation();
-
-    const onSignOut = () => {
-        signOut(auth).catch(error => console.log('Error logging out: ', error));
-    };
+    const { user, setUser } = useContext(AuthenticatedUserContext);
 
     return (
 
