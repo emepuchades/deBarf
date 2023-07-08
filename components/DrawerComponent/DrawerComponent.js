@@ -16,6 +16,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { styleDrawer } from './drawerComponent.style';
 import colors from '../../utils/colors';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../utils/firebase';
 
 const DrawerComponent = props => {
 
@@ -28,6 +30,11 @@ const DrawerComponent = props => {
             .changeLanguage(value)
             .then(() => setLanguage(value))
             .catch(err => console.log(err));
+    };
+
+
+    const onSignOut = () => {
+        signOut(auth).catch(error => console.log('Error logging out: ', error));
     };
 
     return (
@@ -68,7 +75,7 @@ const DrawerComponent = props => {
                     </TouchableOpacity>
 
                 </View>
-                <TouchableOpacity onPress={() => { }} style={styles.buttons}>
+                <TouchableOpacity onPress={() => onSignOut()} style={styles.buttons}>
                     <View style={styles.containerSignOut}>
                         <Ionicons name="exit-outline" size={22} />
                         <Text style={styles.textSignOut}>
