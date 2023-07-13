@@ -7,6 +7,7 @@ import DrawerComponent from "../../../components/DrawerComponent/DrawerComponent
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { styleNavigator } from "./navigator.style";
+import Food from "../Food/Food";
 
 const Drawer = createDrawerNavigator();
 
@@ -29,7 +30,7 @@ const DrawerNavigator = () => {
       />
       <Drawer.Screen
         name={t('navBottom.foods')}
-        component={Profile}
+        component={Food}
         options={{
           drawerIcon: ({ color }) => (
             <Ionicons name="md-nutrition-outline" size={size} color={color} />
