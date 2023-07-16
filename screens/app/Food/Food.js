@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   View,
   Text,
@@ -9,17 +9,19 @@ import {
   StyleSheet,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
-import meatTypes from "../../../utils/info/food";
-import { windowHeight } from "../../../utils/Dimentions";
+import { styleFood } from "./Food.style";
+import foodTypes  from "../../../utils/info/food";
 
 const Food = () => {
   const [selectedType, setSelectedType] = useState("Huesos Carnosos");
   const [searchText, setSearchText] = useState("");
   const menuScrollViewRef = useRef(null);
+  const [foodInfo, setFoodInfo] = useState(foodTypes());
+
 
   const handleTypeSelect = (type) => {
     setSelectedType(type);
-    const selectedIndex = Object.keys(meatTypes).indexOf(type);
+    const selectedIndex = Object.keys(foodInfo).indexOf(type);
     if (menuScrollViewRef.current) {
       menuScrollViewRef.current.scrollTo({
         x: selectedIndex * 100,
@@ -55,11 +57,7 @@ const Food = () => {
           }}
         >
           <View
-            style={{
-              width: 4,
-              height: 20,
-              paddingBottom: 15,
-            }}
+            style={styles.textMenu}
           />
           <Text
             style={{
@@ -80,8 +78,10 @@ const Food = () => {
   };
 
   const renderContent = (selectedType) => {
-    if (selectedType && meatTypes[selectedType]) {
-      const meatItems = meatTypes[selectedType];
+    
+
+    if (selectedType && foodInfo[selectedType]) {
+      const meatItems = foodInfo[selectedType];
       return (
         <View style={styles.content}>
           <Text style={styles.type}>{selectedType}</Text>
@@ -95,20 +95,17 @@ const Food = () => {
                   {item.img ? (
                     <Image
                       source={item.img}
-                      style={styles.imageFood}
+                      style={{
+                        width: selectedType === "Pescado" ? 100 : 70,
+                        height: selectedType === "Pescado" ? 99 : 70,
+                        marginRight: 50,
+                        marginLeft: 25,
+                      }}
                       type="image/webp"
                     />
                   ) : null}
                 </View>
-                <Text
-                  style={{
-                    textAlign: "center",
-                    fontSize: 14,
-                    fontWeight: "bold",
-                  }}
-                >
-                  {item.name}
-                </Text>
+                <Text style={styles.foodText}>{item.name}</Text>
               </View>
             ))}
         </View>
@@ -121,6 +118,8 @@ const Food = () => {
       );
     }
   };
+
+
 
   return (
     <View style={styles.container}>
@@ -144,13 +143,9 @@ const Food = () => {
           horizontal
           showsHorizontalScrollIndicator={false}
           ref={menuScrollViewRef}
-          style={{
-            borderBottomColor: "#F5F5F9",
-            borderBottomWidth: 1,
-            height: 70,
-          }}
+          style={styles.menuItems}
         >
-          {Object.keys(meatTypes).map((type) => renderMenuItem(type))}
+          {Object.keys(foodInfo).map((type) => renderMenuItem(type))}
         </ScrollView>
       )}
 
@@ -163,73 +158,4 @@ const Food = () => {
 
 export default Food;
 
-const styles = StyleSheet.create({
-  imageFood: {
-    height: 70,
-    maxWidth: 70,
-    marginRight: 20,
-    marginLeft: 5,
-  },
-  foodContainer: {
-    marginTop: 10,
-    marginBottom: 10,
-    marginLeft: 20,
-    marginRight: 20,
-    backgroundColor: "#ffffff",
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    textAlign: "center",
-    borderRadius: 10,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 5,
-      height: 5,
-    },
-    shadowOpacity: 0.4,
-    shadowRadius: 3,
-    elevation: 5,
-    backgroundColor: "#fff",
-  },
-  container: {
-    backgroundColor: "#fff",
-    fontFamily: "Loto",
-    height: windowHeight - 55
-  },
-  content: {},
-  type: {
-    color: "#000",
-    fontSize: 18,
-    margin: 10,
-    marginLeft: 22,
-    fontWeight: "600",
-  },
-  searchInput: {
-    marginTop: 10,
-    marginLeft: 10,
-    marginRight: 10,
-    marginBottom: 5,
-    padding: 10,
-    borderColor: "#ccc",
-    borderWidth: 1,
-    borderRadius: 5,
-  },
-  searchContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginHorizontal: 10,
-    marginTop: 10,
-    marginBottom: 5,
-    borderColor: "#ccc",
-    borderWidth: 1,
-    borderRadius: 5,
-  },
-  searchInput: {
-    flex: 1,
-    paddingVertical: 10,
-    paddingLeft: 10,
-  },
-  searchIcon: {
-    marginRight: 10,
-  },
-});
+const styles = StyleSheet.create(styleFood);
