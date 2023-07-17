@@ -6,3 +6,4 @@ yarn*
 .ide*
 .env
 .babel*
+assets/food/
