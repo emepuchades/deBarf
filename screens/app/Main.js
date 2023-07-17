@@ -6,11 +6,11 @@ import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 
 import Home from './Home/Home';
-import AddPost from './AddPost/AddPost';
 import ProfileScreen from './Profile/Profile'
 import Calendar from './Calendar/Calendar'
 import colors from '../../utils/colors';
 import { useTranslation } from 'react-i18next';
+import Food from './Food/Food';
 
 const Tab = createBottomTabNavigator();
 
@@ -45,7 +45,7 @@ const MyTabs = () => {
                     ),
                 }} />
 
-            <Tab.Screen name={t('navBottom.newPost')} component={AddPost}
+            <Tab.Screen name={t('navBottom.newPost')} component={Food}
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <AntDesign name="plus" color={color} size={size} />
