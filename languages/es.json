@@ -18,6 +18,13 @@
       "es": "Español"
     },
     "food": {
+      "searchCategory": "Busca el alimento en la catrgoria seleccionada",
+      "huesosCarnosos": "Huesos Carnosos",
+      "pescado": "Pescado",
+      "carne": "Carne",
+      "higado": "Hígado",
+      "masvisceras": "Mas Vísceras",
+      "frutasverduras": "Frutas y verduras",
       "alitasDePollo": "Alitas de pollo",
       "carcasasDePollo": "Carcasas de pollo",
       "cuellosDePollo": "Cuellos de pollo",

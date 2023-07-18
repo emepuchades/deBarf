@@ -6,7 +6,7 @@ function foodTypes() {
   const { t } = useTranslation();
 
   const meatTypes = {
-    "Huesos Carnosos": [
+    huesosCarnosos: [
       {
         name: t("food.alitasDePollo"),
         img: require("../../assets/food/alitas_pollo.webp"),
@@ -76,7 +76,7 @@ function foodTypes() {
         img: require("../../assets/food/falda_cordero.webp"),
       },
     ],
-    Carne: [
+    carne: [
       {
         name: t("food.pollo"),
         img: require("../../assets/food/pollo.webp"),
@@ -186,7 +186,7 @@ function foodTypes() {
         img: require("../../assets/food/tripa_verde.webp"),
       },
     ],
-    Pescado: [
+    pescado: [
       {
         name: t("food.abadejo"),
         img: require("../../assets/food/pescado/abadejo.webp"),
@@ -336,7 +336,7 @@ function foodTypes() {
         img: require("../../assets/food/pescado/trucha.webp"),
       },
     ],
-    Hígado: [
+    higado: [
       {
         name: t("food.higadoDeCerdo"),
         img: require("../../assets/food/higado/higado-cerdo.webp"),
@@ -366,7 +366,7 @@ function foodTypes() {
         img: require("../../assets/food/higado/higado-caballo.webp"),
       },
     ],
-    "Mas Vísceras": [
+    masvisceras: [
       {
         name: t("food.asaduraDeCerdo"),
         img: require("../../assets/food/mas_visceras/asadura-cerdo.webp"),
@@ -476,7 +476,7 @@ function foodTypes() {
         img: require("../../assets/food/mas_visceras/sesos-ternera.webp"),
       },
     ],
-    "Frutas y verduras": [
+    frutasverduras: [
       {
         name: t("food.manzana"),
         img: require("../../assets/food/frutasverduras/manzana.webp"),

@@ -10,10 +10,12 @@ import {
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { styleFood } from "./Food.style";
+import { useTranslation } from "react-i18next";
 import foodTypes  from "../../../utils/info/food";
 
 const Food = () => {
-  const [selectedType, setSelectedType] = useState("Huesos Carnosos");
+  const { t } = useTranslation();
+  const [selectedType, setSelectedType] = useState('huesosCarnosos');
   const [searchText, setSearchText] = useState("");
   const menuScrollViewRef = useRef(null);
   const [foodInfo, setFoodInfo] = useState(foodTypes());
@@ -36,6 +38,7 @@ const Food = () => {
   };
 
   const renderMenuItem = (type) => {
+    console.log("selectedType", selectedType);
     const isSelected = type === selectedType;
 
     return (
@@ -56,9 +59,7 @@ const Food = () => {
             textAlign: "center",
           }}
         >
-          <View
-            style={styles.textMenu}
-          />
+          <View style={styles.textMenu} />
           <Text
             style={{
               color: isSelected ? "#9c4ef7" : "#000",
@@ -70,7 +71,7 @@ const Food = () => {
               fontWeight: isSelected ? "bold" : "200",
             }}
           >
-            {type}
+            {t(`food.${type}`)}
           </Text>
         </View>
       </TouchableOpacity>
@@ -78,19 +79,17 @@ const Food = () => {
   };
 
   const renderContent = (selectedType) => {
-    
-
     if (selectedType && foodInfo[selectedType]) {
       const meatItems = foodInfo[selectedType];
       return (
         <View style={styles.content}>
-          <Text style={styles.type}>{selectedType}</Text>
+          <Text style={styles.type}> {t(`food.${selectedType}`)}</Text>
           {meatItems
             .filter((item) =>
               item.name.toLowerCase().includes(searchText.toLowerCase())
             )
-            .map((item) => (
-              <View style={styles.foodContainer} key={item.name}>
+            .map((item, index) => (
+              <View style={styles.foodContainer} key={index}>
                 <View>
                   {item.img ? (
                     <Image
@@ -125,7 +124,7 @@ const Food = () => {
     <View style={styles.container}>
       <View style={styles.searchContainer}>
         <TextInput
-          placeholder={`Buscar en la categoría ${selectedType}`}
+          placeholder={t(`food.searchCategory`)}
           value={searchText}
           onChangeText={handleSearchTextChange}
           style={styles.searchInput}
