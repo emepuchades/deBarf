@@ -1,5 +1,6 @@
 
 import { windowHeight } from "../../../utils/Dimentions";
+import { windowWidth } from "../../../utils/Dimentions";
 
 
 export const styleFood = {
@@ -57,10 +58,12 @@ export const styleFood = {
     marginLeft: 22,
     fontWeight: "600",
   },
+  typeContainer: {},
   searchInput: {
+    flex: 1,
     marginTop: 10,
-    marginLeft: 10,
-    marginRight: 10,
+    marginLeft: 20,
+    marginRight: 20,
     marginBottom: 5,
     padding: 10,
     borderColor: "#ccc",
@@ -76,11 +79,12 @@ export const styleFood = {
     borderColor: "#ccc",
     borderWidth: 1,
     borderRadius: 5,
+    marginLeft: 10,
   },
-  searchInput: {
+  searchContainerInput: {
     flex: 1,
     paddingVertical: 10,
-    paddingLeft: 10,
+    textAlign: "center",
   },
   searchIcon: {
     marginRight: 10,

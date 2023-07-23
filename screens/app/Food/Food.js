@@ -38,7 +38,6 @@ const Food = () => {
   };
 
   const renderMenuItem = (type) => {
-    console.log("selectedType", selectedType);
     const isSelected = type === selectedType;
 
     return (
@@ -83,7 +82,6 @@ const Food = () => {
       const meatItems = foodInfo[selectedType];
       return (
         <View style={styles.content}>
-          <Text style={styles.type}> {t(`food.${selectedType}`)}</Text>
           {meatItems
             .filter((item) =>
               item.name.toLowerCase().includes(searchText.toLowerCase())
@@ -127,7 +125,7 @@ const Food = () => {
           placeholder={t(`food.searchCategory`)}
           value={searchText}
           onChangeText={handleSearchTextChange}
-          style={styles.searchInput}
+          style={styles.searchContainerInput} // Actualizar el estilo aquí
         />
         <FontAwesome
           name="search"
@@ -147,7 +145,9 @@ const Food = () => {
           {Object.keys(foodInfo).map((type) => renderMenuItem(type))}
         </ScrollView>
       )}
-
+      <View style={styles.typeContainer}>
+        <Text style={styles.type}> {t(`food.${selectedType}`)}</Text>
+      </View>
       <ScrollView vertical showsHorizontalScrollIndicator={false}>
         {renderContent(selectedType)}
       </ScrollView>
