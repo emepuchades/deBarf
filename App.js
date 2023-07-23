@@ -1,7 +1,12 @@
-import React, { useState, createContext, useContext, useEffect } from "react";
+import React, {
+  useState,
+  createContext,
+  useContext,
+  useEffect,
+} from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { View, ActivityIndicator } from "react-native";
+import { View, ActivityIndicator, StyleSheet } from "react-native";
 
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./utils/firebase";
@@ -10,32 +15,17 @@ import Login from "./screens/auth/Login/Login";
 import Signup from "./screens/auth/Register/Signup";
 import Landing from "./screens/auth/Landing";
 
-import Home from "./screens/app/Home/Home";
-import MainScreen from "./screens/app/Main";
-import AddPost from "./screens/app/AddPost/AddPost";
-import PreviewScreen from "./screens/app/AddPost/Preview";
 import DrawerNavigator from "./screens/app/Navigator/Navigator";
 import {
   AuthenticatedUserContext,
   AuthenticatedUserProvider,
 } from "./utils/context/context";
-
+import Calculator from "./screens/app/Calculator/Calculator";
+import Home from "./screens/app/Home/Home";
+import SyncStorage from "sync-storage";
+import { windowHeight } from "./utils/Dimentions";
 
 const Stack = createStackNavigator();
-
-function AppStack() {
-  return (
-    <Stack.Navigator
-      defaultScreenOptions={MainScreen}
-      screenOptions={{ headerShown: false }}
-    >
-      <Stack.Screen name="beBarf" component={MainScreen} />
-      <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="AddPost" component={AddPost} />
-      <Stack.Screen name="Preview" component={PreviewScreen} />
-    </Stack.Navigator>
-  );
-}
 
 function AuthStack() {
   return (
@@ -62,6 +52,13 @@ function RootNavigator() {
     return unsubscribeAuth;
   }, [user]);
 
+    useEffect(() => {
+       async function storageDefault () {
+        const data = await SyncStorage.init();
+        console.log('AsyncStorage is ready!', data);
+        }
+        storageDefault()
+    }, []);
 
   if (isLoading) {
     return (
@@ -82,6 +79,7 @@ function RootNavigator() {
       {user ? (
         <>
           <DrawerNavigator />
+          <Stack.Screen name="Calculator" component={Home} />
         </>
       ) : (
         <AuthStack />
@@ -97,3 +95,9 @@ export default function App() {
     </AuthenticatedUserProvider>
   );
 }
+
+const styles = StyleSheet.create({
+  containerApp: {
+    height: windowHeight,
+  }
+});
