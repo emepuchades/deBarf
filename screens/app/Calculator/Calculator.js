@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  Button
 } from "react-native";
 import { windowHeight, windowWidth } from "../../../utils/Dimentions";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -15,40 +16,45 @@ import * as ImagePicker from "expo-image-picker";
 import { Ionicons } from "@expo/vector-icons";
 import { Button as PaperButton } from "react-native-paper";
 import SyncStorage from "sync-storage";
+import { AuthenticatedUserContext } from "../../../utils/context/context";
+import { useNavigation } from '@react-navigation/native'; // Asegúrate de tener React Navigation instalado y configurado.
+import  { getDbConnection } from "../../../utils/db";
 
 import colors from "../../../utils/colors";
 
-function Calculator() {
-  const items = ["Opción 1", "Opción 2", "Opción 3", "Opción 4", "Opción 5"];
+function Calculator( addName,
+          setIsCalculator,
+          selectedMascota,
+          setSelectedMascota,
+          searchText,
+          setSearchText,
+          date,
+          setDate,
+          priority,
+          setPriority,
+          isEsterilizado,
+          setIsEsterilizado,
+          isPerroDeporte,
+          setIsPerroDeporte,
+          isGalgo,
+          setIsGalgo,
+          selectedImage,
+          setSelectedImage,
+          weight,
+          setWeight,
+          weightUnit,
+          setWeightUnit,
+          selectedPet,
+          setSelectedPet,
+          datePicker,
+          setDatePicker) {
 
-  const [searchText, setSearchText] = useState("");
-  const [date, setDate] = useState(new Date());
-  const [showDatePicker, setShowDatePicker] = useState(false);
 
-  const [selectedKilos, setSelectedKilos] = useState(0);
-  const [selectedGramos, setSelectedGramos] = useState(0);
-  const [selectedMascota, setSelectedMascota] = useState("perro");
-  const [selectedPet, setSelectedPet] = useState("perro");
 
-  const [priority, setPriority] = useState("baja");
-
-  const [isEsterilizado, setIsEsterilizado] = useState(false);
-  const [isPerroDeporte, setIsPerroDeporte] = useState(false);
-  const [isGalgo, setIsGalgo] = useState(false);
-
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [weight, setWeight] = useState(""); 
-  const [weightUnit, setWeightUnit] = useState("kilos");
+  const { user, setUser } = useContext(AuthenticatedUserContext);
 
   const handleSearchTextChange = (text) => {
     setSearchText(text);
-  };
-
-  const handleDateChange = (event, selectedDate) => {
-    setShowDatePicker(false);
-    if (selectedDate) {
-      setDate(selectedDate);
-    }
   };
 
   const handlePriorityChange = (value) => {
@@ -76,55 +82,69 @@ function Calculator() {
       break;
   }
 
- const handleImageSelect = async () => {
-   try {
-     const result = await ImagePicker.launchImageLibraryAsync({
-       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-       allowsEditing: true,
-       aspect: [4, 3],
-       quality: 1,
-     });
+  const handleImageSelect = async () => {
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
 
-     if (!result.canceled) {
-       setSelectedImage(result.uri);
-     } else {
-       setSelectedImage(null); 
-     }
-   } catch (error) {
-     console.log("Error selecting image:", error);
-   }
- };
+      if (!result.canceled) {
+        setSelectedImage(result.uri);
+      } else {
+        setSelectedImage(null);
+      }
+    } catch (error) {
+      console.log("Error selecting image:", error);
+    }
+  };
 
-
-const handleGuardar = async () => {
-  try {
-    const datosRecopilados = {
-      mascota: selectedMascota,
-      nombre: searchText,
-      fecha: date.toDateString(),
-      kilos: selectedKilos,
-      gramos: selectedGramos,
-      prioridad: priority,
-      esterilizado: isEsterilizado,
-      perroDeporte: isPerroDeporte,
-      esGalgo: isGalgo,
-      imagen: selectedImage,
-      weight: weight,
-      weightUnit: weightUnit,
-    };
-
-    const datosJSON = JSON.stringify(datosRecopilados);
-
-    await SyncStorage.set("datosMascota", datosJSON);
-
-    console.log(
-      "Datos de mascota guardados con éxito en el almacenamiento local."
-    );
-
-  } catch (error) {
-    console.log("Error al guardar los datos de mascota:", error);
+  function showDatePicker() {
+    setDatePicker(true);
   }
-};
+
+  function onDateSelected(event, value) {
+    setDate(value);
+    setDatePicker(false);
+  }
+
+  const handleGuardar = async () => {
+    try {
+      if (
+        !selectedMascota ||
+        !searchText ||
+        !date ||
+        weight === null ||
+        priority === null
+      ) {
+        console.log(
+          "Por favor, complete todos los campos obligatorios antes de guardar la mascota."
+        );
+        return;
+      }
+
+      if (isNaN(weight)) {
+        console.log("El peso debe ser un número válido.");
+        return;
+      }
+
+      if (!user) {
+        console.log(
+          "No hay un usuario autenticado. No se puede guardar la mascota."
+        );
+        return;
+      }
+      console.log("handleGuardar" );
+
+      addName();
+
+      setIsCalculator(false);
+    } catch (error) {
+      console.log("Error al guardar los datos de mascota:", error);
+    }
+  };
 
   return (
     <ScrollView
@@ -135,19 +155,18 @@ const handleGuardar = async () => {
       <View style={styles.containerSelectPet}>
         <Text style={styles.titleEligeType}>Elige el tipo de mascota</Text>
         <View style={styles.buttonContainer}>
-
-            <Image
-              style={styles.tinyLogo}
-              source={require("../../../assets/pets/dogDefault.png")}
-            />
-            <Text
-              style={[
-                styles.buttonText,
-                selectedPet === "perro" && styles.buttonTextPressed,
-              ]}
-            >
-              Perro
-            </Text>
+          <Image
+            style={styles.tinyLogo}
+            source={require("../../../assets/pets/dogDefault.png")}
+          />
+          <Text
+            style={[
+              styles.buttonText,
+              selectedPet === "perro" && styles.buttonTextPressed,
+            ]}
+          >
+            Perro
+          </Text>
           <TouchableOpacity
             style={[
               styles.button,
@@ -217,17 +236,25 @@ const handleGuardar = async () => {
         </View>
 
         <View style={styles.containerDate}>
-          <TouchableOpacity onPress={() => setShowDatePicker(true)}>
-            <Text>Seleccionar Fecha: {date.toDateString()}</Text>
-          </TouchableOpacity>
-          {showDatePicker && (
+          <Text> Fecha nacimiento: {date}</Text>
+          {datePicker && (
             <DateTimePicker
               value={date}
-              mode="date"
-              display="default"
-              onChange={handleDateChange}
+              mode={"date"}
+              display={Platform.OS === "ios" ? "spinner" : "default"}
+              is24Hour={true}
+              onChange={onDateSelected}
+              style={styles.datePicker}
             />
           )}
+
+          <View style={{ margin: 10 }}>
+            <Button
+              title="Introduce la fecha de nacimiento"
+              color="green"
+              onPress={showDatePicker}
+            />
+          </View>
         </View>
 
         <Text>Seleccionar peso:</Text>

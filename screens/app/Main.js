@@ -18,52 +18,75 @@ const MyTabs = () => {
     const { t } = useTranslation();
 
     return (
-        <Tab.Navigator
-            initialRouteName={t('navBottom.pets')}
-            screenOptions={{
-                headerShown: false,
-                tabBarShowLabel: true,
-                tabBarStyle: {
-                    backgroundColor: colors.background,
-                    height: Platform.OS === 'ios' ? 60 : 60,
-                    paddingBottom: 6
-                },
-                tabBarInactiveTintColor: colors.navColor,
-                tabBarActiveTintColor: colors.navHover,
-            }}
-        >
-            <Tab.Screen name={t('navBottom.pets')} component={Home}
-                options={{
-                    tabBarIcon: ({ color, size }) => (
-                        <MaterialCommunityIcons name="dog" color={color} size={size} />
-                    ),
-                }} />
-            <Tab.Screen name={t('navBottom.community')} component={Home}
-                options={{
-                    tabBarIcon: ({ color, size }) => (
-                        <MaterialCommunityIcons name="contacts-outline" color={color} size={size} />
-                    ),
-                }} />
+      <Tab.Navigator
+        initialRouteName={t("navBottom.pets")}
+        screenOptions={{
+          headerShown: false,
+          tabBarShowLabel: true,
+          tabBarStyle: {
+            backgroundColor: colors.background,
+            height: Platform.OS === "ios" ? 60 : 60,
+            paddingBottom: 6,
+          },
+          tabBarInactiveTintColor: colors.navColor,
+          tabBarActiveTintColor: colors.navHover,
+        }}
+      >
+        <Tab.Screen
+          name={t("navBottom.pets")}
+          component={Home}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="dog" color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name={t("navBottom.community")}
+          component={Home}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons
+                name="contacts-outline"
+                color={color}
+                size={size}
+              />
+            ),
+          }}
+        />
 
-            <Tab.Screen name={t('navBottom.newPost')} component={Food}
-                options={{
-                    tabBarIcon: ({ color, size }) => (
-                        <AntDesign name="plus" color={color} size={size} />
-                    ),
-                }} />
-            <Tab.Screen name={t('navBottom.planner')} component={Calendar}
-                options={{
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="md-calendar-sharp" size={22} color={color} />
-                    ),
-                }} />
-            <Tab.Screen name={t('navBottom.profile')} component={ProfileScreen}
-                options={{
-                    tabBarIcon: ({ color, size }) => (
-                        <MaterialCommunityIcons name="account-circle-outline" color={color} size={size} />
-                    ),
-                }} />
-        </Tab.Navigator>
+        <Tab.Screen
+          name={t("navBottom.newPost")}
+          component={Food}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <AntDesign name="plus" color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name={t("navBottom.planner")}
+          component={Calendar}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="md-calendar-sharp" size={22} color={color} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name={t("navBottom.profile")}
+          component={ProfileScreen}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons
+                name="account-circle-outline"
+                color={color}
+                size={size}
+              />
+            ),
+          }}
+        />
+      </Tab.Navigator>
     );
 }
 
