@@ -11,7 +11,8 @@
       "signOut": "Cerrar Sesión",
       "planner": "Planificador",
       "menu": "Menu",
-      "shoppingList": "Lista de la compra"
+      "shoppingList": "Lista de la compra",
+      "newPet": "Agregar Mascota"
     },
     "languages": {
       "en": "Inglés",

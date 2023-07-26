@@ -1,12 +1,7 @@
-import React, {
-  useState,
-  createContext,
-  useContext,
-  useEffect,
-} from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { View, ActivityIndicator, StyleSheet } from "react-native";
+import { View, ActivityIndicator } from "react-native";
 
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./utils/firebase";
@@ -20,10 +15,7 @@ import {
   AuthenticatedUserContext,
   AuthenticatedUserProvider,
 } from "./utils/context/context";
-import Calculator from "./screens/app/Calculator/Calculator";
-import Home from "./screens/app/Home/Home";
-import SyncStorage from "sync-storage";
-import { windowHeight } from "./utils/Dimentions";
+import initDatabase from "./utils/db";
 
 const Stack = createStackNavigator();
 
@@ -52,13 +44,12 @@ function RootNavigator() {
     return unsubscribeAuth;
   }, [user]);
 
-    useEffect(() => {
-       async function storageDefault () {
-        const data = await SyncStorage.init();
-        console.log('AsyncStorage is ready!', data);
-        }
-        storageDefault()
-    }, []);
+  useEffect(() => {
+    async function initDB() {
+      await initDatabase();
+    }
+    initDB();
+  }, []);
 
   if (isLoading) {
     return (
@@ -79,7 +70,6 @@ function RootNavigator() {
       {user ? (
         <>
           <DrawerNavigator />
-          <Stack.Screen name="Calculator" component={Home} />
         </>
       ) : (
         <AuthStack />
@@ -95,9 +85,3 @@ export default function App() {
     </AuthenticatedUserProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  containerApp: {
-    height: windowHeight,
-  }
-});

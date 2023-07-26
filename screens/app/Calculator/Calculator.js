@@ -7,7 +7,7 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
-  Button
+  Button,
 } from "react-native";
 import { windowHeight, windowWidth } from "../../../utils/Dimentions";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -17,41 +17,30 @@ import { Ionicons } from "@expo/vector-icons";
 import { Button as PaperButton } from "react-native-paper";
 import SyncStorage from "sync-storage";
 import { AuthenticatedUserContext } from "../../../utils/context/context";
-import { useNavigation } from '@react-navigation/native'; // Asegúrate de tener React Navigation instalado y configurado.
-import  { getDbConnection } from "../../../utils/db";
-
+import { useNavigation } from "@react-navigation/native"; // Asegúrate de tener React Navigation instalado y configurado.
+import { getDbConnection } from "../../../utils/db";
 import colors from "../../../utils/colors";
+import addPet from "../../../utils/dbPetsInfo";
+import { useTranslation } from "react-i18next";
 
-function Calculator( addName,
-          setIsCalculator,
-          selectedMascota,
-          setSelectedMascota,
-          searchText,
-          setSearchText,
-          date,
-          setDate,
-          priority,
-          setPriority,
-          isEsterilizado,
-          setIsEsterilizado,
-          isPerroDeporte,
-          setIsPerroDeporte,
-          isGalgo,
-          setIsGalgo,
-          selectedImage,
-          setSelectedImage,
-          weight,
-          setWeight,
-          weightUnit,
-          setWeightUnit,
-          selectedPet,
-          setSelectedPet,
-          datePicker,
-          setDatePicker) {
-
-
-
+function Calculator() {
   const { user, setUser } = useContext(AuthenticatedUserContext);
+  const { t } = useTranslation();
+
+  const navigation = useNavigation();
+  const [searchText, setSearchText] = useState("");
+  const [datePicker, setDatePicker] = useState(false);
+  const [date, setDate] = useState(new Date());
+  const [selectedMascota, setSelectedMascota] = useState("perro");
+  const [selectedPet, setSelectedPet] = useState("perro");
+  const [priority, setPriority] = useState("baja");
+  const [isEsterilizado, setIsEsterilizado] = useState(false);
+  const [isPerroDeporte, setIsPerroDeporte] = useState(false);
+  const [isGalgo, setIsGalgo] = useState(false);
+  const [selectedImage, setSelectedImage] = useState("");
+  const [weight, setWeight] = useState("");
+  const [weightUnit, setWeightUnit] = useState("kilos");
+  const HomeURL = t("navBottom.home");
 
   const handleSearchTextChange = (text) => {
     setSearchText(text);
@@ -106,8 +95,10 @@ function Calculator( addName,
   }
 
   function onDateSelected(event, value) {
-    setDate(value);
-    setDatePicker(false);
+    if (value) {
+      setDate(value);
+      setDatePicker(false);
+    }
   }
 
   const handleGuardar = async () => {
@@ -136,11 +127,24 @@ function Calculator( addName,
         );
         return;
       }
-      console.log("handleGuardar" );
+      console.log("handleGuardar");
 
-      addName();
+      const formattedDate = date.toISOString();
 
-      setIsCalculator(false);
+      await addPet(
+        selectedMascota,
+        searchText,
+        formattedDate, // Pasamos la fecha formateada
+        priority,
+        isEsterilizado,
+        isPerroDeporte,
+        isGalgo,
+        selectedImage,
+        weight,
+        weightUnit
+      );
+
+      navigation.navigate(HomeURL);
     } catch (error) {
       console.log("Error al guardar los datos de mascota:", error);
     }
@@ -236,7 +240,7 @@ function Calculator( addName,
         </View>
 
         <View style={styles.containerDate}>
-          <Text> Fecha nacimiento: {date}</Text>
+          <Text>Fecha nacimiento: {date.toDateString()}</Text>
           {datePicker && (
             <DateTimePicker
               value={date}
@@ -247,7 +251,6 @@ function Calculator( addName,
               style={styles.datePicker}
             />
           )}
-
           <View style={{ margin: 10 }}>
             <Button
               title="Introduce la fecha de nacimiento"
@@ -319,7 +322,7 @@ function Calculator( addName,
           <Text>Es galgo</Text>
         </View>
         <PaperButton
-          onPress={handleGuardar}
+          onPress={() => handleGuardar()}
           mode="contained"
           style={styles.guardarButton}
         >

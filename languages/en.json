@@ -11,7 +11,8 @@
       "signOut": "Sign Out",
       "planner": "planner",
       "menu": "Menu",
-      "shoppingList": "Shopping list"
+      "shoppingList": "Shopping list",
+      "newPet": "Add Pet"
     },
     "languages": {
       "en": "English",

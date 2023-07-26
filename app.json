@@ -11,7 +11,7 @@
       "sourceExts": ["cjs"]
     },
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

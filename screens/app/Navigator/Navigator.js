@@ -5,19 +5,17 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Profile from "../Profile/Profile";
 import Main from "../Main";
 import DrawerComponent from "../../../components/DrawerComponent/DrawerComponent";
-import { Ionicons } from '@expo/vector-icons';
-import { useTranslation } from 'react-i18next';
+import { Ionicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 import { styleNavigator } from "./navigator.style";
 import Food from "../Food/Food";
-import Calculator from "../Calculator/Calculator";
-import PetDetails from "../../../components/PetDetails";
 
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
   const { t } = useTranslation();
-  const size = 22
-const Stack = createStackNavigator();
+  const size = 22;
+  const Stack = createStackNavigator();
 
   return (
     <Drawer.Navigator
@@ -60,11 +58,8 @@ const Stack = createStackNavigator();
           ),
         }}
       />
-
-      <Stack.Screen name="Calculator" component={Calculator} />
-      <Stack.Screen name="Pet details" component={PetDetails} />
     </Drawer.Navigator>
   );
-}
+};
 
 export default DrawerNavigator;
