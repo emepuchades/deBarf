@@ -306,35 +306,93 @@ function Calculator() {
           <Picker.Item label="Alta" value="alta" />
         </Picker>
 
-        <View style={styles.checkBoxContainer}>
-          <TouchableOpacity
-            style={[styles.checkBox, isEsterilizado && styles.checkBoxSelected]}
-            onPress={() => setIsEsterilizado(!isEsterilizado)}
-          >
-            {isEsterilizado && <Text style={styles.checkBoxText}>✓</Text>}
-          </TouchableOpacity>
-          <Text>Esterilizado</Text>
-        </View>
+        {selectedMascota === "perro" && (
+          <>
+            <View style={styles.checkBoxContainer}>
+              <TouchableOpacity
+                style={[
+                  styles.checkBox,
+                  isEsterilizado && styles.checkBoxSelected,
+                ]}
+                onPress={() => setIsEsterilizado(!isEsterilizado)}
+              >
+                {isEsterilizado && <Text style={styles.checkBoxText}>✓</Text>}
+              </TouchableOpacity>
+              <Text>Esterilizado</Text>
+            </View>
 
-        <View style={styles.checkBoxContainer}>
-          <TouchableOpacity
-            style={[styles.checkBox, isPerroDeporte && styles.checkBoxSelected]}
-            onPress={() => setIsPerroDeporte(!isPerroDeporte)}
-          >
-            {isPerroDeporte && <Text style={styles.checkBoxText}>✓</Text>}
-          </TouchableOpacity>
-          <Text>Perro de deporte</Text>
-        </View>
+            <View style={styles.checkBoxContainer}>
+              <TouchableOpacity
+                style={[
+                  styles.checkBox,
+                  isPerroDeporte && styles.checkBoxSelected,
+                ]}
+                onPress={() => setIsPerroDeporte(!isPerroDeporte)}
+              >
+                {isPerroDeporte && <Text style={styles.checkBoxText}>✓</Text>}
+              </TouchableOpacity>
+              <Text>Perro de deporte</Text>
+            </View>
 
-        <View style={styles.checkBoxContainer}>
-          <TouchableOpacity
-            style={[styles.checkBox, isGalgo && styles.checkBoxSelected]}
-            onPress={() => setIsGalgo(!isGalgo)}
-          >
-            {isGalgo && <Text style={styles.checkBoxText}>✓</Text>}
-          </TouchableOpacity>
-          <Text>Es galgo</Text>
-        </View>
+            <View style={styles.checkBoxContainer}>
+              <TouchableOpacity
+                style={[styles.checkBox, isGalgo && styles.checkBoxSelected]}
+                onPress={() => setIsGalgo(!isGalgo)}
+              >
+                {isGalgo && <Text style={styles.checkBoxText}>✓</Text>}
+              </TouchableOpacity>
+              <Text>Es galgo</Text>
+            </View>
+          </>
+        )}
+
+        {selectedMascota === "gato" && (
+          <>
+            <View style={styles.checkBoxContainer}>
+              <TouchableOpacity
+                style={[
+                  styles.checkBox,
+                  isEsterilizado && styles.checkBoxSelected,
+                ]}
+                onPress={() => setIsEsterilizado(!isEsterilizado)}
+              >
+                {isEsterilizado && <Text style={styles.checkBoxText}>✓</Text>}
+              </TouchableOpacity>
+              <Text>Esterilizado</Text>
+            </View>
+
+            <View style={styles.checkBoxContainer}>
+              <TouchableOpacity
+                style={[
+                  styles.checkBox,
+                  isPerroDeporte && styles.checkBoxSelected,
+                ]}
+                onPress={() => setIsPerroDeporte(!isPerroDeporte)}
+              >
+                {isPerroDeporte && <Text style={styles.checkBoxText}>✓</Text>}
+              </TouchableOpacity>
+              <Text>Gato callejero</Text>
+            </View>
+          </>
+        )}
+
+        {selectedMascota === "huron" && (
+          <>
+            <View style={styles.checkBoxContainer}>
+              <TouchableOpacity
+                style={[
+                  styles.checkBox,
+                  isEsterilizado && styles.checkBoxSelected,
+                ]}
+                onPress={() => setIsEsterilizado(!isEsterilizado)}
+              >
+                {isEsterilizado && <Text style={styles.checkBoxText}>✓</Text>}
+              </TouchableOpacity>
+              <Text>Esterilizado</Text>
+            </View>
+          </>
+        )}
+
         <PaperButton
           onPress={() => handleGuardar()}
           mode="contained"
