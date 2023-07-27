@@ -106,7 +106,7 @@ export default function Home() {
               pets.map((item, index) => (
                 <View key={index} style={styles.itemContainer}>
                   <View style={styles.imageContainer}>
-                    {item.imagen === "" ? (
+                    {!item.imagen ? (
                       <Image
                         style={styles.imagePet}
                         source={require("../../../assets/pets/dogDefault.png")}
