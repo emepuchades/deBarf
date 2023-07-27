@@ -1,6 +1,6 @@
-import * as SQLite from "expo-sqlite";
 
 async function addPet(
+  db,
   selectedMascota,
   searchText,
   formattedDate,
@@ -12,8 +12,6 @@ async function addPet(
   weight,
   weightUnit
 ) {
-  const db = SQLite.openDatabase("debarf.db");
-
   db.transaction((tx) => {
     tx.executeSql(
       `INSERT INTO mascotas (mascota, nombre, fecha, prioridad, esterilizado, perroDeporte, esGalgo, imagen, weight, weightUnit)

@@ -1,11 +1,4 @@
-import * as SQLite from "expo-sqlite";
-
-const setDb = async () => {
-  return SQLite.openDatabase("debarf.db");
-};
-
-async function createTables() {
-  const db = SQLite.openDatabase("debarf.db");
+async function createTables(db) {
 
   db.transaction((tx) => {
     tx.executeSql(
@@ -29,10 +22,8 @@ async function createTables() {
   });
 }
 
-async function initDatabase() {
-  const db = SQLite.openDatabase("debarf.db");
-  createTables();
-  db.closeAsync();
+async function initDatabase(db) {
+  createTables(db);
 }
 
 export default initDatabase;
