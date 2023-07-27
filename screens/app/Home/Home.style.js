@@ -40,9 +40,38 @@ export const styleHome = {
     fontWeight: "bold",
   },
   itemContainer: {
-    backgroundColor: "#f0f0f0",
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#f9f9f9",
+    borderRadius: 10,
     padding: 10,
     marginBottom: 10,
-    borderRadius: 5,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  imageContainer: {
+    marginRight: 15,
+  },
+  imagePet: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+  },
+  textContainer: {
+    flex: 1,
+  },
+  nameText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  petText: {
+    fontSize: 16,
   },
 };

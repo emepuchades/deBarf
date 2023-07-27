@@ -30,7 +30,7 @@ function AuthStack() {
 }
 
 function RootNavigator() {
-  const { user, setUser } = useContext(AuthenticatedUserContext);
+  const { user, setUser, db } = useContext(AuthenticatedUserContext);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -46,7 +46,7 @@ function RootNavigator() {
 
   useEffect(() => {
     async function initDB() {
-      await initDatabase();
+      await initDatabase(db);
     }
     initDB();
   }, []);
