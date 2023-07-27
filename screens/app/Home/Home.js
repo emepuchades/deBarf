@@ -78,90 +78,99 @@ export default function Home() {
         <Text>Loading pets...</Text>
       </View>
     );
-    A;
   }
 
+  const petImageMap = {
+    perro: require("../../../assets/pets/dogDefault.png"),
+    gato: require("../../../assets/pets/catDefault.png"),
+    huron: require("../../../assets/pets/ferretDefault.png"),
+  };
+
   return (
-    <ScrollView vertical showsHorizontalScrollIndicator={false}>
-      <View style={styles.container}>
-        {pets ? (
-          <View style={styles.containerNewPet}>
-            {pets.length === 0 ? (
-              <View style={styles.containerNewPet}>
-                <Image
-                  style={styles.tinyLogo}
-                  source={require("../../../assets/pets/addNewPet.png")}
-                />
-                <Text>
-                  <Text style={styles.addPetTitle}>
-                    ¡Registra tu primera mascota ahora!{"\n"}
-                  </Text>
+    <>
+      <ScrollView vertical showsHorizontalScrollIndicator={false}>
+        <View style={styles.container}>
+          {pets ? (
+            <View style={styles.containerNewPet}>
+              {pets.length === 0 ? (
+                <View style={styles.containerNewPet}>
+                  <Image
+                    style={styles.tinyLogo}
+                    source={require("../../../assets/pets/addNewPet.png")}
+                  />
                   <Text>
-                    Usa el botón que se encuentra en la parte inferior para
-                    comenzar.
+                    <Text style={styles.addPetTitle}>
+                      ¡Registra tu primera mascota ahora!{"\n"}
+                    </Text>
+                    <Text>
+                      Usa el botón que se encuentra en la parte inferior para
+                      comenzar.
+                    </Text>
                   </Text>
-                </Text>
-              </View>
-            ) : (
-              pets.map((item, index) => (
-                <View key={index} style={styles.itemContainer}>
-                  <View style={styles.imageContainer}>
-                    {!item.imagen ? (
-                      <Image
-                        style={styles.imagePet}
-                        source={require("../../../assets/pets/dogDefault.png")}
-                      />
-                    ) : (
-                      <>
+                </View>
+              ) : (
+                pets.map((item, index) => (
+                  <View key={index} style={styles.itemContainer}>
+                    <View style={styles.imageContainer}>
+                      {!item.imagen ? (
                         <Image
                           style={styles.imagePet}
-                          source={{ uri: decodeBase64Image(item.imagen) }}
+                          source={petImageMap[item.mascota]}
                         />
-                        {console.log(
-                          "decodeBase64Image(item.imagen) ",
-                          decodeBase64Image(item.imagen)
-                        )}
-                      </>
-                    )}
+                      ) : (
+                        <>
+                          <Image
+                            style={styles.imagePet}
+                            source={{ uri: decodeBase64Image(item.imagen) }}
+                          />
+                          {console.log(
+                            "decodeBase64Image(item.imagen) ",
+                            decodeBase64Image(item.imagen)
+                          )}
+                        </>
+                      )}
+                    </View>
+                    <View style={styles.textContainer}>
+                      <Text style={styles.nameText}>Nombre: {item.nombre}</Text>
+                      <Text style={styles.petText}>
+                        Mascota: {item.mascota}
+                      </Text>
+                    </View>
+                    <View style={styles.deleteButtonContainer}>
+                      <Button
+                        title="Eliminar"
+                        onPress={() => handleDeletePet(index)}
+                      />
+                    </View>
                   </View>
-                  <View style={styles.textContainer}>
-                    <Text style={styles.nameText}>Nombre: {item.nombre}</Text>
-                    <Text style={styles.petText}>Mascota: {item.mascota}</Text>
-                  </View>
-                  <View style={styles.deleteButtonContainer}>
-                    <Button
-                      title="Eliminar"
-                      onPress={() => handleDeletePet(index)}
-                    />
-                  </View>
-                </View>
-              ))
-            )}
-          </View>
-        ) : (
-          <View style={styles.containerNewPet}>
-            <Image
-              style={styles.tinyLogo}
-              source={require("../../../assets/pets/addNewPet.png")}
-            />
-            <Text>
-              <Text style={styles.addPetTitle}>
-                ¡Registra tu primera mascota ahora!{"\n"}
-              </Text>
+                ))
+              )}
+            </View>
+          ) : (
+            <View style={styles.containerNewPet}>
+              <Image
+                style={styles.tinyLogo}
+                source={require("../../../assets/pets/addNewPet.png")}
+              />
               <Text>
-                Usa el botón que se encuentra en la parte inferior para
-                comenzar.
+                <Text style={styles.addPetTitle}>
+                  ¡Registra tu primera mascota ahora!{"\n"}
+                </Text>
+                <Text>
+                  Usa el botón que se encuentra en la parte inferior para
+                  comenzar.
+                </Text>
               </Text>
-            </Text>
-          </View>
-        )}
-      </View>
+            </View>
+          )}
+        </View>
+      </ScrollView>
       <FAB
         style={styles.fab}
         icon="plus"
         onPress={() => navigation.navigate(CalculatorURL)}
       />
-    </ScrollView>
+    </>
   );
 }
 

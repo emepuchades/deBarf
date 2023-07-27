@@ -59,15 +59,15 @@ export const styleHome = {
     marginRight: 15,
   },
   imagePet: {
-    width: 100,
-    height: 100,
+    width: 60,
+    height: 60,
     borderRadius: 50,
   },
   textContainer: {
     flex: 1,
   },
   nameText: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
     marginBottom: 5,
   },
