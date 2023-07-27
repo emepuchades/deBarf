@@ -7,6 +7,7 @@ import {
   Platform,
   Image,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import { useState, useEffect, useContext } from "react";
 import { styleHome } from "./Home.style";
@@ -18,6 +19,7 @@ import { AuthenticatedUserContext } from "../../../utils/context/context";
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [pets, setPets] = useState([]);
+  const [selectedPet, setSelectedPet] = useState(null);
   const { t } = useTranslation();
   const CalculatorURL = t("navBottom.newPet");
   const { db } = useContext(AuthenticatedUserContext);
@@ -79,6 +81,10 @@ export default function Home() {
       </View>
     );
   }
+  const handlePetClick = (pet) => {
+    setSelectedPet(pet);
+    navigation.navigate("PetDetails", { selectedPet: pet });
+  };
 
   const petImageMap = {
     perro: require("../../../assets/pets/dogDefault.png"),
@@ -110,7 +116,11 @@ export default function Home() {
                 </View>
               ) : (
                 pets.map((item, index) => (
-                  <View key={index} style={styles.itemContainer}>
+                  <TouchableOpacity
+                    key={index}
+                    onPress={() => handlePetClick(item)}
+                    style={styles.itemContainer}
+                  >
                     <View style={styles.imageContainer}>
                       {!item.imagen ? (
                         <Image
@@ -123,10 +133,6 @@ export default function Home() {
                             style={styles.imagePet}
                             source={{ uri: decodeBase64Image(item.imagen) }}
                           />
-                          {console.log(
-                            "decodeBase64Image(item.imagen) ",
-                            decodeBase64Image(item.imagen)
-                          )}
                         </>
                       )}
                     </View>
@@ -142,7 +148,7 @@ export default function Home() {
                         onPress={() => handleDeletePet(index)}
                       />
                     </View>
-                  </View>
+                  </TouchableOpacity>
                 ))
               )}
             </View>

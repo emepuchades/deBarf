@@ -9,6 +9,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { styleNavigator } from "./navigator.style";
 import Food from "../Food/Food";
+import PetDetails from "../../../components/PetDetails";
 
 const Drawer = createDrawerNavigator();
 
@@ -58,6 +59,7 @@ const DrawerNavigator = () => {
           ),
         }}
       />
+      <Drawer.Screen name={"PetDetails"} component={PetDetails} />
     </Drawer.Navigator>
   );
 };
