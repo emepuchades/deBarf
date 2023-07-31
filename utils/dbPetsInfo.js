@@ -1,20 +1,23 @@
 import * as FileSystem from "expo-file-system";
+import getPercentage from "./getPercentage";
 
 async function addPet(
   db,
-  selectedMascota,
+  selectedPet,
   searchText,
   formattedDate,
-  priority,
-  isEsterilizado,
-  isPerroDeporte,
-  isGalgo,
+  activity,
+  isSterilized,
+  isSportingDog,
+  isGreyhound,
   selectedImageUri,
   weight,
   weightUnit
 ) {
   try {
     let imageBase64 = null; // Set to null when no image is available
+
+    console.log('addPet')
 
     if (
       selectedImageUri &&
@@ -27,21 +30,33 @@ async function addPet(
       await saveImageToDevice(selectedImageUri);
     }
 
+    //Calcular porcentage
+    const percentage = await getPercentage(
+      selectedPet,
+      activity,
+      formattedDate,
+      isSterilized,
+      weight,
+      isGreyhound,
+      isSportingDog
+    );
+
     db.transaction((tx) => {
       tx.executeSql(
-        `INSERT INTO mascotas (mascota, nombre, fecha, prioridad, esterilizado, perroDeporte, esGalgo, imagen, weight, weightUnit)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        `INSERT INTO pets (typePet, name, date, activity, sterilized, sportingDog, isGreyhound , image, weight, weightUnit, percentage)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         [
-          selectedMascota,
+          selectedPet,
           searchText,
           formattedDate,
-          priority,
-          isEsterilizado ? 1 : 0,
-          isPerroDeporte ? 1 : 0,
-          isGalgo ? 1 : 0,
-          imageBase64, // Use null if no image is available
+          activity,
+          isSterilized ? 1 : 0,
+          isSportingDog ? 1 : 0,
+          isGreyhound ? 1 : 0,
+          imageBase64,
           parseFloat(weight),
           weightUnit,
+          percentage
         ],
         (txObj, resultSet) => {
           console.log("resultSet", resultSet);

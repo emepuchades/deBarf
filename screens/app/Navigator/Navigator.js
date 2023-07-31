@@ -10,13 +10,16 @@ import { useTranslation } from "react-i18next";
 import { styleNavigator } from "./navigator.style";
 import Food from "../Food/Food";
 import PetDetails from "../../../components/PetDetails";
-
+import { useNavigation } from "@react-navigation/native";
+import { TouchableOpacity } from "react-native";
+import Calendar from "../Calendar/Calendar";
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
   const { t } = useTranslation();
   const size = 22;
   const Stack = createStackNavigator();
+  const navigation = useNavigation();
 
   return (
     <Drawer.Navigator
@@ -26,40 +29,74 @@ const DrawerNavigator = () => {
       <Drawer.Screen
         name={t("navBottom.home")}
         component={Main}
-        options={{
-          drawerIcon: ({ color }) => (
-            <Ionicons name="home-outline" size={size} color={color} />
+        options={({ navigation, route }) => ({
+          drawerIcon: ({ color, size }) => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate(t("navBottom.home"));
+              }}
+            >
+              <Ionicons name="ios-basket-outline" size={size} color={color} />
+            </TouchableOpacity>
           ),
-        }}
+        })}
       />
       <Drawer.Screen
         name={t("navBottom.foods")}
         component={Food}
-        options={{
-          drawerIcon: ({ color }) => (
-            <Ionicons name="md-nutrition-outline" size={size} color={color} />
+        options={({ navigation, route }) => ({
+          drawerIcon: ({ color, size }) => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate(t("navBottom.foods"));
+              }}
+            >
+              <Ionicons name="md-nutrition-outline" size={size} color={color} />
+            </TouchableOpacity>
           ),
-        }}
+        })}
       />
       <Drawer.Screen
         name={t("navBottom.menu")}
-        component={Profile}
-        options={{
-          drawerIcon: ({ color }) => (
-            <Ionicons name="reader-outline" size={size} color={color} />
+        component={Calendar}
+        options={({ navigation, route }) => ({
+          drawerIcon: ({ color, size }) => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate(t("navBottom.menu"));
+              }}
+            >
+              <Ionicons name="reader-outline" size={size} color={color} />
+            </TouchableOpacity>
           ),
-        }}
+        })}
       />
       <Drawer.Screen
         name={t("navBottom.shoppingList")}
-        component={Profile}
-        options={{
-          drawerIcon: ({ color }) => (
-            <Ionicons name="ios-basket-outline" size={size} color={color} />
+        component={Calendar}
+        options={({ navigation, route }) => ({
+          drawerIcon: ({ color, size }) => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate(t("navBottom.shoppingList"));
+              }}
+            >
+              <Ionicons name="ios-basket-outline" size={size} color={color} />
+            </TouchableOpacity>
           ),
+        })}
+      />
+      <Drawer.Screen
+        name={"PetDetails"}
+        component={PetDetails}
+        options={{
+          drawerItemStyle: {
+            onPress: () => {
+              navigation.navigate("PetDetails");
+            },
+          },
         }}
       />
-      <Drawer.Screen name={"PetDetails"} component={PetDetails} />
     </Drawer.Navigator>
   );
 };

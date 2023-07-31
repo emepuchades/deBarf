@@ -2,9 +2,7 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput,
   Button,
-  Platform,
   Image,
   ScrollView,
   TouchableOpacity,
@@ -27,7 +25,7 @@ export default function Home() {
   useEffect(() => {
     db.transaction((tx) => {
       tx.executeSql(
-        "SELECT * FROM mascotas",
+        "SELECT * FROM pets",
         null,
         (txObj, resultSet) => setPets(resultSet.rows._array),
         (txObj, error) => console.log(error)
@@ -41,12 +39,13 @@ export default function Home() {
     const refreshed = navigation.addListener("focus", () => {
       db.transaction((tx) => {
         tx.executeSql(
-          "SELECT * FROM mascotas",
+          "SELECT * FROM pets",
           null,
           (txObj, resultSet) => setPets(resultSet.rows._array),
           (txObj, error) => console.log(error)
         );
       });
+      setSelectedPet(null);
     });
     return refreshed;
   }, [navigation]);
@@ -60,7 +59,7 @@ export default function Home() {
 
     db.transaction((tx) => {
       tx.executeSql(
-        "DELETE FROM mascotas WHERE id = ?",
+        "DELETE FROM pets WHERE id = ?",
         [petToDelete.id],
         (txObj, resultSet) => {
           console.log("Pet deleted successfully");
@@ -122,24 +121,24 @@ export default function Home() {
                     style={styles.itemContainer}
                   >
                     <View style={styles.imageContainer}>
-                      {!item.imagen ? (
+                      {!item.image ? (
                         <Image
                           style={styles.imagePet}
-                          source={petImageMap[item.mascota]}
+                          source={petImageMap[item.typePet]}
                         />
                       ) : (
                         <>
                           <Image
                             style={styles.imagePet}
-                            source={{ uri: decodeBase64Image(item.imagen) }}
+                            source={{ uri: decodeBase64Image(item.image) }}
                           />
                         </>
                       )}
                     </View>
                     <View style={styles.textContainer}>
-                      <Text style={styles.nameText}>Nombre: {item.nombre}</Text>
+                      <Text style={styles.nameText}>Nombre: {item.name}</Text>
                       <Text style={styles.petText}>
-                        Mascota: {item.mascota}
+                        Mascota: {item.typePet}
                       </Text>
                     </View>
                     <View style={styles.deleteButtonContainer}>

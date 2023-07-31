@@ -3,19 +3,20 @@ async function createTables(db) {
   db.transaction((tx) => {
     tx.executeSql(
       `
-      CREATE TABLE IF NOT EXISTS mascotas (
+      CREATE TABLE IF NOT EXISTS pets (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         userID INTEGER,
-        mascota VARCHAR(512),
-        nombre VARCHAR(512),
-        fecha VARCHAR(100),
-        prioridad INTEGER,
-        esterilizado INTEGER,
-        perroDeporte INTEGER,
-        esGalgo INTEGER,
-        imagen VARCHAR(512),
+        typePet VARCHAR(512),
+        name VARCHAR(512),
+        date VARCHAR(100),
+        activity INTEGER,
+        sterilized INTEGER,
+        sportingDog INTEGER,
+        isGreyhound INTEGER,
+        image VARCHAR(512),
         weight FLOAT,
-        weightUnit VARCHAR(10)
+        weightUnit VARCHAR(10),
+        percentage FLOAT
       )
     `
     );

@@ -21,19 +21,18 @@ import addPet from "../../../utils/dbPetsInfo";
 import { useTranslation } from "react-i18next";
 
 function Calculator() {
-  const { user, setUser, db} = useContext(AuthenticatedUserContext);
+  const { user, db } = useContext(AuthenticatedUserContext);
   const { t } = useTranslation();
 
   const navigation = useNavigation();
   const [searchText, setSearchText] = useState("");
   const [datePicker, setDatePicker] = useState(false);
   const [date, setDate] = useState(new Date());
-  const [selectedMascota, setSelectedMascota] = useState("perro");
   const [selectedPet, setSelectedPet] = useState("perro");
-  const [priority, setPriority] = useState("baja");
-  const [isEsterilizado, setIsEsterilizado] = useState(false);
-  const [isPerroDeporte, setIsPerroDeporte] = useState(false);
-  const [isGalgo, setIsGalgo] = useState(false);
+  const [activity, setActivity] = useState("baja");
+  const [isSterilized, setIsSterilized] = useState(false);
+  const [isSportingDog, setIsSportingDog] = useState(false);
+  const [isGreyhound, setIsGreyhound] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
   const [weight, setWeight] = useState("");
   const [weightUnit, setWeightUnit] = useState("kilos");
@@ -43,17 +42,16 @@ function Calculator() {
     setSearchText(text);
   };
 
-  const handlePriorityChange = (value) => {
-    setPriority(value);
+  const handleActivityChange = (value) => {
+    setActivity(value);
   };
 
   const handlePetSelection = (pet) => {
     setSelectedPet(pet === selectedPet ? null : pet);
-    setSelectedMascota(pet);
   };
 
   let petImageSource = null;
-  switch (selectedMascota) {
+  switch (selectedPet) {
     case "perro":
       petImageSource = require("../../../assets/pets/dogDefault.png");
       break;
@@ -101,11 +99,11 @@ function Calculator() {
   const handleGuardar = async () => {
     try {
       if (
-        !selectedMascota ||
+        !selectedPet ||
         !searchText ||
         !date ||
         weight === null ||
-        priority === null
+        activity === null
       ) {
         console.log(
           "Por favor, complete todos los campos obligatorios antes de guardar la mascota."
@@ -130,19 +128,19 @@ function Calculator() {
 
       await addPet(
         db,
-        selectedMascota,
+        selectedPet,
         searchText,
-        formattedDate, // Pasamos la fecha formateada
-        priority,
-        isEsterilizado,
-        isPerroDeporte,
-        isGalgo,
+        formattedDate,
+        activity,
+        isSterilized,
+        isSportingDog,
+        isGreyhound,
         selectedImage,
         weight,
         weightUnit
       );
 
-    navigation.navigate(HomeURL);
+      navigation.navigate(HomeURL);
 
     } catch (error) {
       console.log("Error al guardar los datos de mascota:", error);
@@ -221,7 +219,6 @@ function Calculator() {
         </View>
         <View style={styles.containerPetInfo}>
           <TouchableOpacity onPress={handleImageSelect}>
-            {/* Aquí agregamos el TouchableOpacity encima de la imagen */}
             {selectedImage ? (
               <Image source={{ uri: selectedImage }} style={styles.petImage} />
             ) : (
@@ -240,15 +237,12 @@ function Calculator() {
             </View>
           </TouchableOpacity>
           <View>
-            <Text style={styles.petNameTitle}>
-              {" "}
-              Nombre de tu {selectedMascota}
-            </Text>
+            <Text style={styles.petNameTitle}> Nombre de tu {selectedPet}</Text>
             <TextInput
               value={searchText}
               style={styles.namePet}
               onChangeText={handleSearchTextChange}
-              placeholder={`Nombre de tu ${selectedMascota}`}
+              placeholder={`Nombre de tu ${selectedPet}`}
             />
           </View>
         </View>
@@ -297,26 +291,26 @@ function Calculator() {
 
         <Text>Seleccionar de actividad:</Text>
         <Picker
-          selectedValue={priority}
+          selectedValue={activity}
           style={styles.picker}
-          onValueChange={handlePriorityChange}
+          onValueChange={handleActivityChange}
         >
           <Picker.Item label="Baja" value="baja" />
           <Picker.Item label="Media" value="media" />
           <Picker.Item label="Alta" value="alta" />
         </Picker>
 
-        {selectedMascota === "perro" && (
+        {selectedPet === "perro" && (
           <>
             <View style={styles.checkBoxContainer}>
               <TouchableOpacity
                 style={[
                   styles.checkBox,
-                  isEsterilizado && styles.checkBoxSelected,
+                  isSterilized && styles.checkBoxSelected,
                 ]}
-                onPress={() => setIsEsterilizado(!isEsterilizado)}
+                onPress={() => setIsSterilized(!isSterilized)}
               >
-                {isEsterilizado && <Text style={styles.checkBoxText}>✓</Text>}
+                {isSterilized && <Text style={styles.checkBoxText}>✓</Text>}
               </TouchableOpacity>
               <Text>Esterilizado</Text>
             </View>
@@ -325,38 +319,38 @@ function Calculator() {
               <TouchableOpacity
                 style={[
                   styles.checkBox,
-                  isPerroDeporte && styles.checkBoxSelected,
+                  isSportingDog && styles.checkBoxSelected,
                 ]}
-                onPress={() => setIsPerroDeporte(!isPerroDeporte)}
+                onPress={() => setIsSportingDog(!isSportingDog)}
               >
-                {isPerroDeporte && <Text style={styles.checkBoxText}>✓</Text>}
+                {isSportingDog && <Text style={styles.checkBoxText}>✓</Text>}
               </TouchableOpacity>
               <Text>Perro de deporte</Text>
             </View>
 
             <View style={styles.checkBoxContainer}>
               <TouchableOpacity
-                style={[styles.checkBox, isGalgo && styles.checkBoxSelected]}
-                onPress={() => setIsGalgo(!isGalgo)}
+                style={[styles.checkBox, isGreyhound && styles.checkBoxSelected]}
+                onPress={() => setIsGreyhound(!isGreyhound)}
               >
-                {isGalgo && <Text style={styles.checkBoxText}>✓</Text>}
+                {isGreyhound && <Text style={styles.checkBoxText}>✓</Text>}
               </TouchableOpacity>
               <Text>Es galgo</Text>
             </View>
           </>
         )}
 
-        {selectedMascota === "gato" && (
+        {selectedPet === "gato" && (
           <>
             <View style={styles.checkBoxContainer}>
               <TouchableOpacity
                 style={[
                   styles.checkBox,
-                  isEsterilizado && styles.checkBoxSelected,
+                  isSterilized && styles.checkBoxSelected,
                 ]}
-                onPress={() => setIsEsterilizado(!isEsterilizado)}
+                onPress={() => setIsSterilized(!isSterilized)}
               >
-                {isEsterilizado && <Text style={styles.checkBoxText}>✓</Text>}
+                {isSterilized && <Text style={styles.checkBoxText}>✓</Text>}
               </TouchableOpacity>
               <Text>Esterilizado</Text>
             </View>
@@ -365,28 +359,28 @@ function Calculator() {
               <TouchableOpacity
                 style={[
                   styles.checkBox,
-                  isPerroDeporte && styles.checkBoxSelected,
+                  isSportingDog && styles.checkBoxSelected,
                 ]}
-                onPress={() => setIsPerroDeporte(!isPerroDeporte)}
+                onPress={() => setIsSportingDog(!isSportingDog)}
               >
-                {isPerroDeporte && <Text style={styles.checkBoxText}>✓</Text>}
+                {isSportingDog && <Text style={styles.checkBoxText}>✓</Text>}
               </TouchableOpacity>
               <Text>Gato callejero</Text>
             </View>
           </>
         )}
 
-        {selectedMascota === "huron" && (
+        {selectedPet === "huron" && (
           <>
             <View style={styles.checkBoxContainer}>
               <TouchableOpacity
                 style={[
                   styles.checkBox,
-                  isEsterilizado && styles.checkBoxSelected,
+                  isSterilized && styles.checkBoxSelected,
                 ]}
-                onPress={() => setIsEsterilizado(!isEsterilizado)}
+                onPress={() => setIsSterilized(!isSterilized)}
               >
-                {isEsterilizado && <Text style={styles.checkBoxText}>✓</Text>}
+                {isSterilized && <Text style={styles.checkBoxText}>✓</Text>}
               </TouchableOpacity>
               <Text>Esterilizado</Text>
             </View>
