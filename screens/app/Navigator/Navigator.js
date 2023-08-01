@@ -90,11 +90,10 @@ const DrawerNavigator = () => {
         name={"PetDetails"}
         component={PetDetails}
         options={{
-          drawerItemStyle: {
-            onPress: () => {
-              navigation.navigate("PetDetails");
-            },
-          },
+          drawerItemStyle: { height: 0 },
+          drawerLockMode: "locked-closed",
+          gestureEnabled: false,
+          drawerLabel: () => null, // Establecemos el drawerLabel como una función que devuelve null para ocultar el enlace en el Drawer
         }}
       />
     </Drawer.Navigator>
