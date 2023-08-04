@@ -62,8 +62,6 @@ export default function Home() {
         "DELETE FROM pets WHERE id = ?",
         [petToDelete.id],
         (txObj, resultSet) => {
-          console.log("Pet deleted successfully");
-          // Actualizar la lista de mascotas después de eliminar
           setPets((prevPets) => prevPets.filter((item, i) => i !== index));
         },
         (txObj, error) => console.log("Error al eliminar la mascota", error)

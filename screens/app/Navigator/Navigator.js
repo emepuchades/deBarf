@@ -13,6 +13,7 @@ import PetDetails from "../../../components/PetDetails";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native";
 import Calendar from "../Calendar/Calendar";
+import EditPet from "../../../components/EditPet";
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
@@ -93,7 +94,17 @@ const DrawerNavigator = () => {
           drawerItemStyle: { height: 0 },
           drawerLockMode: "locked-closed",
           gestureEnabled: false,
-          drawerLabel: () => null, // Establecemos el drawerLabel como una función que devuelve null para ocultar el enlace en el Drawer
+          drawerLabel: () => null,
+        }}
+      />
+      <Drawer.Screen
+        name={"EditPet"}
+        component={EditPet}
+        options={{
+          drawerItemStyle: { height: 0 },
+          drawerLockMode: "locked-closed",
+          gestureEnabled: false,
+          drawerLabel: () => null,
         }}
       />
     </Drawer.Navigator>

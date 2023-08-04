@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 
 const PetDetails = ({ route }) => {
   const { selectedPet } = route.params;
@@ -8,6 +9,7 @@ const PetDetails = ({ route }) => {
   const [meatPercentage, setMeatPercentage] = useState(0.02);
   const [age, setAge] = useState();
   const [months, setMonths] = useState();
+  const { t } = useTranslation();
 
   const navigation = useNavigation();
 
@@ -31,7 +33,6 @@ const PetDetails = ({ route }) => {
           const vegetablesAmount = grMenuDiary * 0.15; // 15% of grMenuDiary as vegetables
           const higadoAmount = grMenuDiary * 0.05; // 5% of grMenuDiary as liver
           const otrasViscerasAmount = grMenuDiary * 0.05; // 5% of grMenuDiary as other organs
-          console.log("meatPercentage", meatPercentage);
 
           if (selectedPet.weightUnit === "libras") {
             return {
@@ -45,7 +46,6 @@ const PetDetails = ({ route }) => {
             };
           }
 
-          // Si la unidad original es kilos, simplemente muestra los resultados en kilos
           return {
             grTotal: grMenuDiary.toFixed(0) + " g",
             meat: meatAmount.toFixed(0) + " g",
@@ -85,8 +85,6 @@ const PetDetails = ({ route }) => {
     }
 
     async function getAge() {
-      console.log("get age selected pet", selectedPet);
-
       const providedDate = selectedPet.date;
 
       const dateObject = new Date(providedDate);
@@ -117,11 +115,18 @@ const PetDetails = ({ route }) => {
   const petImageMap = {
     perro: require("../assets/pets/dogDefault.png"),
     gato: require("../assets/pets/catDefault.png"),
-    huron: require("..//assets/pets/ferretDefault.png"),
+    huron: require("../assets/pets/ferretDefault.png"),
   };
 
   const decodeBase64Image = (base64Data) => {
     return `data:image/jpeg;base64,${base64Data}`;
+  };
+
+  const handleEditPet = (petId) => {
+    navigation.navigate("EditPet", {
+      isEditing: true,
+      editPetId: selectedPet.id,
+    });
   };
 
   return (
@@ -148,12 +153,11 @@ const PetDetails = ({ route }) => {
             Anos: {age} | Meses: {months}
           </Text>
 
-          <TouchableOpacity style={styles.editButton}>
+          <TouchableOpacity style={styles.editButton} onPress={() => handleEditPet(selectedPet.id)}>
             <Text style={styles.editButtonText}>Editar Mascota</Text>
           </TouchableOpacity>
         </View>
       </View>
-      {console.log("barfDiet", barfDiet)}
       <Text style={styles.barfDietTitle}>BARF Diet:</Text>
       <Text style={styles.barfDietText}>
         Total Daily Diet: {barfDiet.grTotal}

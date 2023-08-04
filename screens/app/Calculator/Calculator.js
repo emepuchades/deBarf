@@ -76,7 +76,7 @@ function Calculator() {
       });
 
       if (!result.canceled) {
-        setSelectedImage(result.uri);
+        setSelectedImage(result.assets[0].uri);
       } else {
         setSelectedImage(null);
       }
@@ -122,7 +122,6 @@ function Calculator() {
         );
         return;
       }
-      console.log("handleGuardar");
 
       const formattedDate = date.toISOString();
 

@@ -70,7 +70,6 @@ const styles = StyleSheet.create({
                 elevation: 4,
             },
         }),
-        //boxShadow: 'inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17)',
         position: 'relative',
     },
     textR: {

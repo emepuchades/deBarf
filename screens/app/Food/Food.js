@@ -125,7 +125,7 @@ const Food = () => {
           placeholder={t(`food.searchCategory`)}
           value={searchText}
           onChangeText={handleSearchTextChange}
-          style={styles.searchContainerInput} // Actualizar el estilo aquí
+          style={styles.searchContainerInput}
         />
         <FontAwesome
           name="search"
