@@ -19,6 +19,7 @@ import { AuthenticatedUserContext } from "../../../utils/context/context";
 import { useNavigation } from "@react-navigation/native";
 import addPet from "../../../utils/dbPetsInfo";
 import { useTranslation } from "react-i18next";
+import ErrorMessage from "../../../components/ErrorMessage";
 
 function Calculator() {
   const { user, db } = useContext(AuthenticatedUserContext);
@@ -34,9 +35,10 @@ function Calculator() {
   const [isSportingDog, setIsSportingDog] = useState(false);
   const [isGreyhound, setIsGreyhound] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
-  const [weight, setWeight] = useState("");
+  const [weight, setWeight] = useState(0);
   const [weightUnit, setWeightUnit] = useState("kilos");
   const HomeURL = t("navBottom.pets");
+  const [errorMessages, setErrorMessages] = useState({});
 
   const handleSearchTextChange = (text) => {
     setSearchText(text);
@@ -98,6 +100,8 @@ function Calculator() {
 
   const handleGuardar = async () => {
     try {
+      setErrorMessages({});
+
       if (
         !selectedPet ||
         !searchText ||
@@ -105,25 +109,41 @@ function Calculator() {
         weight === null ||
         activity === null
       ) {
-        console.log(
-          "Por favor, complete todos los campos obligatorios antes de guardar la mascota."
-        );
+        setErrorMessages((prevErrors) => ({
+          ...prevErrors,
+          general:
+            "Por favor, complete todos los campos obligatorios antes de guardar la mascota.",
+        }));
         return;
       }
 
-      if (isNaN(weight)) {
-        console.log("El peso debe ser un número válido.");
+      if (isNaN(weight) || weight === 0) {
+        setErrorMessages((prevErrors) => ({
+          ...prevErrors,
+          weight: "El peso debe ser un número válido.",
+        }));
         return;
       }
 
       if (!user) {
-        console.log(
-          "No hay un usuario autenticado. No se puede guardar la mascota."
-        );
+        setErrorMessages((prevErrors) => ({
+          ...prevErrors,
+          user: "No hay un usuario autenticado. No se puede guardar la mascota.",
+        }));
         return;
       }
-
       const formattedDate = date.toISOString();
+
+      const currentDate = new Date();
+      currentDate.setHours(0, 0, 0, 0);
+
+      if (date.toDateString() === currentDate.toDateString()) {
+        setErrorMessages((prevErrors) => ({
+          ...prevErrors,
+          date: "La fecha no puede ser el día de hoy.",
+        }));
+        return;
+      }
 
       await addPet(
         db,
@@ -139,8 +159,18 @@ function Calculator() {
         weightUnit
       );
 
-      navigation.navigate(HomeURL);
+      setSearchText("");
+      setDate(new Date());
+      setSelectedPet("perro");
+      setActivity("baja");
+      setIsSterilized(false);
+      setIsSportingDog(false);
+      setIsGreyhound(false);
+      setSelectedImage("");
+      setWeight(0);
+      setWeightUnit("kilos");
 
+      navigation.navigate(HomeURL);
     } catch (error) {
       console.log("Error al guardar los datos de mascota:", error);
     }
@@ -329,7 +359,10 @@ function Calculator() {
 
             <View style={styles.checkBoxContainer}>
               <TouchableOpacity
-                style={[styles.checkBox, isGreyhound && styles.checkBoxSelected]}
+                style={[
+                  styles.checkBox,
+                  isGreyhound && styles.checkBoxSelected,
+                ]}
                 onPress={() => setIsGreyhound(!isGreyhound)}
               >
                 {isGreyhound && <Text style={styles.checkBoxText}>✓</Text>}
@@ -385,6 +418,15 @@ function Calculator() {
             </View>
           </>
         )}
+
+        {errorMessages.general && (
+          <ErrorMessage message={errorMessages.general} />
+        )}
+        {errorMessages.date && <ErrorMessage message={errorMessages.date} />}
+        {errorMessages.weight && (
+          <ErrorMessage message={errorMessages.weight} />
+        )}
+        {errorMessages.user && <ErrorMessage message={errorMessages.user} />}
 
         <PaperButton
           onPress={() => handleGuardar()}

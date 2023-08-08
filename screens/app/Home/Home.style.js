@@ -74,4 +74,9 @@ export const styleHome = {
   petText: {
     fontSize: 16,
   },
+  deleteButtonContainer: {
+    position: "absolute",
+    top: 15,
+    right: 15,
+  },
 };

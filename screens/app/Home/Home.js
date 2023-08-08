@@ -13,6 +13,7 @@ import { FAB } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { AuthenticatedUserContext } from "../../../utils/context/context";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -140,10 +141,13 @@ export default function Home() {
                       </Text>
                     </View>
                     <View style={styles.deleteButtonContainer}>
-                      <Button
-                        title="Eliminar"
-                        onPress={() => handleDeletePet(index)}
-                      />
+                      <TouchableOpacity onPress={() => handleDeletePet(index)}>
+                        <Ionicons
+                          name="trash-outline"
+                          size={20}
+                          color="black"
+                        />
+                      </TouchableOpacity>
                     </View>
                   </TouchableOpacity>
                 ))

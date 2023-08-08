@@ -93,10 +93,20 @@ export const updatePet = async (
       await saveImageToDevice(selectedImage);
     }
 
+    const percentage = await getPercentage(
+      selectedPet,
+      activity,
+      formattedDate,
+      isSterilized,
+      weight,
+      isGreyhound,
+      isSportingDog
+    );
+
     try {
       await db.transaction(async (tx) => {
         const updateQuery =
-          "UPDATE pets SET typePet=?, name=?, activity=?, image=?, date=?, sterilized=?, sportingDog=?, isGreyhound=?, weight=?, weightUnit=? WHERE id=?;";
+          "UPDATE pets SET typePet=?, name=?, activity=?, image=?, date=?, sterilized=?, sportingDog=?, isGreyhound=?, weight=?, weightUnit=?, percentage=? WHERE id=?;";
 
         await tx.executeSql(
           updateQuery,
@@ -111,6 +121,7 @@ export const updatePet = async (
             isGreyhound ? 1 : 0,
             parseFloat(weight),
             weightUnit,
+            percentage,
             parseFloat(petId),
           ],
           (txObj, resultSet) => {
@@ -124,7 +135,6 @@ export const updatePet = async (
     } catch (error) {
       console.error("Error occurred:", error);
     }
-
   } catch (error) {
     console.error("Error updating pet:", error);
     throw new Error(

@@ -47,17 +47,69 @@ async function getPercentage(
         percentage = 0.02;
       }
       if (weight <= 3 || isGreyhound || isSportingDog) {
-        percentage = 0.035; 
+        percentage = 0.035;
       }
 
       return percentage;
 
     case "gato":
-      return null;
-      break;
+      let catPercentage;
+      const catAge = await getAge(date);
+      const catMonths = catAge.remainingMonths;
+
+      if (catAge.years >= 11) {
+        catPercentage = 0.02;
+      } else if (catAge.years === 0) {
+        if (catMonths <= 2) {
+          catPercentage = 0.1;
+        } else if (catMonths <= 4) {
+          catPercentage = 0.08;
+        } else if (catMonths <= 6) {
+          catPercentage = 0.06;
+        }
+      } else {
+        switch (activity) {
+          case "baja":
+            catPercentage = 0.02;
+            break;
+          case "media":
+            catPercentage = 0.04;
+            break;
+          case "alta":
+            catPercentage = 0.05;
+            break;
+          default:
+            catPercentage = 0.02;
+        }
+      }
+
+      if (isSterilized) {
+        catPercentage = 0.02;
+      }
+      if (weight <= 3 || isSportingDog) {
+        catPercentage = 0.05
+      }
+
+      return catPercentage;
     case "huron":
-      return null;
-      break;
+      let percentageFerret;
+      const ageFerret = await getAge(date);
+      const ageYears = ageFerret.years;
+
+      if (ageYears < 1) {
+        percentageFerret = 0.1;
+      } else {
+        const currentMonth = new Date().getMonth();
+        const isSummer = currentMonth >= 3 && currentMonth <= 8;
+
+        if (isSummer) {
+          percentageFerret = 0.03; 
+        } else {
+          percentageFerret = 0.08;
+        }
+      }
+
+      return percentageFerret;
     default:
       return null;
   }
