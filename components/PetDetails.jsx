@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
+import { calculateBARFDiet, getAge } from "../utils/getPercentage";
 
 const PetDetails = ({ route }) => {
   const { selectedPet } = route.params;
@@ -22,131 +23,12 @@ const PetDetails = ({ route }) => {
   }
 
   useEffect(() => {
-    async function calculateBARFDiet() {
-      const weightInKg = selectedPet.weight;
-      console.log("selectedPet weightInKg", selectedPet);
-
-      switch (selectedPet.typePet) {
-        case "perro":
-          let meatPercentage = selectedPet.percentage;
-          const grMenuDiary = weightInKg * meatPercentage * 1000; // Convert weight to grams
-          const meatAmount = grMenuDiary * 0.3; // 30% of grMenuDiary as meat
-          const bonesAmount = grMenuDiary * 0.45; // 45% of grMenuDiary as bones
-          const vegetablesAmount = grMenuDiary * 0.15; // 15% of grMenuDiary as vegetables
-          const higadoAmount = grMenuDiary * 0.05; // 5% of grMenuDiary as liver
-          const otrasViscerasAmount = grMenuDiary * 0.05; // 5% of grMenuDiary as other organs
-
-          if (selectedPet.weightUnit === "libras") {
-            return {
-              grTotal: (grMenuDiary * 0.00220462).toFixed(2) + " lbs",
-              meat: (meatAmount * 0.00220462).toFixed(2) + " lbs",
-              bones: (bonesAmount * 0.00220462).toFixed(2) + " lbs",
-              vegetables: (vegetablesAmount * 0.00220462).toFixed(2) + " lbs",
-              higado: (higadoAmount * 0.00220462).toFixed(2) + " lbs",
-              otrasVisceras:
-                (otrasViscerasAmount * 0.00220462).toFixed(2) + " lbs",
-            };
-          }
-
-          return {
-            grTotal: grMenuDiary.toFixed(0) + " g",
-            meat: meatAmount.toFixed(0) + " g",
-            bones: bonesAmount.toFixed(0) + " g",
-            vegetables: vegetablesAmount.toFixed(0) + " g",
-            higado: higadoAmount.toFixed(0) + " g",
-            otrasVisceras: otrasViscerasAmount.toFixed(0) + " g",
-          };
-
-        case "gato":
-          let meatPercentagCat = selectedPet.percentage;
-
-          const grMenuDiaryCat = weightInKg * meatPercentagCat * 1000; // Convert weight to grams
-          const meatAmountCat = grMenuDiaryCat * 0.3; // 30% of grMenuDiary as meat
-          const bonesAmountCat = grMenuDiaryCat * 0.45; // 45% of grMenuDiary as bones
-          const vegetablesAmountCat = grMenuDiaryCat * 0.15; // 15% of grMenuDiary as vegetables
-          const higadoAmountCat = grMenuDiaryCat * 0.05; // 5% of grMenuDiary as liver
-          const otrasViscerasAmountCat = grMenuDiaryCat * 0.05; // 5% of grMenuDiary as other organs
-
-          if (selectedPet.weightUnit === "libras") {
-            return {
-              grTotal: (grMenuDiaryCat * 0.00220462).toFixed(2) + " lbs",
-              meat: (meatAmountCat * 0.00220462).toFixed(2) + " lbs",
-              bones: (bonesAmountCat * 0.00220462).toFixed(2) + " lbs",
-              vegetables:
-                (vegetablesAmountCat * 0.00220462).toFixed(2) + " lbs",
-              higado: (higadoAmountCat * 0.00220462).toFixed(2) + " lbs",
-              otrasVisceras:
-                (otrasViscerasAmountCat * 0.00220462).toFixed(2) + " lbs",
-            };
-          }
-
-          return {
-            grTotal: grMenuDiaryCat.toFixed(0) + " g",
-            meat: meatAmountCat.toFixed(0) + " g",
-            bones: bonesAmountCat.toFixed(0) + " g",
-            vegetables: vegetablesAmountCat.toFixed(0) + " g",
-            higado: higadoAmountCat.toFixed(0) + " g",
-            otrasVisceras: otrasViscerasAmountCat.toFixed(0) + " g",
-          };
-          break;
-        case "huron":
-              let meatPercentagFerret = selectedPet.percentage;
-
-              const grMenuDiaryFerret = weightInKg * meatPercentagFerret * 100; // Porcentaje sugerido para hurones (80%)
-              const meatAmountFerret = grMenuDiaryFerret * 0.8; // 80% de grMenuDiaryFerret como carne
-              const bonesAmountFerret = grMenuDiaryFerret * 0.1; // 10% de grMenuDiaryFerret como huesos
-              const organsAmountFerret = grMenuDiaryFerret * 0.1; // 10% de grMenuDiaryFerret como órganos
-
-              if (selectedPet.weightUnit === "libras") {
-                return {
-                  grTotal: (grMenuDiaryFerret * 0.00220462).toFixed(2) + " lbs",
-                  meat: (meatAmountFerret * 0.00220462).toFixed(2) + " lbs",
-                  bones: (bonesAmountFerret * 0.00220462).toFixed(2) + " lbs",
-                  viscerasHigado:
-                    (organsAmountFerret * 0.00220462).toFixed(2) + " lbs",
-                };
-              }
-
-              return {
-                grTotal: grMenuDiaryFerret.toFixed(0) + " g",
-                meat: meatAmountFerret.toFixed(0) + " g",
-                bones: bonesAmountFerret.toFixed(0) + " g",
-                viscerasHigado: organsAmountFerret.toFixed(0) + " g",
-              };
-          break;
-        default:
-          return {
-            meat: "N/A",
-            bones: "N/A",
-            vegetables: "N/A",
-            higado: "N/A",
-            otrasVisceras: "N/A",
-          };
-      }
-    }
-
-    async function getAge() {
-      const providedDate = selectedPet.date;
-
-      const dateObject = new Date(providedDate);
-      const currentDate = new Date();
-
-      const timeDifferenceInMilliseconds = currentDate - dateObject;
-      const millisecondsInAYear = 365.25 * 24 * 60 * 60 * 1000;
-
-      const timeDifferenceInYears =
-        timeDifferenceInMilliseconds / millisecondsInAYear;
-      const years = Math.floor(timeDifferenceInYears);
-      const remainingMonths = Math.floor((timeDifferenceInYears - years) * 12);
-
-      setAge(years);
-      setMonths(remainingMonths);
-    }
-
     async function fetchData() {
       setMeatPercentage(selectedPet.percentage);
-      await getAge();
-      const infoBarf = await calculateBARFDiet();
+      const agePet = await getAge(selectedPet.date);
+      setAge(agePet.years)
+      setMonths(agePet.remainingMonths);
+      const infoBarf = await calculateBARFDiet(selectedPet);
       setBarfDiet(infoBarf);
     }
 

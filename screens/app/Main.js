@@ -60,19 +60,6 @@ const MyTabs = () => {
           ),
         }}
       />
-      <Tab.Screen
-        name={t("navBottom.profile")}
-        component={ProfileScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons
-              name="account-circle-outline"
-              color={color}
-              size={size}
-            />
-          ),
-        }}
-      />
     </Tab.Navigator>
   );
 };

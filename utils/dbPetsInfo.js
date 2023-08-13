@@ -1,6 +1,29 @@
 import * as FileSystem from "expo-file-system";
 import getPercentage from "./getPercentage";
 
+export const getAllPets = async (
+  db,
+) => {
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM pets;",
+        [],
+        (txObj, resultSet) => {
+          const mascotas = [];
+          for (let i = 0; i < resultSet.rows.length; i++) {
+            mascotas.push(resultSet.rows.item(i));
+          }
+          resolve(mascotas);
+        },
+        (txObj, error) => {
+          reject(error);
+        }
+      );
+    });
+  });
+};
+
 async function addPet(
   db,
   selectedPet,

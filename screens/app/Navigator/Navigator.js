@@ -14,6 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native";
 import Calendar from "../Calendar/Calendar";
 import EditPet from "../../../components/EditPet";
+import AddFoodScreen from "../../../components/AddFoddScreen";
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
@@ -100,6 +101,16 @@ const DrawerNavigator = () => {
       <Drawer.Screen
         name={"EditPet"}
         component={EditPet}
+        options={{
+          drawerItemStyle: { height: 0 },
+          drawerLockMode: "locked-closed",
+          gestureEnabled: false,
+          drawerLabel: () => null,
+        }}
+      />
+      <Drawer.Screen
+        name={"AddFood"}
+        component={AddFoodScreen}
         options={{
           drawerItemStyle: { height: 0 },
           drawerLockMode: "locked-closed",
