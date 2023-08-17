@@ -135,7 +135,7 @@ export async function calculateBARFDiet(selectedPet) {
           bones: (bonesAmount * 0.00220462).toFixed(2) + " lbs",
           vegetables: (vegetablesAmount * 0.00220462).toFixed(2) + " lbs",
           higado: (higadoAmount * 0.00220462).toFixed(2) + " lbs",
-          otrasVisceras: (otrasViscerasAmount * 0.00220462).toFixed(2) + " lbs",
+          visceras: (otrasViscerasAmount * 0.00220462).toFixed(2) + " lbs",
         };
       }
 
@@ -145,7 +145,7 @@ export async function calculateBARFDiet(selectedPet) {
         bones: bonesAmount.toFixed(0) + " g",
         vegetables: vegetablesAmount.toFixed(0) + " g",
         higado: higadoAmount.toFixed(0) + " g",
-        otrasVisceras: otrasViscerasAmount.toFixed(0) + " g",
+        visceras: otrasViscerasAmount.toFixed(0) + " g",
       };
 
     case "gato":
@@ -165,8 +165,7 @@ export async function calculateBARFDiet(selectedPet) {
           bones: (bonesAmountCat * 0.00220462).toFixed(2) + " lbs",
           vegetables: (vegetablesAmountCat * 0.00220462).toFixed(2) + " lbs",
           higado: (higadoAmountCat * 0.00220462).toFixed(2) + " lbs",
-          otrasVisceras:
-            (otrasViscerasAmountCat * 0.00220462).toFixed(2) + " lbs",
+          visceras: (otrasViscerasAmountCat * 0.00220462).toFixed(2) + " lbs",
         };
       }
 
@@ -176,7 +175,7 @@ export async function calculateBARFDiet(selectedPet) {
         bones: bonesAmountCat.toFixed(0) + " g",
         vegetables: vegetablesAmountCat.toFixed(0) + " g",
         higado: higadoAmountCat.toFixed(0) + " g",
-        otrasVisceras: otrasViscerasAmountCat.toFixed(0) + " g",
+        visceras: otrasViscerasAmountCat.toFixed(0) + " g",
       };
       break;
     case "huron":
