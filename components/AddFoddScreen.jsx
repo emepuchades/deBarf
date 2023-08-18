@@ -47,6 +47,48 @@ const AddFoodScreen = ({ navigation, route }) => {
   ];
 
   useEffect(() => {
+    const graphicInfo = async (selectedPet) => {
+      console.log("selectedPet", selectedPet);
+      switch (selectedPet) {
+        case "perro":
+          return [
+            {
+              color: "#FF5733",
+              text: "30%",
+              value: 30,
+            },
+            { color: "#27AE60", text: "45%", value: 45 },
+            { color: "#3498DB", text: "5%", value: 5 },
+            { color: "#FFC300", text: "5%", value: 5 },
+            { color: "#9B59B6", text: "15%", value: 5 },
+          ];
+        case "gato":
+          return [
+            {
+              color: "#FF5733",
+              text: "30%",
+              value: 30,
+            },
+            { color: "#27AE60", text: "45%", value: 45 },
+            { color: "#3498DB", text: "5%", value: 15 },
+            { color: "#FFC300", text: "5%", value: 5 },
+            { color: "#9B59B6", text: "15%", value: 5 },
+          ];
+        case "huron":
+          return [
+            {
+              color: "#FF5733",
+              text: "80%",
+              value: 80,
+            },
+            { color: "#27AE60", text: "10%", value: 10 },
+            { color: "#3498DB", text: "10%", value: 10 },
+          ];
+        default:
+          return "";
+      }
+    };
+
     const updateData = async () => {
       const newStatsPet = await calculateBARFDiet(route.params.selectedPet);
       setSelectedPet(route.params.selectedPet);
@@ -58,8 +100,13 @@ const AddFoodScreen = ({ navigation, route }) => {
         svg: { fill: COLORS[index % COLORS.length] },
         label: key,
       }));
-      setPieData(updatedPieData);
+    
       setSelectedFoods([]);
+      setPieDataGraphic([]);
+      setPieData(updatedPieData);
+    
+      const pieDataInfo = await graphicInfo(route.params.selectedPet.typePet);
+      setPieDataGraphic(pieDataInfo);
     };
 
     updateData();
@@ -100,12 +147,42 @@ const AddFoodScreen = ({ navigation, route }) => {
       const updatedFoods = [...prevSelectedFoods];
       updatedFoods[index].editGrams = text;
 
-      const chartLabel = mapFoodTypeToLabel(updatedFoods[index].category);
+      let category = updatedFoods[index].category;
+
+      if (category === "pescado") {
+        category = "carne";
+      }
+
+      console.log("category", category);
+
+      let chartLabel = mapFoodTypeToLabel(category);
+
+      console.log("chartLabel", chartLabel);
 
       if (chartLabel) {
-        const categoryFoods = updatedFoods.filter(
-          (food) => food.category === updatedFoods[index].category
+        console.log("updatedFoods", updatedFoods);
+
+        const updatedFoodsWithModifiedCategory = updatedFoods.map((food) => {
+          if (food.category === "pescado") {
+            return {
+              ...food,
+              category: "carne",
+            };
+          }
+          return food;
+        });
+
+        console.log(
+          "updatedFoodsWithModifiedCategory",
+          updatedFoodsWithModifiedCategory
         );
+
+        const categoryFoods = updatedFoodsWithModifiedCategory.filter(
+          (food) => food.category === category
+        );
+
+        console.log("categoryFoods2", categoryFoods);
+
         const totalCategoryGrams = categoryFoods.reduce(
           (total, food) => total + parseFloat(food.editGrams),
           0
@@ -149,7 +226,7 @@ const AddFoodScreen = ({ navigation, route }) => {
       case "higado":
         return "higado";
       case "masvisceras":
-        return "viscerasHigado";
+        return "visceras";
       case "frutasverduras":
         return "vegetables";
       case "grTotal":
@@ -158,8 +235,6 @@ const AddFoodScreen = ({ navigation, route }) => {
         return "";
     }
   };
-
-
 
   const handleFoodSelection = (selectedFood, category) => {
     const selectedFoodNew = {
@@ -205,28 +280,22 @@ const AddFoodScreen = ({ navigation, route }) => {
           <View style={styles.contentContainer}>
             <View style={styles.chartContainer}>
               <View style={styles.grTotalContainer}>
+                {console.log("grapich", pieDataGraphic)}
                 <PieChart
                   donut
+                  showText
+                  textColor="black"
                   radius={40}
-                  innerRadius={30}
-                  data={[
-                    {
-                      value: statsPet.grTotal,
-                      color: COLORS[0],
-                    },
-                  ]}
-                  centerLabelComponent={() => {
-                    return (
-                      <Text style={{ fontSize: 18 }}>{statsPet.grTotal}</Text>
-                    );
-                  }}
+                  innerRadius={15}
+                  textSize={20}
+                  data={pieDataGraphic}
                 />
               </View>
             </View>
             <View style={styles.horizontalChartsContainer}>
               <View style={styles.legendItem}>
                 <View style={styles.legendSquare} />
-                <Text style={styles.legendLabelHeader}>Item</Text>
+                <Text style={styles.legendLabelHeader}></Text>
                 <Text style={styles.legendTextHeader}>Total</Text>
                 <Text style={styles.legendTextHeader}>Objetivo</Text>
               </View>
@@ -240,9 +309,7 @@ const AddFoodScreen = ({ navigation, route }) => {
                   />
                   <Text style={styles.legendLabel}>{item.label}</Text>
                   <Text style={styles.legendText}>{item.amount} g</Text>
-                  <Text style={styles.legendText}>
-                    {statsPet[item.label]}
-                  </Text>
+                  <Text style={styles.legendText}>{statsPet[item.label]}</Text>
                 </View>
               ))}
             </View>
