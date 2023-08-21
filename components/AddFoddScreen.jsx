@@ -14,6 +14,7 @@ import { calculateBARFDiet } from "../utils/getPercentage.js";
 import { PieChart } from "react-native-gifted-charts";
 import { Picker } from "@react-native-picker/picker";
 import { Ionicons } from "@expo/vector-icons";
+import ErrorMessage from "./ErrorMessage.js";
 
 const AddFoodScreen = ({ navigation, route }) => {
   const [foodName, setFoodName] = useState("");
@@ -28,8 +29,9 @@ const AddFoodScreen = ({ navigation, route }) => {
   const [pieData, setPieData] = useState([]);
   const [pieDataGraphic, setPieDataGraphic] = useState([]);
   const { t } = useTranslation();
-  const [yourCategory, setYourCategory] = useState();
+  const [yourCategory, setYourCategory] = useState("huesosCarnosos");
   const [yourGrFood, setYourGrFood] = useState("");
+  const [errorMessages, setErrorMessages] = useState({});
 
   const COLORS = [
     "#FF5733",
@@ -48,7 +50,6 @@ const AddFoodScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     const graphicInfo = async (selectedPet) => {
-      console.log("selectedPet", selectedPet);
       switch (selectedPet) {
         case "perro":
           return [
@@ -100,11 +101,12 @@ const AddFoodScreen = ({ navigation, route }) => {
         svg: { fill: COLORS[index % COLORS.length] },
         label: key,
       }));
-    
+
       setSelectedFoods([]);
       setPieDataGraphic([]);
       setPieData(updatedPieData);
-    
+      setErrorMessages({});
+
       const pieDataInfo = await graphicInfo(route.params.selectedPet.typePet);
       setPieDataGraphic(pieDataInfo);
     };
@@ -112,13 +114,16 @@ const AddFoodScreen = ({ navigation, route }) => {
     updateData();
   }, [route.params.selectedPet]);
 
+  useEffect(() => {
+    updatePieChart();
+  }, [selectedFoods]);
+
   const handleEditFood = (index, isEditing) => {
     setSelectedFoods((prevSelectedFoods) => {
       const updatedFoods = [...prevSelectedFoods];
       updatedFoods[index].isEditing = isEditing;
 
       if (!isEditing) {
-        // Actualizar el amount en la gráfica correspondiente cuando se guarda la edición
         const chartLabel = mapFoodTypeToLabel(updatedFoods[index]);
         if (chartLabel) {
           const editGramsAsNumber = parseFloat(updatedFoods[index].editGrams);
@@ -142,77 +147,83 @@ const AddFoodScreen = ({ navigation, route }) => {
     });
   };
 
+  const updatePieChart = () => {
+    const categorySums = {};
+
+    selectedFoods.forEach((food) => {
+      if (food.editGrams !== undefined) {
+
+        const category = mapFoodTypeToLabel(food.category);
+        const editGrams = parseFloat(food.editGrams); 
+        if (!isNaN(editGrams) && category) {
+       
+          if (categorySums[category]) {
+            categorySums[category] += editGrams;
+          } else {
+            categorySums[category] = editGrams;
+          }
+        }
+      }
+    });
+
+    
+    pieData.forEach((data) => {
+      if (data.label !== "grTotal") {
+        data.amount = categorySums[data.label] || 0;
+      }
+    });
+
+    const newErrorMessages = {};
+
+    for (const category in categorySums) {
+      const categorySum = categorySums[category];
+      const categoryGrams = parseInt(statsPet[category].split(" ")[0], 10);
+
+      if (categorySum > categoryGrams) {
+        newErrorMessages[category] = `Te has pasado de ${category}`;
+      }
+    }
+
+    setErrorMessages(newErrorMessages);
+  };
+
   const handleEditGramsChange = (text, index) => {
     setSelectedFoods((prevSelectedFoods) => {
       const updatedFoods = [...prevSelectedFoods];
-      updatedFoods[index].editGrams = text;
 
-      let category = updatedFoods[index].category;
-
-      if (category === "pescado") {
-        category = "carne";
+      if (!text) {
+        updatedFoods[index].editGrams = 0;
+      } else {
+        updatedFoods[index].editGrams = text;
       }
 
-      console.log("category", category);
-
-      let chartLabel = mapFoodTypeToLabel(category);
-
-      console.log("chartLabel", chartLabel);
-
-      if (chartLabel) {
-        console.log("updatedFoods", updatedFoods);
-
-        const updatedFoodsWithModifiedCategory = updatedFoods.map((food) => {
-          if (food.category === "pescado") {
-            return {
-              ...food,
-              category: "carne",
-            };
-          }
-          return food;
-        });
-
-        console.log(
-          "updatedFoodsWithModifiedCategory",
-          updatedFoodsWithModifiedCategory
-        );
-
-        const categoryFoods = updatedFoodsWithModifiedCategory.filter(
-          (food) => food.category === category
-        );
-
-        console.log("categoryFoods2", categoryFoods);
-
-        const totalCategoryGrams = categoryFoods.reduce(
-          (total, food) => total + parseFloat(food.editGrams),
-          0
-        );
-
-        const updatedPieData = pieData.map((item) => {
-          if (chartLabel === item.label) {
-            return {
-              ...item,
-              amount: totalCategoryGrams,
-            };
-          }
-          return item;
-        });
-        setPieData(updatedPieData);
-      }
+      updatePieChart();
 
       return updatedFoods;
     });
   };
 
-  const handleSaveFood = () => {};
+  async function handleSaveFood() {
+    if (yourCategory === "pescado") {
+      setYourCategory("carne");
+    }
+
+    const selectedFoodNew = {
+      category: yourCategory,
+      editGrams: yourGrFood,
+      name: foodName,
+      isEditing: false,
+    };
+
+    setSelectedFoods((prevSelectedFoods) => [
+      ...prevSelectedFoods,
+      selectedFoodNew,
+    ]);
+  }
 
   const handleTabChange = (categoryName) => {
     setActiveTab(categoryName);
     setSelectedTab("ourFood");
-  };
-
-  const handleSwitchToAddFood = () => {
-    setSelectedTab("addFood");
   };
 
   const mapFoodTypeToLabel = (foodType) => {
@@ -248,25 +259,14 @@ const AddFoodScreen = ({ navigation, route }) => {
     ]);
 
     setFoodName(selectedFood.name);
-    const foodType = Object.keys(foodInfo).find((type) =>
-      foodInfo[type].some((food) => food.name === selectedFood.name)
-    );
+  };
 
-    if (foodType) {
-      const chartLabel = mapFoodTypeToLabel(foodType);
-
-      const updatedPieData = pieData.map((item) => {
-        if (chartLabel === item.label) {
-          return {
-            ...item,
-            amount: item.amount,
-          };
-        }
-        return item;
-      });
-
-      setPieData(updatedPieData);
-    }
+  const handleDeleteFood = (index) => {
+    setSelectedFoods((prevSelectedFoods) => {
+      const updatedFoods = [...prevSelectedFoods];
+      updatedFoods.splice(index, 1);
+      return updatedFoods;
+    });
   };
 
   return (
@@ -280,7 +280,6 @@ const AddFoodScreen = ({ navigation, route }) => {
           <View style={styles.contentContainer}>
             <View style={styles.chartContainer}>
               <View style={styles.grTotalContainer}>
-                {console.log("grapich", pieDataGraphic)}
                 <PieChart
                   donut
                   showText
@@ -314,8 +313,22 @@ const AddFoodScreen = ({ navigation, route }) => {
               ))}
             </View>
           </View>
-          <Text style={styles.label}>{selectedPet.name}</Text>
-
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Text style={styles.label}>{selectedPet.name}</Text>
+            <View style={{ flexDirection: "row", marginLeft: "auto" }}>
+              <TouchableOpacity style={{ marginRight: 10 }}>
+                <Ionicons name="settings-outline" size={24} color="black" />
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Ionicons
+                  name="information-circle-outline"
+                  size={24}
+                  color="black"
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+          <Text>Comida dia 4</Text>
           {selectedFoods.map((food, index) => (
             <View key={food.name + index} style={styles.selectedFoodItem}>
               <Text>{food.name}</Text>
@@ -346,12 +359,25 @@ const AddFoodScreen = ({ navigation, route }) => {
                     >
                       <Ionicons name="pencil" size={24} color="blue" />
                     </TouchableOpacity>
+                    <TouchableOpacity
+                      style={styles.editIcon}
+                      onPress={() => handleDeleteFood(index)}
+                    >
+                      <Ionicons name="trash" size={24} color="red" />
+                    </TouchableOpacity>
                   </>
                 )}
               </View>
             </View>
           ))}
-          <TouchableOpacity onPress={handleSaveFood} style={styles.addButton}>
+          {Object.keys(errorMessages).map((category) => (
+            <ErrorMessage message={errorMessages[category]} />
+          ))}
+
+          <TouchableOpacity
+            onPress={() => handleSaveFood}
+            style={styles.addButton}
+          >
             <Text style={styles.addButtonLabel}>Guardar Comida</Text>
           </TouchableOpacity>
           <Text style={styles.label}>Clicka un alimento para anadirlo:</Text>
@@ -380,18 +406,33 @@ const AddFoodScreen = ({ navigation, route }) => {
               <View>
                 <View style={styles.tabsContainer}>
                   <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    {Object.keys(foodInfo).map((categoryName, index) => (
-                      <TouchableOpacity
-                        key={index}
-                        onPress={() => handleTabChange(categoryName)}
-                        style={[
-                          styles.tabButton,
-                          activeTab === categoryName && styles.activeTab,
-                        ]}
-                      >
-                        <Text style={styles.tabButtonText}>{categoryName}</Text>
-                      </TouchableOpacity>
-                    ))}
+                    {Object.keys(foodInfo)
+                      .filter((categoryName) =>
+                        statsPet.hasOwnProperty(
+                          mapFoodTypeToLabel(categoryName)
+                        )
+                      )
+                      .filter(
+                        (categoryName) =>
+                          !(
+                            selectedPet.typePet === "huron" &&
+                            categoryName === "pescado"
+                          )
+                      )
+                      .map((categoryName, index) => (
+                        <TouchableOpacity
+                          key={index}
+                          onPress={() => handleTabChange(categoryName)}
+                          style={[
+                            styles.tabButton,
+                            activeTab === categoryName && styles.activeTab,
+                          ]}
+                        >
+                          <Text style={styles.tabButtonText}>
+                            {categoryName}
+                          </Text>
+                        </TouchableOpacity>
+                      ))}
                   </ScrollView>
                 </View>
                 {activeTab && (
@@ -445,7 +486,7 @@ const AddFoodScreen = ({ navigation, route }) => {
                   ))}
                 </Picker>
                 <TouchableOpacity
-                  onPress={handleSaveFood}
+                  onPress={() => handleSaveFood()}
                   style={styles.addFoodButton}
                 >
                   <Text style={styles.addFoodButtonText}>Añadir</Text>
@@ -528,7 +569,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flexDirection: "row",
-    justifyContent: "center", // Align horizontally in the center
+    justifyContent: "center",
     alignItems: "center",
     padding: 20,
   },
@@ -536,7 +577,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "25%",
     flexDirection: "row",
-    justifyContent: "center", // Align horizontally in the center
+    justifyContent: "center",
     alignItems: "center",
   },
   horizontalChartsContainer: {
@@ -627,12 +668,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   editInputInstagram: {
-    backgroundColor: "#FAFAFA", // Color de fondo similar a Instagram
+    backgroundColor: "#FAFAFA",
     borderColor: "#ddd",
     fontSize: 16,
   },
   totalGrams: {
-    alignSelf: "center", // Centrar el texto horizontalmente
+    alignSelf: "center",
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 10,
@@ -640,20 +681,20 @@ const styles = StyleSheet.create({
   editContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginLeft: "auto", // Mover los elementos a la derecha
+    marginLeft: "auto",
   },
   editInput: {
-    width: 50, // Reducir el ancho del input para que quepa en la pantalla
+    width: 50, 
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 5,
     paddingVertical: 5,
     paddingHorizontal: 10,
-    marginLeft: 10, // Agregar espacio entre el input y el ícono
+    marginLeft: 10,
   },
   gramsText: {
     fontSize: 16,
-    marginRight: 10, // Agregar margen derecho para separar el texto del ícono
+    marginRight: 10, 
   },
   legendItem: {
     flexDirection: "row",
