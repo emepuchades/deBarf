@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext} from "react";
 import {
   View,
   Text,
@@ -8,6 +8,7 @@ import {
   Image,
   StyleSheet,
 } from "react-native";
+import { AuthenticatedUserContext } from "../utils/context/context";
 import { useTranslation } from "react-i18next";
 import foodTypes from "../utils/info/food.js";
 import { calculateBARFDiet } from "../utils/getPercentage.js";
@@ -15,6 +16,8 @@ import { PieChart } from "react-native-gifted-charts";
 import { Picker } from "@react-native-picker/picker";
 import { Ionicons } from "@expo/vector-icons";
 import ErrorMessage from "./ErrorMessage.js";
+import addMenu from "../utils/dbMenu.js";
+
 
 const AddFoodScreen = ({ navigation, route }) => {
   const [foodName, setFoodName] = useState("");
@@ -24,6 +27,7 @@ const AddFoodScreen = ({ navigation, route }) => {
   const [statsPet, setStatsPet] = useState(
     calculateBARFDiet(route.params.selectedPet)
   );
+  const [date, setDate] = useState(route.params.fecha);
   const [selectedTab, setSelectedTab] = useState("ourFood");
   const [activeTab, setActiveTab] = useState("huesosCarnosos"); // Establece la categoría predeterminada
   const [pieData, setPieData] = useState([]);
@@ -32,6 +36,8 @@ const AddFoodScreen = ({ navigation, route }) => {
   const [yourCategory, setYourCategory] = useState("huesosCarnosos");
   const [yourGrFood, setYourGrFood] = useState("");
   const [errorMessages, setErrorMessages] = useState({});
+  const { db } = useContext(AuthenticatedUserContext);
+  const MenuURL = t("navBottom.planner");
 
   const COLORS = [
     "#FF5733",
@@ -93,6 +99,7 @@ const AddFoodScreen = ({ navigation, route }) => {
     const updateData = async () => {
       const newStatsPet = await calculateBARFDiet(route.params.selectedPet);
       setSelectedPet(route.params.selectedPet);
+      setDate(route.params.fecha);
       setStatsPet(newStatsPet);
 
       const updatedPieData = Object.keys(newStatsPet).map((key, index) => ({
@@ -152,11 +159,9 @@ const AddFoodScreen = ({ navigation, route }) => {
 
     selectedFoods.forEach((food) => {
       if (food.editGrams !== undefined) {
-
         const category = mapFoodTypeToLabel(food.category);
-        const editGrams = parseFloat(food.editGrams); 
+        const editGrams = parseFloat(food.editGrams);
         if (!isNaN(editGrams) && category) {
-       
           if (categorySums[category]) {
             categorySums[category] += editGrams;
           } else {
@@ -166,7 +171,6 @@ const AddFoodScreen = ({ navigation, route }) => {
       }
     });
 
-    
     pieData.forEach((data) => {
       if (data.label !== "grTotal") {
         data.amount = categorySums[data.label] || 0;
@@ -268,6 +272,13 @@ const AddFoodScreen = ({ navigation, route }) => {
       return updatedFoods;
     });
   };
+
+  const saveFood = async () => {
+    const foodJson = JSON.stringify(selectedFoods);
+    await addMenu(db, date, selectedPet.id, foodJson)
+    
+    navigation.navigate(MenuURL);
+   };
 
   return (
     <ScrollView
@@ -375,7 +386,7 @@ const AddFoodScreen = ({ navigation, route }) => {
           ))}
 
           <TouchableOpacity
-            onPress={() => handleSaveFood}
+            onPress={() => saveFood()}
             style={styles.addButton}
           >
             <Text style={styles.addButtonLabel}>Guardar Comida</Text>
@@ -684,7 +695,7 @@ const styles = StyleSheet.create({
     marginLeft: "auto",
   },
   editInput: {
-    width: 50, 
+    width: 50,
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 5,
@@ -694,7 +705,7 @@ const styles = StyleSheet.create({
   },
   gramsText: {
     fontSize: 16,
-    marginRight: 10, 
+    marginRight: 10,
   },
   legendItem: {
     flexDirection: "row",

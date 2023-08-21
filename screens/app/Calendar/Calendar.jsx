@@ -12,6 +12,8 @@ import moment from "moment";
 import { windowHeight, windowWidth } from "../../../utils/Dimentions";
 import { AuthenticatedUserContext } from "../../../utils/context/context";
 import { useNavigation } from "@react-navigation/native";
+import Modal from "react-native-modal";
+import { checkIfMenuDataExists, getMenuData } from "../../../utils/dbMenu";
 
 const Calendar = () => {
   const { user, db } = useContext(AuthenticatedUserContext);
@@ -25,7 +27,9 @@ const Calendar = () => {
     moment().startOf("week").format("YYYY-MM-DD")
   );
   const [pets, setPets] = useState([]);
+  const [foodData, setFoodData] = useState([]);
   const menuScrollViewRef = useRef(null);
+  const [isModalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -59,6 +63,27 @@ const Calendar = () => {
     }
     return refreshed;
   }, [navigation]);
+
+  useEffect(() => {
+    // Obtener la información de alimentos al cargar el componente
+    const fetchFoodData = async () => {
+      if (selectedPet && selectedDay) {
+       const foodString = await getMenuData(db, selectedPet.id, selectedDay);
+       const parsedFood = JSON.parse(foodString);
+       
+       console.log("foodString", foodString);
+       console.log("parsedFood", parsedFood);
+       setFoodData(parsedFood);
+
+        if (!parsedFood) {
+           setFoodData([]);
+        }
+      }
+    };
+
+    fetchFoodData();
+  }, [selectedPet, selectedDay]);
+
 
   const handleGuardarComida = () => {
     if (comidaInput.trim() !== "") {
@@ -99,22 +124,29 @@ const Calendar = () => {
     setSelectedPet(mascota);
     setInputComidaVisible(true);
 
-     if (menuScrollViewRef.current) {
-       const selectedIndex = pets.findIndex((pet) => pet.id === mascota.id);
-       menuScrollViewRef.current.scrollTo({
-         x: selectedIndex * (windowWidth * 0.3),
-         y: 0,
-         animated: true,
-       });
-     }
-  };
-  
-  const handleAddFood = () => {
-        navigation.navigate("AddFood", {
-          selectedPet: selectedPet,
-        });
+    if (menuScrollViewRef.current) {
+      const selectedIndex = pets.findIndex((pet) => pet.id === mascota.id);
+      menuScrollViewRef.current.scrollTo({
+        x: selectedIndex * (windowWidth * 0.3),
+        y: 0,
+        animated: true,
+      });
+    }
   };
 
+  const handleAddFood = () => {
+    if (!selectedPet) {
+      setModalVisible(true);
+      return;
+    }
+    navigation.navigate("AddFood", {
+      selectedPet: selectedPet,
+      fecha: selectedDay,
+    });
+  };
+  const closeModal = () => {
+    setModalVisible(false);
+  };
   const petImageMap = {
     perro: require("../../../assets/pets/dogDefault.png"),
     gato: require("../../../assets/pets/catDefault.png"),
@@ -136,6 +168,12 @@ const Calendar = () => {
     return `data:image/jpeg;base64,${base64Data}`;
   };
 
+  const dayFecha = (fechaStr) => {
+    const date = new Date(fechaStr);
+    const dia = date.getUTCDate();
+    return dia;
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.navigation}>
@@ -147,8 +185,6 @@ const Calendar = () => {
           <Text style={styles.navigationText}>{">"}</Text>
         </TouchableOpacity>
       </View>
-      {console.log("pets", selectedPet)}
-
       <View style={styles.daysContainer}>
         {diasSemana.map((dia, index) => (
           <TouchableOpacity
@@ -164,8 +200,22 @@ const Calendar = () => {
             }
             style={styles.dayButton}
           >
-            <Text style={styles.dayNumber}>{diasNumeros[index]}</Text>
-            <Text style={styles.dayName}>{dia}</Text>
+            {parseFloat(diasNumeros[index]) ===
+            parseFloat(dayFecha(selectedDay)) ? (
+              <>
+                <View style={styles.selectedDay}>
+                  <Text style={styles.dayNumber}>{diasNumeros[index]}</Text>
+                  <Text style={styles.dayName}>{dia}</Text>
+                </View>
+              </>
+            ) : (
+              <>
+                <View style={styles.nonSelectedDay}>
+                  <Text style={styles.dayNumber}>{diasNumeros[index]}</Text>
+                  <Text style={styles.dayName}>{dia}</Text>
+                </View>
+              </>
+            )}
           </TouchableOpacity>
         ))}
       </View>
@@ -223,15 +273,55 @@ const Calendar = () => {
       ) : null}
       <Text>Toma 1S</Text>
       <View style={styles.inputContainer}>
-        <TextInput
-          value={comidas[selectedDay] || ""}
-          onChangeText={handleInputChange}
-          placeholder="Ingresa tu comida"
-          style={styles.input}
-        />
-        <TouchableOpacity onPress={handleAddFood} style={styles.addButton}>
-          <Text style={styles.addButtonLabel}>Añadir Alimentos</Text>
-        </TouchableOpacity>
+        {selectedPet ? (
+          <TouchableOpacity onPress={handleAddFood} style={styles.addButton}>
+            <Text style={styles.addButtonLabel}>Añadir Alimentos</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity onPress={handleAddFood} style={styles.addButton}>
+            <Text style={styles.addButtonLabel}>Añadir Alimentos</Text>
+          </TouchableOpacity>
+        )}
+      </View>
+      <View>
+        {console.log("foodData", foodData)}
+        {foodData ? (
+          foodData.length > 0 ? (
+            <View style={styles.foodDataContainer}>
+              <Text style={styles.foodDataTitle}>Food Data:</Text>
+              {Array.isArray(foodData) &&
+                foodData.map((item, index) => {
+                  console.log("Dentro del mapeo:", item);
+                  return (
+                    // Agrega el return aquí
+                    <View key={index}>
+                      <Text style={styles.textFood}>Name: {item.name}</Text>
+                      <Text style={styles.textFood}>
+                        Category: {item.category}
+                      </Text>
+                      <Text style={styles.textFood}>
+                        Grams: {item.editGrams}
+                      </Text>
+                    </View>
+                  );
+                })}
+            </View>
+          ) : (
+            <Text>No tienes comida en este día</Text>
+          )
+        ) : null}
+
+        <Modal isVisible={isModalVisible}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalText}>
+              Debes seleccionar una mascota antes de crear un menú. Crea una
+              mascota aqui
+            </Text>
+            <TouchableOpacity onPress={closeModal} style={styles.closeButton}>
+              <Text style={styles.closeButtonText}>Cerrar</Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
       </View>
     </View>
   );
@@ -286,7 +376,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    fontSize: 18, 
+    fontSize: 18,
     padding: 8,
     color: "#333",
   },
@@ -334,6 +424,52 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
   },
+  selectedDay: {
+    backgroundColor: "#3498DB", // Cambia el color de fondo para el día seleccionado
+    padding: 10,
+    borderRadius: 5,
+  },
+  nonSelectedDay: {
+    padding: 10,
+    borderRadius: 5,
+  },
+  dayNumber: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  dayName: {
+    fontSize: 14,
+  },
+  addButtonLabel: {
+    color: "white",
+  },
+  modalContent: {
+    backgroundColor: "white",
+    padding: 20,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  modalText: {
+    marginBottom: 10,
+  },
+  closeButton: {
+    marginTop: 10,
+    backgroundColor: "blue",
+    padding: 10,
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  closeButtonText: {
+    color: "white",
+  },
+  foodItem: {
+    height: windowHeight,
+    width: windowWidth
+  },
+  textFood: {
+    color: 'black',
+    fontSize: 16
+  }
 });
 
 export default Calendar;

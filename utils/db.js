@@ -1,5 +1,4 @@
 async function createTables(db) {
-
   db.transaction((tx) => {
     tx.executeSql(
       `
@@ -17,6 +16,19 @@ async function createTables(db) {
         weight FLOAT,
         weightUnit VARCHAR(10),
         percentage FLOAT
+      )
+    `
+    );
+  });
+
+  db.transaction((tx) => {
+    tx.executeSql(
+      `
+      CREATE TABLE IF NOT EXISTS menu (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        petId INTEGER,
+        date TEXT,
+        food TEXT
       )
     `
     );
