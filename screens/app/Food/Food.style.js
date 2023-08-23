@@ -6,13 +6,11 @@ import { windowWidth } from "../../../utils/Dimentions";
 export const styleFood = {
   container: {
     backgroundColor: "#fff",
-    height: windowHeight - 55,
+    height: windowHeight - 85,
   },
   content: {},
   menuItems: {
-    borderBottomColor: "#F5F5F9",
-    borderBottomWidth: 1,
-    height: 70,
+    height: 60,
   },
   textMenu: {
     width: 34,
@@ -35,7 +33,7 @@ export const styleFood = {
     alignItems: "center",
     textAlign: "center",
     borderRadius: 10,
-    shadowColor: "#000",
+    shadowColor: "#c1c1c1",
     shadowOffset: {
       width: 5,
       height: 5,
@@ -52,13 +50,16 @@ export const styleFood = {
     fontWeight: "bold",
   },
   type: {
-    color: "#000",
+    color: "white",
     fontSize: 18,
     margin: 10,
     marginLeft: 22,
     fontWeight: "600",
   },
-  typeContainer: {},
+  typeContainer: {
+    marginTop: 10,
+    height: 70,
+  },
   searchInput: {
     flex: 1,
     marginTop: 10,
@@ -80,11 +81,13 @@ export const styleFood = {
     borderWidth: 1,
     borderRadius: 5,
     marginLeft: 10,
+    backgroundColor: "white",
   },
   searchContainerInput: {
     flex: 1,
     paddingVertical: 10,
     textAlign: "center",
+    backgroundColor: "white",
   },
   searchIcon: {
     marginRight: 10,

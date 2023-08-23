@@ -7,11 +7,13 @@ import {
   Image,
   TextInput,
   StyleSheet,
+  ImageBackground,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { styleFood } from "./Food.style";
 import { useTranslation } from "react-i18next";
 import foodTypes  from "../../../utils/info/food";
+import backgroundImage from "../../../assets/images/header.png"; // Import your background image
 
 const Food = () => {
   const { t } = useTranslation();
@@ -47,31 +49,28 @@ const Food = () => {
         style={{
           padding: 5,
           margin: 10,
+          alignItems: "center", // Centrar los elementos horizontalmente
         }}
       >
         <View
           style={{
             flexDirection: "row",
             alignItems: "center",
-            borderBottomColor: isSelected ? "#9c4ef7" : "transparent",
-            borderBottomWidth: isSelected ? 3 : 0,
-            textAlign: "center",
+            borderBottomColor: isSelected ? "black" : "transparent",
+            borderBottomWidth: isSelected ? 2 : 0,
           }}
         >
           <View style={styles.textMenu} />
           <Text
             style={{
-              color: isSelected ? "#9c4ef7" : "#000",
-              height: 20,
+              color: isSelected ? "black" : "white",
               fontSize: 14,
-              textAlign: "center",
-              marginTop: 12,
-              marginBottom: 9,
-              fontWeight: isSelected ? "bold" : "200",
+              fontWeight: isSelected ? "bold" : "bold",
             }}
           >
             {t(`food.${type}`)}
           </Text>
+          <View style={styles.textMenu} />
         </View>
       </TouchableOpacity>
     );
@@ -120,6 +119,10 @@ const Food = () => {
 
   return (
     <View style={styles.container}>
+      <ImageBackground
+    source={backgroundImage}
+    style={styles.navigationWrapper}
+  >
       <View style={styles.searchContainer}>
         <TextInput
           placeholder={t(`food.searchCategory`)}
@@ -148,6 +151,7 @@ const Food = () => {
       <View style={styles.typeContainer}>
         <Text style={styles.type}> {t(`food.${selectedType}`)}</Text>
       </View>
+      </ImageBackground>
       <ScrollView vertical showsHorizontalScrollIndicator={false}>
         {renderContent(selectedType)}
       </ScrollView>
