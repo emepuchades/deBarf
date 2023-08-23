@@ -35,7 +35,7 @@ const DrawerNavigator = () => {
           drawerIcon: ({ color, size }) => (
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate(t("navBottom.home"));
+                navigation.navigate(t("navBottom.pets"));
               }}
             >
               <Ionicons name="ios-basket-outline" size={size} color={color} />
