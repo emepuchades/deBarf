@@ -264,17 +264,31 @@ const AddFoodScreen = ({ navigation, route }) => {
   };
 
   const handleFoodSelection = (selectedFood, category) => {
+  
     const selectedFoodNew = {
-      ...selectedFood,
-      category: category,
-    };
+    ...selectedFood,
+    category: category,
+  };
 
-    setSelectedFoods((prevSelectedFoods) => [
-      ...prevSelectedFoods,
-      selectedFoodNew,
-    ]);
+  // Verificar si ya existe un alimento con el mismo nombre
+  const isDuplicate = selectedFoods.some(
+    (food) => food.name === selectedFoodNew.name
+  );
 
-    setFoodName(selectedFood.name);
+  if (isDuplicate) {
+    setErrorMessages({
+      duplicateFood: `Ya has seleccionado ${selectedFoodNew.name}`,
+    });
+    setTimeout(() => {
+      setErrorMessages({});
+    }, 5000); 
+    return;
+  }
+
+  setSelectedFoods((prevSelectedFoods) => [
+    ...prevSelectedFoods,
+    selectedFoodNew,
+  ]);
   };
 
   const handleDeleteFood = (index) => {
