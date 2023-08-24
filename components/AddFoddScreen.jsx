@@ -19,6 +19,7 @@ import ErrorMessage from "./ErrorMessage.js";
 import addMenu from "../utils/dbMenu.js";
 import backgroundImage from "../assets/images/header.png"; // Import your background image
 import { windowHeight, windowWidth } from "../utils/Dimentions";
+import Modal from "react-native-modal";
 
 const AddFoodScreen = ({ navigation, route }) => {
   const [foodName, setFoodName] = useState("");
@@ -28,6 +29,7 @@ const AddFoodScreen = ({ navigation, route }) => {
   const [statsPet, setStatsPet] = useState(
     calculateBARFDiet(route.params.selectedPet)
   );
+  const [isModalVisible, setModalVisible] = useState(false);
   const [date, setDate] = useState(route.params.fecha);
   const [selectedTab, setSelectedTab] = useState("ourFood");
   const [activeTab, setActiveTab] = useState("huesosCarnosos"); // Establece la categoría predeterminada
@@ -252,6 +254,15 @@ const AddFoodScreen = ({ navigation, route }) => {
     }
   };
 
+  
+  const handleAddFood = () => {
+      setModalVisible(true);
+   
+  };
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
   const handleFoodSelection = (selectedFood, category) => {
     const selectedFoodNew = {
       ...selectedFood,
@@ -280,6 +291,10 @@ const AddFoodScreen = ({ navigation, route }) => {
 
     navigation.navigate(MenuURL);
   };
+
+   const goEdit = async () => {
+         navigation.navigate("PetDetails", { selectedPet: selectedPet });
+   };
 
   return (
     <ScrollView
@@ -330,10 +345,13 @@ const AddFoodScreen = ({ navigation, route }) => {
           >
             <Text style={styles.label}>{selectedPet.name}</Text>
             <View style={{ flexDirection: "row", marginLeft: "auto" }}>
-              <TouchableOpacity style={{ marginRight: 10 }}>
+              <TouchableOpacity
+                style={{ marginRight: 10 }}
+                onPress={() => goEdit()}
+              >
                 <Ionicons name="settings-outline" size={24} color="black" />
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => handleAddFood()}>
                 <Ionicons
                   name="information-circle-outline"
                   size={24}
@@ -490,9 +508,9 @@ const AddFoodScreen = ({ navigation, route }) => {
                         />
                         <Text style={styles.foodName}>{food.name}</Text>
                         <Ionicons
-                          name="ios-add-circle-outline"
+                          name="ios-add-circle"
                           size={24}
-                          color="black"
+                          color="#3498DB"
                         />
                       </TouchableOpacity>
                     ))}
@@ -526,13 +544,26 @@ const AddFoodScreen = ({ navigation, route }) => {
                       style={styles.picker}
                       onValueChange={(itemValue) => setYourCategory(itemValue)}
                     >
-                      {Object.keys(foodInfo).map((categoryName, index) => (
-                        <Picker.Item
-                          key={index}
-                          label={categoryName}
-                          value={categoryName}
-                        />
-                      ))}
+                      {Object.keys(foodInfo)
+                        .filter((categoryName) =>
+                          statsPet.hasOwnProperty(
+                            mapFoodTypeToLabel(categoryName)
+                          )
+                        )
+                        .filter(
+                          (categoryName) =>
+                            !(
+                              selectedPet.typePet === "huron" &&
+                              categoryName === "pescado"
+                            )
+                        )
+                        .map((categoryName, index) => (
+                          <Picker.Item
+                            key={index}
+                            label={categoryName}
+                            value={categoryName}
+                          />
+                        ))}
                     </Picker>
                   </View>
                 </View>
@@ -548,6 +579,19 @@ const AddFoodScreen = ({ navigation, route }) => {
           </View>
         </View>
       ) : null}
+      <View style={styles.foodDataContainer}>
+        <Modal isVisible={isModalVisible}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalText}>
+              Debes seleccionar una mascota antes de crear un menú. Crea una
+              mascota aqui
+            </Text>
+            <TouchableOpacity onPress={closeModal} style={styles.closeButton}>
+              <Text style={styles.closeButtonText}>Cerrar</Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
+      </View>
     </ScrollView>
   );
 };
@@ -868,6 +912,25 @@ const styles = StyleSheet.create({
     padding: 16,
     borderWidth: 1,
     borderColor: "#ddd",
+  },
+  modalContent: {
+    backgroundColor: "white",
+    padding: 20,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  modalText: {
+    marginBottom: 10,
+  },
+  closeButton: {
+    marginTop: 10,
+    backgroundColor: "blue",
+    padding: 10,
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  closeButtonText: {
+    color: "white",
   },
 });
 
