@@ -28,6 +28,7 @@ const Calendar = () => {
   const [selectedPet, setSelectedPet] = useState(null);
   const [inputComidaVisible, setInputComidaVisible] = useState(false);
   const [comidaInput, setComidaInput] = useState("");
+  const [idMenu, setIdMenu] = useState("");
   const [selectedDay, setSelectedDay] = useState(
     moment().startOf("week").format("YYYY-MM-DD")
   );
@@ -42,13 +43,37 @@ const Calendar = () => {
       tx.executeSql(
         "SELECT * FROM pets",
         null,
-        (txObj, resultSet) => setPets(resultSet.rows._array),
+        (txObj, resultSet) => {
+          setPets(resultSet.rows._array);
+
+          if (resultSet.rows.length > 0) {
+            setSelectedPet(resultSet.rows._array[0]);
+          }
+        },
         (txObj, error) => console.log(error)
       );
     });
-    if (pets.length > 0) {
-      setSelectedPet(pets[0]);
-    }
+    const fetchFoodData = async () => {
+      if (selectedPet && selectedDay) {
+        const foodString = await getMenuData(db, selectedPet.id, selectedDay);
+
+        if (foodString) {
+          setIdMenu(foodString.id);
+          const parsedFood = JSON.parse(foodString.food);
+          setFoodData(parsedFood);
+
+          if (!parsedFood) {
+            setFoodData([]);
+          }
+        } else {
+          setIdMenu(null); // Reset idMenu since there is no data
+          setFoodData([]);
+        }
+      }
+    };
+
+    fetchFoodData();
+
     setIsLoading(false);
   }, []);
 
@@ -58,14 +83,37 @@ const Calendar = () => {
         tx.executeSql(
           "SELECT * FROM pets",
           null,
-          (txObj, resultSet) => setPets(resultSet.rows._array),
+          (txObj, resultSet) => {
+            setPets(resultSet.rows._array);
+
+            if (resultSet.rows.length > 0) {
+              setSelectedPet(resultSet.rows._array[0]);
+            }
+          },
           (txObj, error) => console.log(error)
         );
       });
+      const fetchFoodData = async () => {
+        if (selectedPet && selectedDay) {
+          const foodString = await getMenuData(db, selectedPet.id, selectedDay);
+
+          if (foodString) {
+            setIdMenu(foodString.id);
+            const parsedFood = JSON.parse(foodString.food);
+            setFoodData(parsedFood);
+
+            if (!parsedFood) {
+              setFoodData([]);
+            }
+          } else {
+            setIdMenu(null); // Reset idMenu since there is no data
+            setFoodData([]);
+          }
+        }
+      };
+
+      fetchFoodData();
     });
-    if (pets.length > 0) {
-      setSelectedPet(pets[0]);
-    }
     return refreshed;
   }, [navigation]);
 
@@ -73,11 +121,19 @@ const Calendar = () => {
     // Obtener la información de alimentos al cargar el componente
     const fetchFoodData = async () => {
       if (selectedPet && selectedDay) {
-        const foodString = await getMenuData(db, selectedPet.id, selectedDay);
-        const parsedFood = JSON.parse(foodString);
-        setFoodData(parsedFood);
 
-        if (!parsedFood) {
+        const foodString = await getMenuData(db, selectedPet.id, selectedDay);
+
+        if (foodString) {
+          setIdMenu(foodString.id);
+          const parsedFood = JSON.parse(foodString.food);
+          setFoodData(parsedFood);
+
+          if (!parsedFood) {
+            setFoodData([]);
+          }
+        } else {
+          setIdMenu(null); // Reset idMenu since there is no data
           setFoodData([]);
         }
       }
@@ -145,6 +201,16 @@ const Calendar = () => {
       fecha: selectedDay,
     });
   };
+
+  const editMenu = () => {
+    navigation.navigate("EditFood", {
+      selectedPet: selectedPet,
+      fecha: selectedDay,
+      foodData: foodData,
+      idMenu: idMenu,
+    });
+  };
+
   const closeModal = () => {
     setModalVisible(false);
   };
@@ -175,7 +241,6 @@ const Calendar = () => {
     return dia;
   };
 
-  
   const mapFoodTypeToLabel = (foodType) => {
     switch (foodType) {
       case "huesosCarnosos":
@@ -196,7 +261,6 @@ const Calendar = () => {
         return "";
     }
   };
-
 
   return (
     <ScrollView
@@ -270,7 +334,8 @@ const Calendar = () => {
                 {
                   backgroundColor:
                     selectedPet?.id === mascota.id ? "#5b8afd" : "white",
-                  borderColor:  selectedPet?.id === mascota.id ? "white" : "#ddd",
+                  borderColor:
+                    selectedPet?.id === mascota.id ? "white" : "#ddd",
                 },
               ]}
             >
@@ -302,7 +367,16 @@ const Calendar = () => {
         </ScrollView>
       </View>
       <View style={styles.inputContainer}>
-        {selectedPet ? (
+        {selectedPet && (foodData && foodData.length > 0) ? (
+          <View style={styles.addButtonContainer}>
+            <TouchableOpacity
+              onPress={() => editMenu()}
+              style={styles.addButton}
+            >
+              <Text style={styles.addButtonLabel}>Editar comida</Text>
+            </TouchableOpacity>
+          </View>
+        ) : selectedPet ? (
           <View style={styles.addButtonContainer}>
             <TouchableOpacity onPress={handleAddFood} style={styles.addButton}>
               <Text style={styles.addButtonLabel}>Añadir Racion diaria</Text>
@@ -320,7 +394,6 @@ const Calendar = () => {
         <View style={styles.headerFood}>
           <Text style={styles.headerTextFood}>Toma 1</Text>
         </View>
-        {console.log("foodData", foodData)}
         <View style={styles.contentFood}>
           {foodData ? (
             foodData.length > 0 ? (

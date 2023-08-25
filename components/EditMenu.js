@@ -16,12 +16,12 @@ import { PieChart } from "react-native-gifted-charts";
 import { Picker } from "@react-native-picker/picker";
 import { Ionicons } from "@expo/vector-icons";
 import ErrorMessage from "./ErrorMessage.js";
-import addMenu from "../utils/dbMenu.js";
+import addMenu, { updateMenu } from "../utils/dbMenu.js";
 import backgroundImage from "../assets/images/header.png"; // Import your background image
 import { windowHeight, windowWidth } from "../utils/Dimentions";
 import Modal from "react-native-modal";
 
-const AddFoodScreen = ({ navigation, route }) => {
+const EditMenu = ({ navigation, route }) => {
   const [foodName, setFoodName] = useState("");
   const [selectedFoods, setSelectedFoods] = useState([]);
   const [foodInfo, setFoodInfo] = useState(foodTypes());
@@ -42,6 +42,8 @@ const AddFoodScreen = ({ navigation, route }) => {
   const [errorMessages, setErrorMessages] = useState({});
   const { db } = useContext(AuthenticatedUserContext);
   const MenuURL = t("navBottom.planner");
+  const [idMenu, setIdMenu] = useState();
+
 
   const COLORS = [
     "#ffca3a",
@@ -106,25 +108,21 @@ const AddFoodScreen = ({ navigation, route }) => {
       setDate(route.params.fecha);
       setStatsPet(newStatsPet);
 
-      const updatedPieData = Object.keys(newStatsPet).map((key, index) => ({
-        key: index,
-        amount: 0,
-        svg: { fill: COLORS[index % COLORS.length] },
-        label: key,
-      }));
-
-      setSelectedFoods([]);
+      setSelectedFoods(route.params.foodData);
       setPieDataGraphic([]);
-      setPieData(updatedPieData);
+      //setPieData(updatedPieData);
       setErrorMessages({});
+      setIdMenu(route.params.idMenu);
       const dateObj = new Date(date);
       setDay(dateObj.getDate());
-
       const pieDataInfo = await graphicInfo(route.params.selectedPet.typePet);
+      
       setPieDataGraphic(pieDataInfo);
     };
 
     updateData();
+    updatePieChart();
+
   }, [route.params.selectedPet]);
 
   useEffect(() => {
@@ -257,41 +255,37 @@ const AddFoodScreen = ({ navigation, route }) => {
     }
   };
 
-  
   const handleAddFood = () => {
-      setModalVisible(true);
-   
+    setModalVisible(true);
   };
   const closeModal = () => {
     setModalVisible(false);
   };
 
   const handleFoodSelection = (selectedFood, category) => {
-  
     const selectedFoodNew = {
-    ...selectedFood,
-    category: category,
-  };
+      ...selectedFood,
+      category: category,
+    };
 
-  // Verificar si ya existe un alimento con el mismo nombre
-  const isDuplicate = selectedFoods.some(
-    (food) => food.name === selectedFoodNew.name
-  );
+    const isDuplicate = selectedFoods.some(
+      (food) => food.name === selectedFoodNew.name
+    );
 
-  if (isDuplicate) {
-    setErrorMessages({
-      duplicateFood: `Ya has seleccionado ${selectedFoodNew.name}`,
-    });
-    setTimeout(() => {
-      setErrorMessages({});
-    }, 5000); 
-    return;
-  }
+    if (isDuplicate) {
+      setErrorMessages({
+        duplicateFood: `Ya has seleccionado ${selectedFoodNew.name}`,
+      });
+      setTimeout(() => {
+        setErrorMessages({});
+      }, 5000);
+      return;
+    }
 
-  setSelectedFoods((prevSelectedFoods) => [
-    ...prevSelectedFoods,
-    selectedFoodNew,
-  ]);
+    setSelectedFoods((prevSelectedFoods) => [
+      ...prevSelectedFoods,
+      selectedFoodNew,
+    ]);
   };
 
   const handleDeleteFood = (index) => {
@@ -304,14 +298,14 @@ const AddFoodScreen = ({ navigation, route }) => {
 
   const saveFood = async () => {
     const foodJson = JSON.stringify(selectedFoods);
-    await addMenu(db, date, selectedPet.id, foodJson);
+    await updateMenu(db, idMenu, date, selectedPet.id, foodJson);
 
     navigation.navigate(MenuURL);
   };
 
-   const goEdit = async () => {
-      navigation.navigate("PetDetails", { selectedPet: selectedPet });
-   };
+  const goEdit = async () => {
+    navigation.navigate("PetDetails", { selectedPet: selectedPet });
+  };
 
   return (
     <ScrollView
@@ -342,7 +336,8 @@ const AddFoodScreen = ({ navigation, route }) => {
                 <Text style={styles.legendTextHeader}>Total</Text>
                 <Text style={styles.legendTextHeader}>Objetivo</Text>
               </View>
-              {pieData.slice(1).map((item, index) => (
+              { pieData ?
+              pieData.slice(1).map((item, index) => (
                 <View key={index} style={styles.legendItem}>
                   <View
                     style={[
@@ -354,7 +349,7 @@ const AddFoodScreen = ({ navigation, route }) => {
                   <Text style={styles.legendText}>{item.amount} g</Text>
                   <Text style={styles.legendText}>{statsPet[item.label]}</Text>
                 </View>
-              ))}
+              )) : null}
             </View>
           </View>
           <View
@@ -449,10 +444,10 @@ const AddFoodScreen = ({ navigation, route }) => {
                   left: 0,
                   width: 150,
                   height: 40,
-                  resizeMode: "cover", // This makes the image cover the
+                  resizeMode: "cover",
                 }}
               />
-              <Text style={styles.addButtonLabel}>Guardar Comida</Text>
+              <Text style={styles.addButtonLabel}>Editar Comida</Text>
             </TouchableOpacity>
           </View>
           <Text style={styles.label}>Clicka un alimento para anadirlo:</Text>
@@ -951,4 +946,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddFoodScreen;
+export default EditMenu;

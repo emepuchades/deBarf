@@ -17,18 +17,38 @@ async function addMenu(db, date, petID, foodJSON) {
   }
 }
 
+export async function updateMenu(db, menuID, date, petID, foodJSON) {
+  try {
+    await db.transaction(async (tx) => {
+      console.log("menuID", menuID);
+      await tx.executeSql(
+        `UPDATE menu SET date = ?, petId = ?, food = ? WHERE id = ?`,
+        [date, petID, foodJSON, menuID],
+        (txObj, resultSet) => {
+          tx.executeSql("COMMIT");
+        },
+        (txObj, error) => {
+          tx.executeSql("ROLLBACK");
+        }
+      );
+    });
+  } catch (error) {
+    console.log("Error al procesar", error);
+  }
+}
+
 export async function getMenuData(db, petId, date) {
-  console.log("dsf dentro", date);
 
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        "SELECT food FROM menu WHERE petId = ? AND date = ?;",
+        "SELECT * FROM menu WHERE petId = ? AND date = ?;",
         [petId, date],
         (txObj, resultSet) => {
           try {
+            console.log("resultSet.rows.item(0)", resultSet.rows);
             if (resultSet.rows.length > 0) {
-              const foodData = resultSet.rows.item(0).food;
+              const foodData = resultSet.rows.item(0);
               resolve(foodData);
             } else {
               resolve(null); // No hay datos para la mascota y fecha seleccionadas
