@@ -30,7 +30,7 @@ const Calendar = () => {
   const [comidaInput, setComidaInput] = useState("");
   const [idMenu, setIdMenu] = useState("");
   const [selectedDay, setSelectedDay] = useState(
-    moment().startOf("week").format("YYYY-MM-DD")
+    moment().format("YYYY-MM-DD")
   );
   const [pets, setPets] = useState([]);
   const [foodData, setFoodData] = useState([]);
