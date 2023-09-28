@@ -29,6 +29,7 @@ const AddFoodScreen = ({ navigation, route }) => {
   const [statsPet, setStatsPet] = useState(
     calculateBARFDiet(route.params.selectedPet)
   );
+  const [loading, setLoading] = useState(true);
   const [isModalVisible, setModalVisible] = useState(false);
   const [date, setDate] = useState(route.params.fecha);
   const [day, setDay] = useState(route.params.fecha);
@@ -122,6 +123,7 @@ const AddFoodScreen = ({ navigation, route }) => {
 
       const pieDataInfo = await graphicInfo(route.params.selectedPet.typePet);
       setPieDataGraphic(pieDataInfo);
+      setLoading(false);
     };
 
     updateData();
@@ -257,41 +259,38 @@ const AddFoodScreen = ({ navigation, route }) => {
     }
   };
 
-  
   const handleAddFood = () => {
-      setModalVisible(true);
-   
+    setModalVisible(true);
   };
   const closeModal = () => {
     setModalVisible(false);
   };
 
   const handleFoodSelection = (selectedFood, category) => {
-  
     const selectedFoodNew = {
-    ...selectedFood,
-    category: category,
-  };
+      ...selectedFood,
+      category: category,
+    };
 
-  // Verificar si ya existe un alimento con el mismo nombre
-  const isDuplicate = selectedFoods.some(
-    (food) => food.name === selectedFoodNew.name
-  );
+    // Verificar si ya existe un alimento con el mismo nombre
+    const isDuplicate = selectedFoods.some(
+      (food) => food.name === selectedFoodNew.name
+    );
 
-  if (isDuplicate) {
-    setErrorMessages({
-      duplicateFood: `Ya has seleccionado ${selectedFoodNew.name}`,
-    });
-    setTimeout(() => {
-      setErrorMessages({});
-    }, 5000); 
-    return;
-  }
+    if (isDuplicate) {
+      setErrorMessages({
+        duplicateFood: `Ya has seleccionado ${selectedFoodNew.name}`,
+      });
+      setTimeout(() => {
+        setErrorMessages({});
+      }, 5000);
+      return;
+    }
 
-  setSelectedFoods((prevSelectedFoods) => [
-    ...prevSelectedFoods,
-    selectedFoodNew,
-  ]);
+    setSelectedFoods((prevSelectedFoods) => [
+      ...prevSelectedFoods,
+      selectedFoodNew,
+    ]);
   };
 
   const handleDeleteFood = (index) => {
@@ -305,13 +304,14 @@ const AddFoodScreen = ({ navigation, route }) => {
   const saveFood = async () => {
     const foodJson = JSON.stringify(selectedFoods);
     await addMenu(db, date, selectedPet.id, foodJson);
+    setStatsPet([]);
 
     navigation.navigate(MenuURL);
   };
 
-   const goEdit = async () => {
-      navigation.navigate("PetDetails", { selectedPet: selectedPet });
-   };
+  const goEdit = async () => {
+    navigation.navigate("PetDetails", { selectedPet: selectedPet });
+  };
 
   return (
     <ScrollView
@@ -319,7 +319,9 @@ const AddFoodScreen = ({ navigation, route }) => {
       vertical
       showsHorizontalScrollIndicator={false}
     >
-      {statsPet ? (
+    {loading ? (
+      <Text>Loading</Text>
+    ) : statsPet ? (
         <View>
           <View style={styles.contentContainer}>
             <View style={styles.chartContainer}>
@@ -330,7 +332,7 @@ const AddFoodScreen = ({ navigation, route }) => {
                   textColor="black"
                   radius={40}
                   innerRadius={15}
-                  textSize={20}
+                  textSize={30}
                   data={pieDataGraphic}
                 />
               </View>
@@ -358,7 +360,11 @@ const AddFoodScreen = ({ navigation, route }) => {
             </View>
           </View>
           <View
-            style={{ flexDirection: "row", alignItems: "center", padding: 12 }}
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              padding: 12,
+            }}
           >
             <Text style={styles.label}>{selectedPet.name}</Text>
             <View style={{ flexDirection: "row", marginLeft: "auto" }}>
@@ -596,20 +602,8 @@ const AddFoodScreen = ({ navigation, route }) => {
           </View>
         </View>
       ) : null}
-      <View style={styles.foodDataContainer}>
-        <Modal isVisible={isModalVisible}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalText}>
-              Debes seleccionar una mascota antes de crear un menú. Crea una
-              mascota aqui
-            </Text>
-            <TouchableOpacity onPress={closeModal} style={styles.closeButton}>
-              <Text style={styles.closeButtonText}>Cerrar</Text>
-            </TouchableOpacity>
-          </View>
-        </Modal>
-      </View>
-    </ScrollView>
+      </ScrollView>
+
   );
 };
 

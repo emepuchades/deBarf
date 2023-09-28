@@ -29,6 +29,7 @@ const EditMenu = ({ navigation, route }) => {
   const [statsPet, setStatsPet] = useState(
     calculateBARFDiet(route.params.selectedPet)
   );
+  const [loading, setLoading] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   const [date, setDate] = useState(route.params.fecha);
   const [day, setDay] = useState(route.params.fecha);
@@ -43,7 +44,6 @@ const EditMenu = ({ navigation, route }) => {
   const { db } = useContext(AuthenticatedUserContext);
   const MenuURL = t("navBottom.planner");
   const [idMenu, setIdMenu] = useState();
-
 
   const COLORS = [
     "#ffca3a",
@@ -107,22 +107,45 @@ const EditMenu = ({ navigation, route }) => {
       setSelectedPet(route.params.selectedPet);
       setDate(route.params.fecha);
       setStatsPet(newStatsPet);
+      const categorySums = {};
+
+      selectedFoods.forEach((food) => {
+        if (food.editGrams !== undefined) {
+          const category = mapFoodTypeToLabel(food.category);
+          const editGrams = parseFloat(food.editGrams);
+          if (!isNaN(editGrams) && category) {
+            if (categorySums[category]) {
+              categorySums[category] += editGrams;
+            } else {
+              categorySums[category] = editGrams;
+            }
+          }
+        }
+      });
+
+      const updatedPieData = Object.keys(newStatsPet).map((key, index) => ({
+        key: index,
+        amount: categorySums[key] || 0,
+        svg: { fill: COLORS[index % COLORS.length] },
+        label: key,
+      }));
 
       setSelectedFoods(route.params.foodData);
       setPieDataGraphic([]);
-      //setPieData(updatedPieData);
+      setPieData(updatedPieData);
       setErrorMessages({});
       setIdMenu(route.params.idMenu);
       const dateObj = new Date(date);
       setDay(dateObj.getDate());
+
       const pieDataInfo = await graphicInfo(route.params.selectedPet.typePet);
-      
+
       setPieDataGraphic(pieDataInfo);
     };
 
     updateData();
     updatePieChart();
-
+    setLoading(true);
   }, [route.params.selectedPet]);
 
   useEffect(() => {
@@ -180,6 +203,8 @@ const EditMenu = ({ navigation, route }) => {
         data.amount = categorySums[data.label] || 0;
       }
     });
+
+    console.log("pieData", pieData);
 
     const newErrorMessages = {};
 
@@ -313,6 +338,10 @@ const EditMenu = ({ navigation, route }) => {
       vertical
       showsHorizontalScrollIndicator={false}
     >
+            <ShimmerPlaceHolder
+        autoRun={true}
+        visible={loading}
+      >
       {statsPet ? (
         <View>
           <View style={styles.contentContainer}>
@@ -336,20 +365,23 @@ const EditMenu = ({ navigation, route }) => {
                 <Text style={styles.legendTextHeader}>Total</Text>
                 <Text style={styles.legendTextHeader}>Objetivo</Text>
               </View>
-              { pieData ?
-              pieData.slice(1).map((item, index) => (
-                <View key={index} style={styles.legendItem}>
-                  <View
-                    style={[
-                      styles.legendSquare,
-                      { backgroundColor: COLORS[index % COLORS.length] },
-                    ]}
-                  />
-                  <Text style={styles.legendLabel}>{item.label}</Text>
-                  <Text style={styles.legendText}>{item.amount} g</Text>
-                  <Text style={styles.legendText}>{statsPet[item.label]}</Text>
-                </View>
-              )) : null}
+              {pieData
+                ? pieData.slice(1).map((item, index) => (
+                    <View key={index} style={styles.legendItem}>
+                      <View
+                        style={[
+                          styles.legendSquare,
+                          { backgroundColor: COLORS[index % COLORS.length] },
+                        ]}
+                      />
+                      <Text style={styles.legendLabel}>{item.label}</Text>
+                      <Text style={styles.legendText}>{item.amount} g</Text>
+                      <Text style={styles.legendText}>
+                        {statsPet[item.label]}
+                      </Text>
+                    </View>
+                  ))
+                : null}
             </View>
           </View>
           <View
@@ -604,6 +636,7 @@ const EditMenu = ({ navigation, route }) => {
           </View>
         </Modal>
       </View>
+      </ShimmerPlaceHolder>
     </ScrollView>
   );
 };
@@ -944,6 +977,11 @@ const styles = StyleSheet.create({
   closeButtonText: {
     color: "white",
   },
+  chartShimmer: {
+    width: '100%',
+    height: 200,
+    borderRadius: 12,
+  }
 });
 
 export default EditMenu;

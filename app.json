@@ -6,9 +6,10 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "sdkVersion": "49.0.0",
     "packagerOpts": {
-      "sourceExts": ["cjs"]
+      "sourceExts": [
+        "cjs"
+      ]
     },
     "splash": {
       "image": "./assets/logo.png",

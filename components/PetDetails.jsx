@@ -3,10 +3,14 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { calculateBARFDiet, getAge } from "../utils/getPercentage";
+import updateData from "../utils/functions/piedData";
+import { PieChart } from "react-native-gifted-charts";
 
 const PetDetails = ({ route }) => {
   const { selectedPet } = route.params;
   const [barfDiet, setBarfDiet] = useState({});
+  const [pieData, setPieData] = useState([]);
+  const [pieDataGraphic, setPieDataGraphic] = useState([]);
   const [meatPercentage, setMeatPercentage] = useState(0.02);
   const [age, setAge] = useState();
   const [months, setMonths] = useState();
@@ -26,10 +30,12 @@ const PetDetails = ({ route }) => {
     async function fetchData() {
       setMeatPercentage(selectedPet.percentage);
       const agePet = await getAge(selectedPet.date);
-      setAge(agePet.years)
+      setAge(agePet.years);
       setMonths(agePet.remainingMonths);
       const infoBarf = await calculateBARFDiet(selectedPet);
       setBarfDiet(infoBarf);
+      const pieDataInfo = await updateData(selectedPet);
+      setPieData(pieDataInfo);
     }
 
     fetchData();
@@ -50,6 +56,14 @@ const PetDetails = ({ route }) => {
       isEditing: true,
       editPetId: selectedPet.id,
     });
+  };
+
+  const getColorForKey = (key) => {
+    // You can define a color mapping based on the key here
+    // For example, return different colors for different keys
+    // You can use a switch statement or if-else conditions
+    // For this example, I'll use a single color for demonstration
+    return "#FF5733";
   };
 
   return (
@@ -84,37 +98,45 @@ const PetDetails = ({ route }) => {
           </TouchableOpacity>
         </View>
       </View>
-      <Text style={styles.barfDietTitle}>BARF Diet:</Text>
-      <Text style={styles.barfDietText}>
-        Total Daily Diet: {barfDiet.grTotal}
-      </Text>
+      <View style={styles.containerlegend}>
+        <View style={styles.headerContainer}>
+          <Text style={styles.barfDietText}>
+            Total Daily Diet: {barfDiet.grTotal}
+          </Text>
+          <View style={styles.grTotalContainer}>
+            <PieChart
+              donut
+              showText
+              textColor="black"
+              radius={60}
+              innerRadius={25}
+              textSize={20}
+              data={pieData}
+            />
+          </View>
+        </View>
 
-      {barfDiet.meat ? (
-        <Text style={styles.barfDietText}>Meat: {barfDiet.meat}</Text>
-      ) : null}
-      {barfDiet.bones ? (
-        <Text style={styles.barfDietText}>Bones: {barfDiet.bones}</Text>
-      ) : null}
-      {barfDiet.vegetables ? (
-        <Text style={styles.barfDietText}>
-          Vegetables: {barfDiet.vegetables}
-        </Text>
-      ) : null}
-      {barfDiet.higado ? (
-        <Text style={styles.barfDietText}>Liver: {barfDiet.higado}</Text>
-      ) : null}
-      {barfDiet.otrasVisceras ? (
-        <Text style={styles.barfDietText}>
-          Other Organs: {barfDiet.otrasVisceras}
-        </Text>
-      ) : null}
-
-      {barfDiet.viscerasHigado ? (
-        <Text style={styles.barfDietText}>
-          Visceras y higado: {barfDiet.viscerasHigado}
-        </Text>
-      ) : null}
-
+        <View style={styles.tableContainer}>
+          <View style={styles.tableRow}>
+            <Text style={styles.tableHeader}>Elemento</Text>
+            <Text style={styles.tableHeader}>Texto</Text>
+          </View>
+          {Object.entries(barfDiet).map(([key, value]) =>
+            key === "grTotal" ? null : (
+              <View key={key} style={styles.tableRow}>
+                <View
+                  style={[
+                    styles.colorPoint,
+                    { backgroundColor: getColorForKey(key) },
+                  ]}
+                />
+                <Text style={styles.tableItem}>{key}</Text>
+                <Text style={styles.tableItem}>{value}</Text>
+              </View>
+            )
+          )}
+        </View>
+      </View>
       <View>
         <Text style={styles.barfDietTitle}>Configuracion dieta:</Text>
         <Text>Porcentaje diaria de acuerdo a su peso</Text>
@@ -190,8 +212,39 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginTop: 16,
   },
+  headerContainer: {
+  },
   barfDietText: {
     fontSize: 16,
-    marginTop: 8,
+    marginTop: 30,
+    marginBottom: 20,
+  },
+  tableContainer: {
+    backgroundColor: "#F5F5F5",
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 20,
+  },
+  tableRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 5,
+  },
+  tableHeader: {
+    flex: 1,
+    fontWeight: "bold",
+  },
+  tableItem: {
+    flex: 1,
+  },
+  colorPoint: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginRight: 5,
+  },
+  grTotalContainer: {
+    justifyContent: "center", 
+    alignItems: "center",
   },
 });
