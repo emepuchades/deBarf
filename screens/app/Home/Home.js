@@ -75,7 +75,7 @@ export default function Home() {
   if (isLoading) {
     return (
       <View style={styles.container}>
-        <Text>Loading pets...</Text>
+        <Text>{t('home.loanding')}</Text>
       </View>
     );
   }
@@ -104,11 +104,10 @@ export default function Home() {
                   />
                   <Text>
                     <Text style={styles.addPetTitle}>
-                      ¡Registra tu primera mascota ahora!{"\n"}
+                      {t('home.registerTitle')}{"\n"}
                     </Text>
                     <Text>
-                      Usa el botón que se encuentra en la parte inferior para
-                      comenzar.
+                      {t('home.registerSubtitle')}
                     </Text>
                   </Text>
                 </View>
@@ -135,9 +134,9 @@ export default function Home() {
                       )}
                     </View>
                     <View style={styles.textContainer}>
-                      <Text style={styles.nameText}>Nombre: {item.name}</Text>
+                      <Text style={styles.nameText}> {t('home.name')} {item.name}</Text>
                       <Text style={styles.petText}>
-                        Mascota: {item.typePet}
+                         {t('home.pets')} {item.typePet}
                       </Text>
                     </View>
                     <View style={styles.deleteButtonContainer}>
@@ -161,11 +160,10 @@ export default function Home() {
               />
               <Text>
                 <Text style={styles.addPetTitle}>
-                  ¡Registra tu primera mascota ahora!{"\n"}
+                   {t('home.registerTitle')}{"\n"}
                 </Text>
                 <Text>
-                  Usa el botón que se encuentra en la parte inferior para
-                  comenzar.
+                      {t('home.registerSubtitle')}
                 </Text>
               </Text>
             </View>

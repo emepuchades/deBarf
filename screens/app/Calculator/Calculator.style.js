@@ -7,6 +7,7 @@ export const styleCalculator = {
     height: windowHeight - 140,
     width: windowWidth,
     padding: 20,
+    marginBottom: 20,
   },
   tinyLogo: {
     height: 40,

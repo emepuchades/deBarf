@@ -13,7 +13,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { styleFood } from "./Food.style";
 import { useTranslation } from "react-i18next";
 import foodTypes  from "../../../utils/info/food";
-import backgroundImage from "../../../assets/images/header.png"; // Import your background image
+import backgroundImage from "../../../assets/images/header.png";
 
 const Food = () => {
   const { t } = useTranslation();
@@ -49,7 +49,7 @@ const Food = () => {
         style={{
           padding: 5,
           margin: 10,
-          alignItems: "center", // Centrar los elementos horizontalmente
+          alignItems: "center",
         }}
       >
         <View
@@ -109,7 +109,7 @@ const Food = () => {
     } else {
       return (
         <View style={{ marginTop: 20 }}>
-          <Text>Selecciona un tipo de carne</Text>
+          <Text>{t('food.selectType')}</Text>
         </View>
       );
     }

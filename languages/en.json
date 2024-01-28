@@ -1,6 +1,12 @@
 {
   "translation": {
     "newpet": "Add your pet",
+    "dog": "Dog",
+    "cat": "Cat",
+    "ferret": "Ferret",
+    "gr": "gr",
+    "kilos": "kilos",
+    "pounds": "pounds",
     "navBottom": {
       "home": "Home",
       "pets": "Pets",
@@ -9,7 +15,7 @@
       "foods": "Foods",
       "profile": "Profile",
       "signOut": "Sign Out",
-      "planner": "planner",
+      "planner": "Planner",
       "menu": "Menu",
       "shoppingList": "Shopping list",
       "newPet": "Add Pet"
@@ -18,7 +24,15 @@
       "en": "English",
       "es": "Spanish"
     },
+    "home": {
+      "loading": "Loading...",
+      "registerTitle": "Register your first pet now!",
+      "registerSubtitle": "Use the button at the bottom to get started.",
+      "name": "Name:",
+      "pets": "Pets:"
+    },
     "food": {
+      "selectType": "Select a type of meat",
       "searchCategory": "Search for the food in the selected category",
       "huesosCarnosos": "Meaty Bones",
       "pescado": "Fish",
@@ -197,6 +211,45 @@
       "seta": "Mushroom",
       "tomate": "Tomato",
       "yuca": "Cassava"
+    },
+    "calendar": {
+      "editFood": "Edit Food",
+      "mealRation": "Add daily portion",
+      "feed": "Feed",
+      "noFoodError": "You don't have food, click the button above and add them",
+      "noPeterror": "You must select a pet before creating a menu. Create a pet here",
+      "close": "Close"
+    },
+    "calculator": {
+      "generalError": "Please complete all required fields before saving the pet.",
+      "weigthError": "Weight must be a valid number.",
+      "userError": "There is no authenticated user. The pet cannot be kept.",
+      "dateError": "The date cannot be today.",
+      "choosePet": "Choose the type of pets",
+      "addImage": "Add a photo",
+      "namePet": "Name of your pet",
+      "dateBirth": "Birth date:",
+      "selectBirth": "Select the date of birth.",
+      "weigthTitle": "Add the weight",
+      "selectActivity": "How active your pet is?",
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low",
+      "sterilized": "Sterilized",
+      "sportDog": "Sport dog",
+      "isGreyhound": "Is a greyhound",
+      "strayCat": "Stray cat",
+      "save": "Save",
+      "edit": "Edit"
+    },
+    "planner": {
+      "exceeded": "You have exceeded the recommended amount of grams of",
+      "meat": "Meat",
+      "bones": "Edible Bones",
+      "visceras": "Organs",
+      "higado": "Liver",
+      "vegetables": "Vegetables",
+      "fish": "Fish"
     }
   }
 }

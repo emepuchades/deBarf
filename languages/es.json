@@ -1,6 +1,12 @@
 {
   "translation": {
     "newpet": "Añade a tu mascota",
+    "dog": "Perro",
+    "cat": "Gato",
+    "ferret": "Huron",
+    "gr": "gr",
+    "kilos": "kilos",
+    "pounds": "libras",
     "navBottom": {
       "home": "Inicio",
       "pets": "Mascotas",
@@ -18,7 +24,15 @@
       "en": "Inglés",
       "es": "Español"
     },
+    "home": {
+      "loading": "Cargando...",
+      "registerTitle": "¡Registra tu primera mascota ahora!",
+      "registerSubtitle": "Usa el botón que se encuentra en la parte inferior para comenzar.",
+      "name": "Nombre:",
+      "pets": "Mascotas:"
+    },
     "food": {
+      "selectType": "Selecciona un tipo de carne",
       "searchCategory": "Busca el alimento en la catrgoria seleccionada",
       "huesosCarnosos": "Huesos Carnosos",
       "pescado": "Pescado",
@@ -197,6 +211,45 @@
       "seta": "Seta",
       "tomate": "Tomate",
       "yuca": "Yuca"
+    },
+    "calendar": {
+      "editFood": "Editar comida",
+      "mealRation": "Añadir racion diaria",
+      "feed": "Toma",
+      "noFoodError": "No tienes alimentos, clicka al boton de arriba y agregalos",
+      "noPeterror": "Debes seleccionar una mascota antes de crear un menú. Crea una mascota aqui",
+      "close": "Cerrar"
+    },
+    "calculator": {
+      "generalError": "Por favor, complete todos los campos obligatorios antes de guardar la mascota.",
+      "weigthError": "El peso debe ser un número válido.",
+      "userError": "No hay un usuario autenticado. No se puede guardar la mascota.",
+      "dateError": "La fecha no puede ser el día de hoy.",
+      "choosePet": "Elige el tipo de mascotas",
+      "addImage": "Añade una foto",
+      "namePet": "Nombre de tu mascota",
+      "dateBirth": "Fecha nacimiento:",
+      "selectBirth": "Selecciona la fecha de nacimiento",
+      "weigthTitle": "Ingresa el peso",
+      "selectActivity": "Cuánta actividad tiene tu mascota?",
+      "high": "Alta",
+      "medium": "Media",
+      "low": "Baja",
+      "sterilized": "Esterilizado",
+      "sportDog": "Perro de deporte",
+      "isGreyhound": "Es Galgo",
+      "strayCat": "Gato callejero",
+      "save": "Guardar",
+      "edit": "Editar"
+    },
+    "planner":{
+      "exceeded":"Has excedido la cantidad recomendada de ",
+      "meat": "Carne",
+      "bones": "Huesos Carnosos",
+      "visceras": "Visceras",
+      "higado": "Higado",
+      "vegetables": "Vegetales",
+      "fish": "Pescado"
     }
   }
 }

@@ -55,7 +55,6 @@ const MyTabs = () => {
         name={t("navBottom.planner")}
         component={Calendar}
         options={{
-          title: "Calendar",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="md-calendar-sharp" size={22} color={color} />
           ),

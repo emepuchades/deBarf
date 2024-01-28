@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useRef,
+  useTransition,
+} from "react";
 import {
   View,
   Text,
@@ -17,10 +23,12 @@ import Modal from "react-native-modal";
 import { checkIfMenuDataExists, getMenuData } from "../../../utils/dbMenu";
 import { LinearGradient } from "expo-linear-gradient";
 import foodTypes from "../../../utils/info/food.js";
-import backgroundImage from "../../../assets/images/header.png"; // Import your background image
+import backgroundImage from "../../../assets/images/header.png";
+import { useTranslation } from "react-i18next";
 
 const Calendar = () => {
   const { user, db } = useContext(AuthenticatedUserContext);
+  const { t } = useTranslation();
   const [fecha, setFecha] = useState(moment());
   const [comidas, setComidas] = useState({});
   const [foodInfo, setFoodInfo] = useState(foodTypes());
@@ -29,9 +37,7 @@ const Calendar = () => {
   const [inputComidaVisible, setInputComidaVisible] = useState(false);
   const [comidaInput, setComidaInput] = useState("");
   const [idMenu, setIdMenu] = useState("");
-  const [selectedDay, setSelectedDay] = useState(
-    moment().format("YYYY-MM-DD")
-  );
+  const [selectedDay, setSelectedDay] = useState(moment().format("YYYY-MM-DD"));
   const [pets, setPets] = useState([]);
   const [foodData, setFoodData] = useState([]);
   const menuScrollViewRef = useRef(null);
@@ -66,7 +72,7 @@ const Calendar = () => {
             setFoodData([]);
           }
         } else {
-          setIdMenu(null); // Reset idMenu since there is no data
+          setIdMenu(null);
           setFoodData([]);
         }
       }
@@ -106,7 +112,7 @@ const Calendar = () => {
               setFoodData([]);
             }
           } else {
-            setIdMenu(null); // Reset idMenu since there is no data
+            setIdMenu(null);
             setFoodData([]);
           }
         }
@@ -118,10 +124,8 @@ const Calendar = () => {
   }, [navigation]);
 
   useEffect(() => {
-    // Obtener la información de alimentos al cargar el componente
     const fetchFoodData = async () => {
       if (selectedPet && selectedDay) {
-
         const foodString = await getMenuData(db, selectedPet.id, selectedDay);
 
         if (foodString) {
@@ -133,7 +137,7 @@ const Calendar = () => {
             setFoodData([]);
           }
         } else {
-          setIdMenu(null); // Reset idMenu since there is no data
+          setIdMenu(null);
           setFoodData([]);
         }
       }
@@ -367,32 +371,38 @@ const Calendar = () => {
         </ScrollView>
       </View>
       <View style={styles.inputContainer}>
-        {selectedPet && (foodData && foodData.length > 0) ? (
+        {selectedPet && foodData && foodData.length > 0 ? (
           <View style={styles.addButtonContainer}>
             <TouchableOpacity
               onPress={() => editMenu()}
               style={styles.addButton}
             >
-              <Text style={styles.addButtonLabel}>Editar comida</Text>
+              <Text style={styles.addButtonLabel}>
+                {t(`calendar.editFood`)}
+              </Text>
             </TouchableOpacity>
           </View>
         ) : selectedPet ? (
           <View style={styles.addButtonContainer}>
             <TouchableOpacity onPress={handleAddFood} style={styles.addButton}>
-              <Text style={styles.addButtonLabel}>Añadir Racion diaria</Text>
+              <Text style={styles.addButtonLabel}>
+                {t(`calendar.mealRation`)}
+              </Text>
             </TouchableOpacity>
           </View>
         ) : (
           <View style={styles.addButtonContainer}>
             <TouchableOpacity onPress={handleAddFood} style={styles.addButton}>
-              <Text style={styles.addButtonLabel}>Añadir Racion diaria</Text>
+              <Text style={styles.addButtonLabel}>
+                {t(`calendar.mealRation`)}
+              </Text>
             </TouchableOpacity>
           </View>
         )}
       </View>
       <View style={styles.containerFood}>
         <View style={styles.headerFood}>
-          <Text style={styles.headerTextFood}>Toma 1</Text>
+          <Text style={styles.headerTextFood}>{t(`calendar.feed`)} 1</Text>
         </View>
         <View style={styles.contentFood}>
           {foodData ? (
@@ -422,7 +432,7 @@ const Calendar = () => {
                         </View>
                         <View style={styles.containerGrams}>
                           <Text style={styles.textGrams}>
-                            {item.editGrams} gr
+                            {item.editGrams} {t(`gr`)}
                           </Text>
                         </View>
                       </View>
@@ -431,9 +441,7 @@ const Calendar = () => {
               </View>
             ) : (
               <View style={styles.noFoodCOntainer}>
-                <Text>
-                  No tienes alimentos, clicka al boton de arriba y agregalos
-                </Text>
+                <Text>{t(`calendar.noFoodError`)}</Text>
               </View>
             )
           ) : null}
@@ -442,12 +450,11 @@ const Calendar = () => {
       <View style={styles.foodDataContainer}>
         <Modal isVisible={isModalVisible}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalText}>
-              Debes seleccionar una mascota antes de crear un menú. Crea una
-              mascota aqui
-            </Text>
+            <Text style={styles.modalText}>{t(`calendar.noPeterror`)}</Text>
             <TouchableOpacity onPress={closeModal} style={styles.closeButton}>
-              <Text style={styles.closeButtonText}>Cerrar</Text>
+              <Text style={styles.closeButtonText}>
+                {t(`calendar.close`)}
+              </Text>
             </TouchableOpacity>
           </View>
         </Modal>
@@ -458,7 +465,7 @@ const Calendar = () => {
 
 const styles = StyleSheet.create({
   containerWrapper: {
-    flex: 1, // Ensure the wrapper takes up the entire screen
+    flex: 1,
     padding: 0,
   },
   container: {
@@ -507,12 +514,12 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     flexDirection: "row",
-    justifyContent: "space-between", // Alinea los elementos a la derecha y a la izquierda
-    alignItems: "center", // Alinea los elementos verticalmente
+    justifyContent: "space-between", 
+    alignItems: "center", 
   },
   addButtonContainer: {
-    flex: 1, // Esto permite que el botón ocupe el espacio disponible
-    alignItems: "flex-end", // Alinea el botón a la derecha
+    flex: 1,
+    alignItems: "flex-end",
     marginRight: 15,
   },
   addButton: {
@@ -570,9 +577,9 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   bottomContainer: {
-    flexDirection: "row", // Alinea los elementos en una fila
-    justifyContent: "space-between", // Espacio entre los elementos
-    alignItems: "center", // Alinea verticalmente al centro
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   addButton: {
     backgroundColor: "#9D71E8",
@@ -586,7 +593,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   selectedDay: {
-    backgroundColor: "white", // Cambia el color de fondo para el día seleccionado
+    backgroundColor: "white",
     padding: 10,
     borderRadius: 20,
   },
@@ -632,10 +639,10 @@ const styles = StyleSheet.create({
     width: windowWidth - 70,
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "white", // Fondo blanco
+    backgroundColor: "white", 
     padding: 10,
     marginBottom: 10,
-    borderBottomColor: "#ccc", // Color de la ralla
+    borderBottomColor: "#ccc",
   },
   foodInfo: {
     marginLeft: 10,
@@ -674,7 +681,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#9D71E8",
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
-    borderBottomLeftRadius: 0, // Sin radio en la parte inferior izquierda
+    borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
     padding: 8,
   },
@@ -688,8 +695,8 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
-    borderBottomLeftRadius: 8, // Sin radio en la parte inferior izquierda
-    borderBottomRightRadius: 8, // Sin radio en la parte inferior derecha
+    borderBottomLeftRadius: 8, 
+    borderBottomRightRadius: 8,
     padding: 16,
     borderWidth: 1,
     borderColor: "#ddd",
