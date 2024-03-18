@@ -7,6 +7,7 @@
     "gr": "gr",
     "kilos": "kilos",
     "pounds": "pounds",
+    "loading": "Loading...",
     "navBottom": {
       "home": "Home",
       "pets": "Pets",
@@ -250,6 +251,18 @@
       "higado": "Liver",
       "vegetables": "Vegetables",
       "fish": "Fish"
+    },
+    "addMeal": {
+      "total": "Total",
+      "goal": "Goal",
+      "mealDay": "Meal Day",
+      "saveMeal": "Save meal",
+      "selectFood": "Select a food to add it",
+      "food": "Food",
+      "yourFood": "Your food",
+      "foodName": "Nombre del alimento:",
+      "grams": "Grams:",
+      "addMeal": "Add Food"
     }
   }
 }

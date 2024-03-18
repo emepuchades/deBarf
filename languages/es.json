@@ -7,6 +7,7 @@
     "gr": "gr",
     "kilos": "kilos",
     "pounds": "libras",
+    "loading": "Cargando...",
     "navBottom": {
       "home": "Inicio",
       "pets": "Mascotas",
@@ -250,6 +251,18 @@
       "higado": "Higado",
       "vegetables": "Vegetales",
       "fish": "Pescado"
+    }, 
+    "addMeal": {
+      "total": "Total",
+      "goal": "Objetivo",
+      "mealDay": "Comida Dia",
+      "saveMeal": "Guardar Comida",
+      "selectFood": "Selecciona un alimento para agregarlo",
+      "food": "Alimentos",
+      "yourFood": "Tus alimentos",
+      "foodName": "Nombre del alimento:",
+      "grams": "Gramos:",
+      "addMeal": "Añadir"
     }
   }
 }

@@ -59,10 +59,6 @@ const PetDetails = ({ route }) => {
   };
 
   const getColorForKey = (key) => {
-    // You can define a color mapping based on the key here
-    // For example, return different colors for different keys
-    // You can use a switch statement or if-else conditions
-    // For this example, I'll use a single color for demonstration
     return "#FF5733";
   };
 
