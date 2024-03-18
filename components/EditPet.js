@@ -146,8 +146,7 @@ function EditPet({ route }) {
       ) {
         setErrorMessages((prevErrors) => ({
           ...prevErrors,
-          general:
-            "Por favor, complete todos los campos obligatorios antes de guardar la mascota.",
+          general: t(`calculator.generalError`),
         }));
         return;
       }
@@ -155,7 +154,7 @@ function EditPet({ route }) {
       if (isNaN(weight) ||   parseFloat(weight) === 0 || !weight) {
         setErrorMessages((prevErrors) => ({
           ...prevErrors,
-          weight: "El peso debe ser un número válido.",
+          weight: t(`calculator.weigthError`),
         }));
         return;
       }
@@ -163,7 +162,7 @@ function EditPet({ route }) {
       if (!user) {
         setErrorMessages((prevErrors) => ({
           ...prevErrors,
-          user: "No hay un usuario autenticado. No se puede guardar la mascota.",
+          user: t(`calculator.userError`),
         }));
         return;
       }
@@ -175,7 +174,7 @@ function EditPet({ route }) {
       if (date.toDateString() === currentDate.toDateString()) {
         setErrorMessages((prevErrors) => ({
           ...prevErrors,
-          date: "La fecha no puede ser el día de hoy.",
+          date: t(`calculator.dateError`),
         }));
         return;
       }
@@ -209,7 +208,7 @@ function EditPet({ route }) {
       showsHorizontalScrollIndicator={false}
     >
       <View style={styles.containerSelectPet}>
-        <Text style={styles.titleEligeType}>Elige el tipo de mascota</Text>
+        <Text style={styles.titleEligeType}>{t(`calculator.choosePet`)}</Text>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={[
@@ -228,7 +227,7 @@ function EditPet({ route }) {
                 selectedPet === "perro" && styles.buttonTextPressed,
               ]}
             >
-              Perro
+              {t(`dog`)}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -248,7 +247,7 @@ function EditPet({ route }) {
                 selectedPet === "gato" && styles.buttonTextPressed,
               ]}
             >
-              Gato
+              {t(`cat`)}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -268,7 +267,7 @@ function EditPet({ route }) {
                 selectedPet === "huron" && styles.buttonTextPressed,
               ]}
             >
-              Huron
+              {t(`ferret`)}
             </Text>
           </TouchableOpacity>
         </View>
@@ -288,22 +287,22 @@ function EditPet({ route }) {
               }}
             >
               <Ionicons name="camera" size={24} color="#fff" />
-              <Text color="#fff">Anade una foto</Text>
+              <Text color="#fff">{t(`calculator.addImage`)}</Text>
             </View>
           </TouchableOpacity>
           <View>
-            <Text style={styles.petNameTitle}> Nombre de tu {selectedPet}</Text>
+            <Text style={styles.petNameTitle}> {t(`calculator.namePet`)}</Text>
             <TextInput
               value={searchText}
               style={styles.namePet}
               onChangeText={handleSearchTextChange}
-              placeholder={`Nombre de tu ${selectedPet}`}
+              placeholder={t(`calculator.namePet`)}
             />
           </View>
         </View>
 
         <View style={styles.containerDate}>
-          <Text>Fecha nacimiento: {date.toDateString()}</Text>
+          <Text>{t(`calculator.dateBirth`) + date.toDateString()}</Text>
           {datePicker && (
             <DateTimePicker
               value={date}
@@ -316,21 +315,21 @@ function EditPet({ route }) {
           )}
           <View style={{ margin: 10 }}>
             <Button
-              title="Introduce la fecha de nacimiento"
+              title={t(`calculator.selectBirth`)}
               color="green"
               onPress={showDatePicker}
             />
           </View>
         </View>
 
-        <Text>Seleccionar peso:</Text>
+        <Text>{t(`calculator.weigthTitle`)}</Text>
         <View style={styles.weightPickerContainer}>
           <View style={styles.weightInputContainer}>
             <TextInput
               style={styles.weightInput}
               value={weight}
               onChangeText={setWeight}
-              placeholder="Ingrese el peso"
+              placeholder={t(`calculator.weigthTitle`)}
               keyboardType="numeric"
             />
             <Picker
@@ -338,21 +337,21 @@ function EditPet({ route }) {
               style={styles.weightUnitPicker}
               onValueChange={(itemValue) => setWeightUnit(itemValue)}
             >
-              <Picker.Item label="Kilos" value="kilos" />
-              <Picker.Item label="Libras" value="libras" />
+              <Picker.Item label={t(`kilos`)} value="kilos" />
+              <Picker.Item label={t(`pounds`)} value="libras" />
             </Picker>
           </View>
         </View>
 
-        <Text>Seleccionar de actividad:</Text>
+        <Text>{t(`calculator.selectActivity`)}</Text>
         <Picker
           selectedValue={activity}
           style={styles.picker}
           onValueChange={handleActivityChange}
         >
-          <Picker.Item label="Baja" value="baja" />
-          <Picker.Item label="Media" value="media" />
-          <Picker.Item label="Alta" value="alta" />
+          <Picker.Item label={t(`calculator.low`)} value="baja" />
+          <Picker.Item label={t(`calculator.medium`)} value="media" />
+          <Picker.Item label={t(`calculator.high`)} value="alta" />
         </Picker>
 
         {selectedPet === "perro" && (
@@ -367,7 +366,7 @@ function EditPet({ route }) {
               >
                 {isSterilized && <Text style={styles.checkBoxText}>✓</Text>}
               </TouchableOpacity>
-              <Text>Esterilizado</Text>
+              <Text>{t(`calculator.sterilized`)}</Text>
             </View>
 
             <View style={styles.checkBoxContainer}>
@@ -380,7 +379,7 @@ function EditPet({ route }) {
               >
                 {isSportingDog && <Text style={styles.checkBoxText}>✓</Text>}
               </TouchableOpacity>
-              <Text>Perro de deporte</Text>
+              <Text>{t(`calculator.sportDog`)}</Text>
             </View>
 
             <View style={styles.checkBoxContainer}>
@@ -393,7 +392,7 @@ function EditPet({ route }) {
               >
                 {isGreyhound && <Text style={styles.checkBoxText}>✓</Text>}
               </TouchableOpacity>
-              <Text>Es galgo</Text>
+              <Text>{t(`calculator.isGreyhound`)}</Text>
             </View>
           </>
         )}
@@ -410,7 +409,7 @@ function EditPet({ route }) {
               >
                 {isSterilized && <Text style={styles.checkBoxText}>✓</Text>}
               </TouchableOpacity>
-              <Text>Esterilizado</Text>
+              <Text>{t(`calculator.sterilized`)}</Text>
             </View>
 
             <View style={styles.checkBoxContainer}>
@@ -423,7 +422,7 @@ function EditPet({ route }) {
               >
                 {isSportingDog && <Text style={styles.checkBoxText}>✓</Text>}
               </TouchableOpacity>
-              <Text>Gato callejero</Text>
+              <Text>{t(`calculator.strayCat`)}</Text>
             </View>
           </>
         )}
@@ -440,7 +439,7 @@ function EditPet({ route }) {
               >
                 {isSterilized && <Text style={styles.checkBoxText}>✓</Text>}
               </TouchableOpacity>
-              <Text>Esterilizado</Text>
+              <Text>{t(`calculator.sterilized`)}</Text>
             </View>
           </>
         )}
@@ -459,7 +458,7 @@ function EditPet({ route }) {
           mode="contained"
           style={styles.guardarButton}
         >
-          Editar
+          {t(`calculator.edit`)}
         </PaperButton>
       </View>
     </ScrollView>

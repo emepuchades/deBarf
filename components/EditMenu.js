@@ -338,10 +338,6 @@ const EditMenu = ({ navigation, route }) => {
       vertical
       showsHorizontalScrollIndicator={false}
     >
-            <ShimmerPlaceHolder
-        autoRun={true}
-        visible={loading}
-      >
       {statsPet ? (
         <View>
           <View style={styles.contentContainer}>
@@ -385,7 +381,11 @@ const EditMenu = ({ navigation, route }) => {
             </View>
           </View>
           <View
-            style={{ flexDirection: "row", alignItems: "center", padding: 12 }}
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              padding: 12,
+            }}
           >
             <Text style={styles.label}>{selectedPet.name}</Text>
             <View style={{ flexDirection: "row", marginLeft: "auto" }}>
@@ -636,7 +636,6 @@ const EditMenu = ({ navigation, route }) => {
           </View>
         </Modal>
       </View>
-      </ShimmerPlaceHolder>
     </ScrollView>
   );
 };
@@ -978,10 +977,10 @@ const styles = StyleSheet.create({
     color: "white",
   },
   chartShimmer: {
-    width: '100%',
+    width: "100%",
     height: 200,
     borderRadius: 12,
-  }
+  },
 });
 
 export default EditMenu;

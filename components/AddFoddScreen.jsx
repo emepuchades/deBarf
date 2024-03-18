@@ -17,7 +17,7 @@ import { Picker } from "@react-native-picker/picker";
 import { Ionicons } from "@expo/vector-icons";
 import ErrorMessage from "./ErrorMessage.js";
 import addMenu from "../utils/dbMenu.js";
-import backgroundImage from "../assets/images/header.png"; // Import your background image
+import backgroundImage from "../assets/images/header.png";
 import { windowHeight, windowWidth } from "../utils/Dimentions";
 import Modal from "react-native-modal";
 
@@ -34,7 +34,7 @@ const AddFoodScreen = ({ navigation, route }) => {
   const [date, setDate] = useState(route.params.fecha);
   const [day, setDay] = useState(route.params.fecha);
   const [selectedTab, setSelectedTab] = useState("ourFood");
-  const [activeTab, setActiveTab] = useState("huesosCarnosos"); // Establece la categoría predeterminada
+  const [activeTab, setActiveTab] = useState("huesosCarnosos");
   const [pieData, setPieData] = useState([]);
   const [pieDataGraphic, setPieDataGraphic] = useState([]);
   const { t } = useTranslation();
@@ -127,7 +127,7 @@ const AddFoodScreen = ({ navigation, route }) => {
     };
 
     updateData();
-  }, [route.params.selectedPet]);
+  }, [route.params.selectedPet, t]);
 
   useEffect(() => {
     updatePieChart();
@@ -192,7 +192,7 @@ const AddFoodScreen = ({ navigation, route }) => {
       const categoryGrams = parseInt(statsPet[category].split(" ")[0], 10);
 
       if (categorySum > categoryGrams) {
-        newErrorMessages[category] = `Te has pasado de ${category}`;
+        newErrorMessages[category] = t(`planner.exceeded`) + t(`planner.${category}`);
       }
     }
 
@@ -272,7 +272,6 @@ const AddFoodScreen = ({ navigation, route }) => {
       category: category,
     };
 
-    // Verificar si ya existe un alimento con el mismo nombre
     const isDuplicate = selectedFoods.some(
       (food) => food.name === selectedFoodNew.name
     );
@@ -319,9 +318,9 @@ const AddFoodScreen = ({ navigation, route }) => {
       vertical
       showsHorizontalScrollIndicator={false}
     >
-    {loading ? (
-      <Text>Loading</Text>
-    ) : statsPet ? (
+      {loading ? (
+        <Text>{t(`loading`)}</Text>
+      ) : statsPet ? (
         <View>
           <View style={styles.contentContainer}>
             <View style={styles.chartContainer}>
@@ -341,8 +340,10 @@ const AddFoodScreen = ({ navigation, route }) => {
               <View style={styles.legendItem}>
                 <View style={styles.legendSquare} />
                 <Text style={styles.legendLabelHeader}></Text>
-                <Text style={styles.legendTextHeader}>Total</Text>
-                <Text style={styles.legendTextHeader}>Objetivo</Text>
+                <Text style={styles.legendTextHeader}>
+                  {t(`addMeal.total`)}
+                </Text>
+                <Text style={styles.legendTextHeader}>{t(`addMeal.goal`)}</Text>
               </View>
               {pieData.slice(1).map((item, index) => (
                 <View key={index} style={styles.legendItem}>
@@ -385,7 +386,9 @@ const AddFoodScreen = ({ navigation, route }) => {
           </View>
           <View style={styles.containerFood}>
             <View style={styles.headerFood}>
-              <Text style={styles.headerTextFood}>Comida dia {day}</Text>
+              <Text style={styles.headerTextFood}>
+                {t(`addMeal.mealDay`)} {day}
+              </Text>
             </View>
             <View style={styles.contentFood}>
               {selectedFoods.map((food, index) => (
@@ -455,13 +458,13 @@ const AddFoodScreen = ({ navigation, route }) => {
                   left: 0,
                   width: 150,
                   height: 40,
-                  resizeMode: "cover", // This makes the image cover the
+                  resizeMode: "cover",
                 }}
               />
-              <Text style={styles.addButtonLabel}>Guardar Comida</Text>
+              <Text style={styles.addButtonLabel}>{t(`addMeal.saveMeal`)}</Text>
             </TouchableOpacity>
           </View>
-          <Text style={styles.label}>Clicka un alimento para anadirlo:</Text>
+          <Text style={styles.label}>{t(`addMeal.selectFood`)}</Text>
           <View>
             <View style={styles.tabsContainer}>
               <TouchableOpacity
@@ -471,7 +474,7 @@ const AddFoodScreen = ({ navigation, route }) => {
                   selectedTab === "ourFood" && styles.activeTab,
                 ]}
               >
-                <Text style={styles.tabButtonText}>Nuestra Comida</Text>
+                <Text style={styles.tabButtonText}>{t(`addMeal.food`)}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => setSelectedTab("addFood")}
@@ -480,7 +483,9 @@ const AddFoodScreen = ({ navigation, route }) => {
                   selectedTab === "addFood" && styles.activeTab,
                 ]}
               >
-                <Text style={styles.tabButtonText}>Tu Comida</Text>
+                <Text style={styles.tabButtonText}>
+                  {t(`addMeal.yourFood`)}
+                </Text>
               </TouchableOpacity>
             </View>
             {selectedTab === "ourFood" ? (
@@ -542,20 +547,20 @@ const AddFoodScreen = ({ navigation, route }) => {
               </View>
             ) : (
               <View style={styles.addFoodContainer}>
-                <Text style={styles.addFoodText}>Nombre del alimento:</Text>
+                <Text style={styles.addFoodText}> {t(`addMeal.foodName`)}</Text>
                 <TextInput
                   style={styles.addFoodInput}
-                  placeholder="Nombre de la comida"
+                  placeholder={t(`addMeal.foodName`)}
                   value={foodName}
                   onChangeText={setFoodName}
                 />
 
                 <View style={styles.row}>
                   <View style={styles.columnLeft}>
-                    <Text style={styles.addFoodText}>Gramos:</Text>
+                    <Text style={styles.addFoodText}>{t(`addMeal.grams`)}</Text>
                     <TextInput
                       style={styles.addFoodInputSmall}
-                      placeholder="Gramos"
+                      placeholder={t(`addMeal.grams`)}
                       value={yourGrFood}
                       onChangeText={setYourGrFood}
                     />
@@ -583,7 +588,7 @@ const AddFoodScreen = ({ navigation, route }) => {
                         .map((categoryName, index) => (
                           <Picker.Item
                             key={index}
-                            label={categoryName}
+                            label={t(`food.${categoryName}`)}
                             value={categoryName}
                           />
                         ))}
@@ -595,15 +600,16 @@ const AddFoodScreen = ({ navigation, route }) => {
                   onPress={() => handleSaveFood()}
                   style={styles.addFoodButton}
                 >
-                  <Text style={styles.addFoodButtonText}>Añadir</Text>
+                  <Text style={styles.addFoodButtonText}>
+                    {t(`addMeal.addMeal`)}
+                  </Text>
                 </TouchableOpacity>
               </View>
             )}
           </View>
         </View>
       ) : null}
-      </ScrollView>
-
+    </ScrollView>
   );
 };
 
@@ -629,10 +635,10 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     width: 150,
-    height: 40, // A height is set to make sure the button has a defined size
+    height: 40,
     alignItems: "center",
     justifyContent: "center",
-    overflow: "hidden", // To ensure the image stays within the button boundaries
+    overflow: "hidden",
   },
   addButtonLabel: {
     color: "white",
@@ -904,7 +910,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#9D71E8",
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
-    borderBottomLeftRadius: 0, // Sin radio en la parte inferior izquierda
+    borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
     padding: 8,
   },
@@ -918,8 +924,8 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
-    borderBottomLeftRadius: 8, // Sin radio en la parte inferior izquierda
-    borderBottomRightRadius: 8, // Sin radio en la parte inferior derecha
+    borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 8,
     padding: 16,
     borderWidth: 1,
     borderColor: "#ddd",
