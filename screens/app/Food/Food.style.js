@@ -5,12 +5,20 @@ import { windowWidth } from "../../../utils/Dimentions";
 
 export const styleFood = {
   container: {
-    backgroundColor: "#fff",
+    backgroundColor: "#fAfAfA",
     height: windowHeight - 85,
   },
-  content: {},
+  content: {
+    flex: 1,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "flex-start",
+  },
+  rowContainer: {
+  },
   menuItems: {
-    height: 60,
+    height: 100,
+    marginLeft: 5,
   },
   textMenu: {
     width: 34,
@@ -21,15 +29,14 @@ export const styleFood = {
     marginRight: 50,
     marginLeft: 25,
     paddingLeft: 20,
+    marginTop: 10,
   },
   foodContainer: {
+    width: "43%",
+    margin: 10,
     marginTop: 10,
     marginBottom: 10,
-    marginLeft: 20,
-    marginRight: 20,
     backgroundColor: "#ffffff",
-    flex: 1,
-    flexDirection: "row",
     alignItems: "center",
     textAlign: "center",
     borderRadius: 10,
@@ -43,15 +50,16 @@ export const styleFood = {
     elevation: 5,
     backgroundColor: "#fff",
   },
-
   foodText: {
     textAlign: "center",
     fontSize: 14,
     fontWeight: "bold",
+    marginBottom: 10,
+    marginTop: 10,
   },
   type: {
     color: "white",
-    fontSize: 18,
+    fontSize: 20,
     margin: 10,
     marginLeft: 22,
     fontWeight: "600",
@@ -63,8 +71,8 @@ export const styleFood = {
   searchInput: {
     flex: 1,
     marginTop: 10,
-    marginLeft: 20,
-    marginRight: 20,
+    marginLeft: 30,
+    marginRight: 30,
     marginBottom: 5,
     padding: 10,
     borderColor: "#ccc",
@@ -75,12 +83,13 @@ export const styleFood = {
     flexDirection: "row",
     alignItems: "center",
     marginHorizontal: 10,
-    marginTop: 10,
+    marginTop: 20,
     marginBottom: 5,
     borderColor: "#ccc",
     borderWidth: 1,
     borderRadius: 5,
-    marginLeft: 10,
+    marginLeft: 15,
+    marginRight: 15,
     backgroundColor: "white",
   },
   searchContainerInput: {
@@ -91,5 +100,29 @@ export const styleFood = {
   },
   searchIcon: {
     marginRight: 10,
+  },
+  imageContainerMenu: {
+    width: 30,
+    height: 30,
+    backgroundColor: "white",
+    borderRadius: 10,
+    marginBottom: 5,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  iconMenu: {
+    width: 40,
+    height: 40,
+  },
+  textMenu: {
+    color: "#111111",
+    textAlign: "center",
+  },
+  menuItem: {
+    flexDirection: "column",
+    alignItems: "center",
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 5,
   },
 };

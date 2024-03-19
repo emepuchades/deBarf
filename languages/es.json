@@ -34,7 +34,7 @@
     },
     "food": {
       "selectType": "Selecciona un tipo de carne",
-      "searchCategory": "Busca el alimento en la catrgoria seleccionada",
+      "searchCategory": "Busca el alimento en la categoria seleccionada",
       "huesosCarnosos": "Huesos Carnosos",
       "pescado": "Pescado",
       "carne": "Carne",
