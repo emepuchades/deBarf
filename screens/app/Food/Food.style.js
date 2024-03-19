@@ -59,7 +59,7 @@ export const styleFood = {
   },
   type: {
     color: "white",
-    fontSize: 20,
+    fontSize: 21,
     margin: 10,
     marginLeft: 22,
     fontWeight: "600",
