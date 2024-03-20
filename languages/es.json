@@ -226,7 +226,7 @@
       "weigthError": "El peso debe ser un número válido.",
       "userError": "No hay un usuario autenticado. No se puede guardar la mascota.",
       "dateError": "La fecha no puede ser el día de hoy.",
-      "choosePet": "Elige el tipo de mascotas",
+      "choosePet": "Elige a tu mascota",
       "addImage": "Añade una foto",
       "namePet": "Nombre de tu mascota",
       "dateBirth": "Fecha nacimiento:",

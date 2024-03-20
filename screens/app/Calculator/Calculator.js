@@ -260,14 +260,12 @@ function Calculator() {
                 backgroundColor: "rgba(0, 0, 0, 0.3)",
               }}
             >
-              <Ionicons name="camera" size={24} color="#fff" />
+              <Ionicons name="camera" size={30} color="#fff" />
               <Text color="#fff">{t(`calculator.addImage`)}</Text>
             </View>
           </TouchableOpacity>
           <View>
-            <Text style={styles.petNameTitle}>
-              {t(`calculator.namePet`)}
-            </Text>
+            <Text style={styles.petNameTitle}>{t(`calculator.namePet`)}</Text>
             <TextInput
               value={searchText}
               style={styles.namePet}
@@ -278,7 +276,12 @@ function Calculator() {
         </View>
 
         <View style={styles.containerDate}>
-          <Text>{t(`calculator.dateBirth`) + date.toDateString()}</Text>
+          <View style={styles.containerDateText}>
+            <Text style={styles.textDateBirthTitle}>
+              {t(`calculator.dateBirth`)}
+            </Text>
+            <Text style={styles.textDateBirth}>{date.toDateString()}</Text>
+          </View>
           {datePicker && (
             <DateTimePicker
               value={date}
@@ -292,13 +295,13 @@ function Calculator() {
           <View style={{ margin: 10 }}>
             <Button
               title={t(`calculator.selectBirth`)}
-              color="green"
+              color="#4F98FE"
               onPress={showDatePicker}
             />
           </View>
         </View>
 
-        <Text>{t(`calculator.weigthTitle`)}</Text>
+        <Text style={styles.weigthTitle}>{t(`calculator.weigthTitle`)}</Text>
         <View style={styles.weightPickerContainer}>
           <View style={styles.weightInputContainer}>
             <TextInput
@@ -319,7 +322,9 @@ function Calculator() {
           </View>
         </View>
 
-        <Text>{t(`calculator.selectActivity`)}</Text>
+        <Text style={styles.selectActivityTitle}>
+          {t(`calculator.selectActivity`)}
+        </Text>
         <Picker
           selectedValue={activity}
           style={styles.picker}
@@ -342,7 +347,9 @@ function Calculator() {
               >
                 {isSterilized && <Text style={styles.checkBoxText}>✓</Text>}
               </TouchableOpacity>
-              <Text>{t(`calculator.sterilized`)}</Text>
+              <Text style={styles.checkBoxContainerText}>
+                {t(`calculator.sterilized`)}
+              </Text>
             </View>
 
             <View style={styles.checkBoxContainer}>
@@ -355,7 +362,9 @@ function Calculator() {
               >
                 {isSportingDog && <Text style={styles.checkBoxText}>✓</Text>}
               </TouchableOpacity>
-              <Text>{t(`calculator.sportDog`)}</Text>
+              <Text style={styles.checkBoxContainerText}>
+                {t(`calculator.sportDog`)}
+              </Text>
             </View>
 
             <View style={styles.checkBoxContainer}>
@@ -368,7 +377,9 @@ function Calculator() {
               >
                 {isGreyhound && <Text style={styles.checkBoxText}>✓</Text>}
               </TouchableOpacity>
-              <Text>{t(`calculator.isGreyhound`)}</Text>
+              <Text style={styles.checkBoxContainerText}>
+                {t(`calculator.isGreyhound`)}
+              </Text>
             </View>
           </>
         )}
@@ -385,7 +396,9 @@ function Calculator() {
               >
                 {isSterilized && <Text style={styles.checkBoxText}>✓</Text>}
               </TouchableOpacity>
-              <Text>{t(`calculator.sterilized`)}</Text>
+              <Text style={styles.checkBoxContainerText}>
+                {t(`calculator.sterilized`)}
+              </Text>
             </View>
 
             <View style={styles.checkBoxContainer}>
@@ -398,7 +411,9 @@ function Calculator() {
               >
                 {isSportingDog && <Text style={styles.checkBoxText}>✓</Text>}
               </TouchableOpacity>
-              <Text>{t(`calculator.strayCat`)}</Text>
+              <Text style={styles.checkBoxContainerText}>
+                {t(`calculator.strayCat`)}
+              </Text>
             </View>
           </>
         )}
@@ -415,7 +430,9 @@ function Calculator() {
               >
                 {isSterilized && <Text style={styles.checkBoxText}>✓</Text>}
               </TouchableOpacity>
-              <Text>{t(`calculator.sterilized`)}</Text>
+              <Text style={styles.checkBoxContainerText}>
+                {t(`calculator.sterilized`)}
+              </Text>
             </View>
           </>
         )}

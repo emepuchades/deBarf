@@ -7,11 +7,10 @@ export const styleCalculator = {
     height: windowHeight - 140,
     width: windowWidth,
     padding: 20,
-    marginBottom: 20,
   },
   tinyLogo: {
-    height: 40,
-    width: 40,
+    height: 35,
+    width: 35,
   },
   containerPetInfo: {
     flex: 1,
@@ -22,6 +21,7 @@ export const styleCalculator = {
     marginBottom: 20,
   },
   titleEligeType: {
+    fontSize: 17,
     fontWeight: "bold",
   },
   containerSelectPet: {
@@ -30,6 +30,7 @@ export const styleCalculator = {
   petNameTitle: {
     marginLeft: 20,
     marginTop: 30,
+    fontSize: 16,
     fontWeight: "bold",
   },
   petImage: {
@@ -50,6 +51,23 @@ export const styleCalculator = {
   },
   containerDate: {
     marginBottom: 20,
+    flex: 1,
+  },
+  textDateBirth: {
+    fontSize: 16,
+  },
+  textDateBirthTitle: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginRight: 10,
+  },
+  containerDateText: {
+    flex: 1,
+    flexDirection: "row",
+  },
+  weigthTitle: {
+    fontSize: 16,
+    fontWeight: "bold",
   },
   weightPickerContainer: {
     flexDirection: "row",
@@ -59,6 +77,11 @@ export const styleCalculator = {
   },
   weightPicker: {
     alignItems: "center",
+  },
+  selectActivityTitle: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 10,
   },
   pickerItem: {
     justifyContent: "center",
@@ -82,21 +105,19 @@ export const styleCalculator = {
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "left",
-    marginTop: 10,
+    marginTop: 15,
   },
   button: {
-    paddingHorizontal: 35,
+    paddingHorizontal: 22,
     paddingVertical: 10,
-    borderRadius: 5,
-    borderWidth: 1,
-
-    borderColor: "#000",
+    borderRadius: 40,
+    backgroundColor: "#fAfAfA",
   },
   buttonText: {
     fontSize: 16,
   },
   buttonPressed: {
-    backgroundColor: "#000",
+    backgroundColor: "#4F98FE",
   },
   buttonTextPressed: {
     color: "#fff",
@@ -106,14 +127,17 @@ export const styleCalculator = {
     height: 100,
     resizeMode: "contain",
   },
+  datePicker: {
+    backgroundColor: "#4F98FE",
+  },
   checkBoxContainer: {
     flexDirection: "row",
     alignItems: "center",
     marginTop: 10,
   },
   checkBox: {
-    width: 15,
-    height: 15,
+    width: 18,
+    height: 20,
     borderWidth: 1,
     borderColor: "#000",
     justifyContent: "center",
@@ -121,9 +145,10 @@ export const styleCalculator = {
     marginRight: 5,
   },
   checkBoxSelected: {
-    backgroundColor: "#000",
+    backgroundColor: "#4F98FE",
   },
   checkBoxText: {
+    fontSize: 13,
     color: "#fff",
   },
   petImage: {
@@ -148,7 +173,12 @@ export const styleCalculator = {
   weightUnitPicker: {
     width: 140,
   },
+  checkBoxContainerText: {
+    fontSize: 15,
+  },
   guardarButton: {
     margin: 20,
+    marginBottom: 40,
+    backgroundColor: "#4F98FE",
   },
 };
