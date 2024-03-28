@@ -264,7 +264,7 @@ function Calculator() {
               <Text color="#fff">{t(`calculator.addImage`)}</Text>
             </View>
           </TouchableOpacity>
-          <View>
+          <View style={styles.petNameConatiner}>
             <Text style={styles.petNameTitle}>{t(`calculator.namePet`)}</Text>
             <TextInput
               value={searchText}
