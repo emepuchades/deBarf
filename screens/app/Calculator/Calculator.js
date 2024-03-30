@@ -247,21 +247,28 @@ function Calculator() {
         </View>
         <View style={styles.containerPetInfo}>
           <TouchableOpacity onPress={handleImageSelect}>
-            {selectedImage ? (
-              <Image source={{ uri: selectedImage }} style={styles.petImage} />
-            ) : (
-              <Image source={petImageSource} style={styles.petImage} />
-            )}
-            <View
-              style={{
-                ...StyleSheet.absoluteFillObject,
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: "rgba(0, 0, 0, 0.3)",
-              }}
-            >
-              <Ionicons name="camera" size={30} color="#fff" />
-              <Text color="#fff">{t(`calculator.addImage`)}</Text>
+            <View style={styles.petImage}>
+              <View
+                style={{
+                  ...StyleSheet.absoluteFillObject,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: "#f0f0f0",
+                  borderRadius: 20,
+                }}
+              >
+                <Ionicons name="camera" size={27} color="#111" />
+                <Text
+                  style={{
+                    paddingVertical: 2,
+                    paddingHorizontal: 10,
+                    textAlign: "center",
+                    fontSize: 13,
+                  }}
+                >
+                  {t(`calculator.addImage`)}
+                </Text>
+              </View>
             </View>
           </TouchableOpacity>
           <View style={styles.petNameConatiner}>
@@ -270,11 +277,9 @@ function Calculator() {
               value={searchText}
               style={styles.namePet}
               onChangeText={handleSearchTextChange}
-              placeholder={t(`calculator.namePet`)}
             />
           </View>
         </View>
-
         <View style={styles.containerDate}>
           <View style={styles.containerDateText}>
             <Text style={styles.textDateBirthTitle}>
@@ -300,7 +305,6 @@ function Calculator() {
             />
           </View>
         </View>
-
         <Text style={styles.weigthTitle}>{t(`calculator.weigthTitle`)}</Text>
         <View style={styles.weightPickerContainer}>
           <View style={styles.weightInputContainer}>
@@ -308,7 +312,6 @@ function Calculator() {
               style={styles.weightInput}
               value={weight}
               onChangeText={setWeight}
-              placeholder={t(`calculator.weigthTitle`)}
               keyboardType="numeric"
             />
             <Picker
@@ -321,20 +324,20 @@ function Calculator() {
             </Picker>
           </View>
         </View>
-
         <Text style={styles.selectActivityTitle}>
           {t(`calculator.selectActivity`)}
         </Text>
-        <Picker
-          selectedValue={activity}
-          style={styles.picker}
-          onValueChange={handleActivityChange}
-        >
-          <Picker.Item label={t(`calculator.low`)} value="baja" />
-          <Picker.Item label={t(`calculator.medium`)} value="media" />
-          <Picker.Item label={t(`calculator.high`)} value="alta" />
-        </Picker>
-
+        <View style={styles.pickerContainer}>
+          <Picker
+            selectedValue={activity}
+            style={[styles.picker]}
+            onValueChange={handleActivityChange}
+          >
+            <Picker.Item label={t(`calculator.low`)} value="baja" />
+            <Picker.Item label={t(`calculator.medium`)} value="media" />
+            <Picker.Item label={t(`calculator.high`)} value="alta" />
+          </Picker>
+        </View>
         {selectedPet === "perro" && (
           <>
             <View style={styles.checkBoxContainer}>
@@ -383,7 +386,6 @@ function Calculator() {
             </View>
           </>
         )}
-
         {selectedPet === "gato" && (
           <>
             <View style={styles.checkBoxContainer}>
@@ -417,7 +419,6 @@ function Calculator() {
             </View>
           </>
         )}
-
         {selectedPet === "huron" && (
           <>
             <View style={styles.checkBoxContainer}>
@@ -436,7 +437,6 @@ function Calculator() {
             </View>
           </>
         )}
-
         {errorMessages.general && (
           <ErrorMessage message={errorMessages.general} />
         )}
@@ -445,7 +445,6 @@ function Calculator() {
           <ErrorMessage message={errorMessages.weight} />
         )}
         {errorMessages.user && <ErrorMessage message={errorMessages.user} />}
-
         <PaperButton
           onPress={() => handleGuardar()}
           mode="contained"
