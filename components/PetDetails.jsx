@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { calculateBARFDiet, getAge } from "../utils/getPercentage";
 import updateData from "../utils/functions/piedData";
 import { PieChart } from "react-native-gifted-charts";
+import { windowWidth } from "../utils/Dimentions";
 
 const PetDetails = ({ route }) => {
   const { selectedPet } = route.params;
@@ -63,98 +64,104 @@ const PetDetails = ({ route }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.petInfoContainer}>
-        <View style={styles.imageContainer}>
-          {!selectedPet.image ? (
-            <Image
-              style={styles.imagePet}
-              source={petImageMap[selectedPet.typePet]}
-            />
-          ) : (
-            <Image
-              style={styles.imagePet}
-              source={{ uri: decodeBase64Image(selectedPet.image) }}
-            />
-          )}
-        </View>
-        <View style={styles.petDetails}>
-          <Text style={styles.petName}>Name: {selectedPet.name}</Text>
-          <Text style={styles.petMascota}>Pet: {selectedPet.typePet}</Text>
-          <Text style={styles.petWeight}>Peso: {selectedPet.weight}</Text>
-          <Text style={styles.petWeight}>
-            Anos: {age} | Meses: {months}
-          </Text>
+    <ScrollView
+      style={styles.container}
+      vertical
+      showsHorizontalScrollIndicator={false}
+    >
+      <View>
+        <View style={styles.petInfoContainer}>
+          <View style={styles.imageContainer}>
+            {!selectedPet.image ? (
+              <Image
+                style={styles.imagePet}
+                source={petImageMap[selectedPet.typePet]}
+              />
+            ) : (
+              <Image
+                style={styles.imagePet}
+                source={{ uri: decodeBase64Image(selectedPet.image) }}
+              />
+            )}
+          </View>
+          <View style={styles.petDetails}>
+            <Text style={styles.petName}>Name: {selectedPet.name}</Text>
+            <Text style={styles.petMascota}>Pet: {selectedPet.typePet}</Text>
+            <Text style={styles.petWeight}>Peso: {selectedPet.weight}</Text>
+            <Text style={styles.petWeight}>
+              Anos: {age} | Meses: {months}
+            </Text>
 
-          <TouchableOpacity
-            style={styles.editButton}
-            onPress={() => handleEditPet(selectedPet.id)}
-          >
-            <Text style={styles.editButtonText}>Editar Mascota</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-      <View style={styles.containerlegend}>
-        <View style={styles.headerContainer}>
-          <Text style={styles.barfDietText}>
-            Total Daily Diet: {barfDiet.grTotal}
-          </Text>
-          <View style={styles.grTotalContainer}>
-            <PieChart
-              donut
-              showText
-              textColor="black"
-              radius={60}
-              innerRadius={25}
-              textSize={20}
-              data={pieData}
-            />
+            <TouchableOpacity
+              style={styles.editButton}
+              onPress={() => handleEditPet(selectedPet.id)}
+            >
+              <Text style={styles.editButtonText}>Editar Mascota</Text>
+            </TouchableOpacity>
           </View>
         </View>
-
-        <View style={styles.tableContainer}>
-          <View style={styles.tableRow}>
-            <Text style={styles.tableHeader}>Elemento</Text>
-            <Text style={styles.tableHeader}>Texto</Text>
+        <View style={styles.containerlegend}>
+          <View style={styles.headerContainer}>
+            <Text style={styles.barfDietText}>
+              Total Daily Diet: {barfDiet.grTotal}
+            </Text>
+            <View style={styles.grTotalContainer}>
+              <PieChart
+                donut
+                showText
+                textColor="black"
+                radius={60}
+                innerRadius={25}
+                textSize={20}
+                data={pieData}
+              />
+            </View>
           </View>
-          {Object.entries(barfDiet).map(([key, value]) =>
-            key === "grTotal" ? null : (
-              <View key={key} style={styles.tableRow}>
-                <View
-                  style={[
-                    styles.colorPoint,
-                    { backgroundColor: getColorForKey(key) },
-                  ]}
-                />
-                <Text style={styles.tableItem}>{key}</Text>
-                <Text style={styles.tableItem}>{value}</Text>
-              </View>
-            )
-          )}
+
+          <View style={styles.tableContainer}>
+            <View style={styles.tableRow}>
+              <Text style={styles.tableHeader}>Elemento</Text>
+              <Text style={styles.tableHeader}>Texto</Text>
+            </View>
+            {Object.entries(barfDiet).map(([key, value]) =>
+              key === "grTotal" ? null : (
+                <View key={key} style={styles.tableRow}>
+                  <View
+                    style={[
+                      styles.colorPoint,
+                      { backgroundColor: getColorForKey(key) },
+                    ]}
+                  />
+                  <Text style={styles.tableItem}>{key}</Text>
+                  <Text style={styles.tableItem}>{value}</Text>
+                </View>
+              )
+            )}
+          </View>
+        </View>
+        <View style={styles.containerDietDetails}>
+          <Text style={styles.barfDietTitle}>Configuracion dieta:</Text>
+          <Text>Porcentaje diaria de acuerdo a su peso</Text>
+          <Text>{(meatPercentage * 100).toFixed(2)}</Text>
+          <View>
+            <Text>Porciones al dia</Text>
+            <Text>1</Text>
+          </View>
+          <View>
+            <Text>Huevo</Text>
+            <Text>1/ semana *abria que calcularlo</Text>
+          </View>
+          <View>
+            <Text>Incluir pescado </Text>
+            <Text>1 / semana *abria que calcularlo</Text>
+          </View>
+          <View>
+            <Text>Suplementos: </Text>
+            <Text>Omega 3</Text>
+          </View>
         </View>
       </View>
-      <View>
-        <Text style={styles.barfDietTitle}>Configuracion dieta:</Text>
-        <Text>Porcentaje diaria de acuerdo a su peso</Text>
-        <Text>{(meatPercentage * 100).toFixed(2)}</Text>
-      </View>
-      <View>
-        <Text>Porciones al dia</Text>
-        <Text>1</Text>
-      </View>
-      <View>
-        <Text>Huevo</Text>
-        <Text>1/ semana *abria que calcularlo</Text>
-      </View>
-      <View>
-        <Text>Incluir pescado </Text>
-        <Text>1 / semana *abria que calcularlo</Text>
-      </View>
-      <View>
-        <Text>Suplementos: </Text>
-        <Text>Omega 3</Text>
-      </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -162,13 +169,22 @@ export default PetDetails;
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#f0f0f0",
+    width: windowWidth,
     height: "100%",
+    marginHorizontal: 15,
   },
   petInfoContainer: {
+    backgroundColor: "#ffffff",
     flexDirection: "row",
     alignItems: "center",
+    width: "92%",
+    padding: 10,
+    marginTop: 5,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
   },
   imageContainer: {
     marginRight: 16,
@@ -193,33 +209,54 @@ const styles = StyleSheet.create({
   },
   editButton: {
     marginTop: 8,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
+    paddingVertical: 6,
     backgroundColor: "#1565C0",
     borderRadius: 20,
+    margin: 8,
   },
   editButtonText: {
     color: "#FFFFFF",
     fontSize: 16,
     textAlign: "center",
   },
+  containerlegend: {
+    width: "92%",
+    backgroundColor: "#ffffff",
+    marginTop: 10,
+    marginRight: 20,
+    borderRadius: 10,
+    marginBottom: 10,
+    paddingLeft: 25,
+  },
+  containerDietDetails: {
+    width: "92%",
+    backgroundColor: "#ffffff",
+    marginRight: 20,
+    borderRadius: 10,
+    marginBottom: 20,
+    padding: 10,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    paddingLeft: 25,
+  },
   barfDietTitle: {
     fontSize: 18,
     fontWeight: "bold",
     marginTop: 16,
   },
-  headerContainer: {
-  },
+  headerContainer: {},
   barfDietText: {
     fontSize: 16,
     marginTop: 30,
     marginBottom: 20,
   },
   tableContainer: {
-    backgroundColor: "#F5F5F5",
+    backgroundColor: "#ffffff",
     padding: 10,
-    borderRadius: 5,
-    marginTop: 20,
+    marginTop: 10,
+    width: "92%",
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
   },
   tableRow: {
     flexDirection: "row",
@@ -240,7 +277,7 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   grTotalContainer: {
-    justifyContent: "center", 
+    justifyContent: "center",
     alignItems: "center",
   },
 });
