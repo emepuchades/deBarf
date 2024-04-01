@@ -115,8 +115,7 @@ export const styleCalculator = {
   buttonContainer: {
     flex: 1,
     flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
+    justifyContent: "flex-start",
     marginTop: 15,
     width: "100%",
     marginBottom: 10,
@@ -124,7 +123,8 @@ export const styleCalculator = {
   button: {
     padding: 10,
     paddingHorizontal: 30,
-    borderRadius: 5,
+    borderRadius: 10,
+    marginRight: 20,
     backgroundColor: "#f0f0f0",
     alignItems: "center",
   },
@@ -151,6 +151,7 @@ export const styleCalculator = {
     alignItems: "center",
     marginTop: 10,
     marginBottom: 3,
+    paddingHorizontal: 10,
   },
   checkBox: {
     width: 18,
