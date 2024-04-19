@@ -22,12 +22,12 @@ const Food = () => {
   const menuScrollViewRef = useRef(null);
   const [foodInfo, setFoodInfo] = useState(foodTypes());
   const menuImageItem = {
-    carne: require("../../../assets/iconsFood/meat.png"),
-    pescado: require("../../../assets/iconsFood/fish.png"),
-    higado: require("../../../assets/iconsFood/liver.png"),
-    masvisceras: require("../../../assets/iconsFood/kidneys.png"),
-    huesosCarnosos: require("../../../assets/iconsFood/chicken.png"),
-    frutasverduras: require("../../../assets/iconsFood/fruits.png"),
+    carne: require("../../../assets/iconsFood/carne.png"),
+    pescado: require("../../../assets/iconsFood/pescado.png"),
+    higado: require("../../../assets/iconsFood/higado.png"),
+    masvisceras: require("../../../assets/iconsFood/masvisceras.png"),
+    huesosCarnosos: require("../../../assets/iconsFood/huesosCarnosos.png"),
+    frutasverduras: require("../../../assets/iconsFood/frutasverduras.png"),
   };
 
   const handleTypeSelect = (type) => {

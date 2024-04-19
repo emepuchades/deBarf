@@ -43,7 +43,14 @@ const AddFoodScreen = ({ navigation, route }) => {
   const [errorMessages, setErrorMessages] = useState({});
   const { db } = useContext(AuthenticatedUserContext);
   const MenuURL = t("navBottom.planner");
-
+  const menuImageItem = {
+    carne: require("../assets/iconsFood/carne.png"),
+    pescado: require("../assets/iconsFood/pescado.png"),
+    higado: require("../assets/iconsFood/higado.png"),
+    masvisceras: require("../assets/iconsFood/masvisceras.png"),
+    huesosCarnosos: require("../assets/iconsFood/huesosCarnosos.png"),
+    frutasverduras: require("../assets/iconsFood/frutasverduras.png"),
+  };
   const COLORS = [
     "#ffca3a",
     "#ff595e",
@@ -192,7 +199,8 @@ const AddFoodScreen = ({ navigation, route }) => {
       const categoryGrams = parseInt(statsPet[category].split(" ")[0], 10);
 
       if (categorySum > categoryGrams) {
-        newErrorMessages[category] = t(`planner.exceeded`) + t(`planner.${category}`);
+        newErrorMessages[category] =
+          t(`planner.exceeded`) + t(`planner.${category}`);
       }
     }
 
@@ -362,135 +370,169 @@ const AddFoodScreen = ({ navigation, route }) => {
           </View>
           <View
             style={{
-              flexDirection: "row",
-              alignItems: "center",
-              padding: 12,
+              marginTop: 10,
+              borderRadius: 10,
+              backgroundColor: "#ffffff",
             }}
           >
-            <Text style={styles.label}>{selectedPet.name}</Text>
-            <View style={{ flexDirection: "row", marginLeft: "auto" }}>
-              <TouchableOpacity
-                style={{ marginRight: 10 }}
-                onPress={() => goEdit()}
-              >
-                <Ionicons name="settings-outline" size={24} color="black" />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => handleAddFood()}>
-                <Ionicons
-                  name="information-circle-outline"
-                  size={24}
-                  color="black"
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={styles.containerFood}>
-            <View style={styles.headerFood}>
-              <Text style={styles.headerTextFood}>
-                {t(`addMeal.mealDay`)} {day}
-              </Text>
-            </View>
-            <View style={styles.contentFood}>
-              {selectedFoods.map((food, index) => (
-                <View key={food.name + index} style={styles.selectedFoodItem}>
-                  <Text>{food.name}</Text>
-                  <View style={styles.editContainer}>
-                    {food.isEditing ? (
-                      <>
-                        <TextInput
-                          style={styles.editInput}
-                          value={food.editGrams}
-                          keyboardType="numeric"
-                          onChangeText={(text) =>
-                            handleEditGramsChange(text, index)
-                          }
-                        />
-                        <TouchableOpacity
-                          style={styles.editIcon}
-                          onPress={() => handleEditFood(index, false)}
-                        >
-                          <Ionicons name="checkmark" size={24} color="green" />
-                        </TouchableOpacity>
-                      </>
-                    ) : (
-                      <>
-                        <Text style={styles.gramsText}>{food.editGrams} g</Text>
-                        <TouchableOpacity
-                          style={styles.editIcon}
-                          onPress={() => handleEditFood(index, true)}
-                        >
-                          <Ionicons name="pencil" size={24} color="blue" />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                          style={styles.editIcon}
-                          onPress={() => handleDeleteFood(index)}
-                        >
-                          <Ionicons name="trash" size={24} color="red" />
-                        </TouchableOpacity>
-                      </>
-                    )}
-                  </View>
-                </View>
-              ))}
-            </View>
-          </View>
-
-          {Object.keys(errorMessages).map((category) => (
-            <ErrorMessage message={errorMessages[category]} />
-          ))}
-          <View
-            style={{
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "flex-end",
-              padding: 12,
-            }}
-          >
-            <TouchableOpacity
-              onPress={() => saveFood()}
-              style={styles.addButton}
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                padding: 12,
+              }}
             >
-              <Image
-                source={backgroundImage}
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: 150,
-                  height: 40,
-                  resizeMode: "cover",
-                }}
-              />
-              <Text style={styles.addButtonLabel}>{t(`addMeal.saveMeal`)}</Text>
-            </TouchableOpacity>
-          </View>
-          <Text style={styles.label}>{t(`addMeal.selectFood`)}</Text>
-          <View>
-            <View style={styles.tabsContainer}>
+              <Text style={styles.label}>{selectedPet.name}</Text>
+              <View style={{ flexDirection: "row", marginLeft: "auto" }}>
+                <TouchableOpacity
+                  style={{ marginRight: 10 }}
+                  onPress={() => goEdit()}
+                >
+                  <Ionicons name="settings-outline" size={24} color="black" />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => handleAddFood()}>
+                  <Ionicons
+                    name="information-circle-outline"
+                    size={24}
+                    color="black"
+                  />
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View style={styles.containerFood}>
+              <View style={styles.headerFood}>
+                <Text style={styles.headerTextFood}>
+                  {t(`addMeal.mealDay`)} {day}
+                </Text>
+              </View>
+              <View style={styles.contentFood}>
+                {selectedFoods.length === 0 && (
+                  <Text style={styles.emptyFood}>{t(`addMeal.emptyFood`)}</Text>
+                )}
+                {selectedFoods.map((food, index) => (
+                  <View key={food.name + index} style={styles.selectedFoodItem}>
+                    <Text>{food.name}</Text>
+                    <View style={styles.editContainer}>
+                      {food.isEditing ? (
+                        <>
+                          <TextInput
+                            style={styles.editInput}
+                            value={food.editGrams}
+                            keyboardType="numeric"
+                            onChangeText={(text) =>
+                              handleEditGramsChange(text, index)
+                            }
+                          />
+                          <TouchableOpacity
+                            style={styles.editIcon}
+                            onPress={() => handleEditFood(index, false)}
+                          >
+                            <Ionicons
+                              name="checkmark"
+                              size={24}
+                              color="green"
+                            />
+                          </TouchableOpacity>
+                        </>
+                      ) : (
+                        <>
+                          <Text style={styles.gramsText}>
+                            {food.editGrams} g
+                          </Text>
+                          <TouchableOpacity
+                            style={styles.editIcon}
+                            onPress={() => handleEditFood(index, true)}
+                          >
+                            <Ionicons name="pencil" size={24} color="#3498DB" />
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                            style={styles.editIcon}
+                            onPress={() => handleDeleteFood(index)}
+                          >
+                            <Ionicons name="trash" size={24} color="red" />
+                          </TouchableOpacity>
+                        </>
+                      )}
+                    </View>
+                  </View>
+                ))}
+              </View>
+            </View>
+
+            {Object.keys(errorMessages).map((category) => (
+              <ErrorMessage message={errorMessages[category]} />
+            ))}
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "flex-end",
+                padding: 12,
+              }}
+            >
               <TouchableOpacity
-                onPress={() => setSelectedTab("ourFood")}
-                style={[
-                  styles.tabButton,
-                  selectedTab === "ourFood" && styles.activeTab,
-                ]}
+                onPress={() => saveFood()}
+                style={styles.addButton}
               >
-                <Text style={styles.tabButtonText}>{t(`addMeal.food`)}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => setSelectedTab("addFood")}
-                style={[
-                  styles.tabButton,
-                  selectedTab === "addFood" && styles.activeTab,
-                ]}
-              >
-                <Text style={styles.tabButtonText}>
-                  {t(`addMeal.yourFood`)}
+                <Image
+                  source={backgroundImage}
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: 150,
+                    height: 40,
+                    resizeMode: "cover",
+                  }}
+                />
+                <Text style={styles.addButtonLabel}>
+                  {t(`addMeal.saveMeal`)}
                 </Text>
               </TouchableOpacity>
             </View>
+          </View>
+
+          <Text style={styles.labelSelectFood}>{t(`addMeal.selectFood`)}</Text>
+          <View style={styles.tabsFoodContainer}>
+            <View style={styles.tabsContainer}>
+              <View style={styles.tabsContainerText}>
+                <TouchableOpacity
+                  onPress={() => setSelectedTab("ourFood")}
+                  style={[
+                    styles.tabButtonSectionFood,
+                    selectedTab === "ourFood" && styles.activeTabSectionFood,
+                  ]}
+                >
+                  <Text
+                    style={[
+                      styles.tabButtonText,
+                      selectedTab === "ourFood" && styles.activeTabButtonText,
+                    ]}
+                  >
+                    {t(`addMeal.food`)}
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => setSelectedTab("addFood")}
+                  style={[
+                    styles.tabButtonSectionFood,
+                    selectedTab === "addFood" && styles.activeTabSectionFood,
+                  ]}
+                >
+                  <Text
+                    style={[
+                      styles.tabButtonText,
+                      selectedTab === "addFood" && styles.activeTabButtonText,
+                    ]}
+                  >
+                    {t(`addMeal.yourFood`)}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
             {selectedTab === "ourFood" ? (
               <View>
-                <View style={styles.tabsContainer}>
+                <View style={styles.tabsContainerCategory}>
                   <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                     {Object.keys(foodInfo)
                       .filter((categoryName) =>
@@ -515,8 +557,12 @@ const AddFoodScreen = ({ navigation, route }) => {
                               styles.activeTabPurple,
                           ]}
                         >
+                          <Image
+                            source={menuImageItem[categoryName]}
+                            style={styles.iconMenuCategory}
+                          />
                           <Text style={styles.tabButtonText}>
-                            {categoryName}
+                            {t(`food.${categoryName}`)}
                           </Text>
                         </TouchableOpacity>
                       ))}
@@ -566,7 +612,9 @@ const AddFoodScreen = ({ navigation, route }) => {
                     />
                   </View>
                   <View style={styles.columnRight}>
-                    <Text style={styles.addFoodText}>Categoría:</Text>
+                    <Text style={styles.addFoodText}>
+                      {t(`addMeal.category`)}:
+                    </Text>
                     <Picker
                       selectedValue={yourCategory}
                       style={styles.picker}
@@ -616,12 +664,14 @@ const AddFoodScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: "white",
+    padding: 5,
+    paddingHorizontal: 12,
+    backgroundColor: "#f0f0f0",
   },
   label: {
     fontSize: 16,
     marginBottom: 10,
+    marginTop: 10,
   },
   input: {
     borderWidth: 1,
@@ -631,7 +681,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   addButton: {
-    backgroundColor: "#9D71E8",
+    backgroundColor: "#4F98FE",
     padding: 10,
     borderRadius: 10,
     width: 150,
@@ -665,17 +715,17 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   fullList: {
-    maxHeight: 300,
-    borderWidth: 1,
-    borderColor: "#ccc",
     borderRadius: 5,
   },
   fullListItem: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: 5,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
+    textAlign: "center",
+    padding: 10,
+    paddingHorizontal: 10,
+    marginVertical: 5,
+    borderRadius: 10,
+    backgroundColor: "#ffffff",
   },
   grTotalContainer: {
     alignItems: "center",
@@ -689,6 +739,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
+    marginTop: 5,
+    borderRadius: 10,
+    backgroundColor: "#ffffff",
   },
   chartContainer: {
     flex: 1,
@@ -696,6 +749,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#ffffff",
   },
   horizontalChartsContainer: {
     width: "75%",
@@ -714,9 +768,49 @@ const styles = StyleSheet.create({
     height: 50,
     width: 50,
   },
-
   tabsContainer: {
+    padding: 10,
+    paddingBottom: 10,
+    paddingTop: 10,
+    marginBottom: 10,
+    borderRadius: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    backgroundColor: "#ffffff",
+  },
+  tabsContainerCategory: {
+    backgroundColor: "#ffffff",
+    padding: 14,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    marginTop: -15,
+  },
+  labelSelectFood: {
+    marginTop: 20,
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  tabsContainerText: {
+    flex: 1,
     flexDirection: "row",
+    justifyContent: "space-around",
+    backgroundColor: "#f0f0f0",
+    borderRadius: 10,
+  },
+  tabButtonSectionFood: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    marginRight: 10,
+    margin: 5,
+    width: "46%",
+  },
+  activeTabSectionFood: {
+    backgroundColor: "white",
+    borderRadius: 10,
   },
   tabButton: {
     flexDirection: "row",
@@ -725,6 +819,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 15,
     marginRight: 10,
+    textAlign: "center",
   },
   activeTab: {
     borderBottomWidth: 1,
@@ -733,10 +828,26 @@ const styles = StyleSheet.create({
   },
   activeTabPurple: {
     borderBottomWidth: 1,
-    borderBottomColor: "#9D71E8",
-    backgroundColor: "white",
+    borderColor: "black",
+    flex: 1,
+    textAlign: "center",
+    justifyContent: "center",
+  },
+  tabsFoodContainer: {
+    borderRadius: 10,
   },
   tabButtonText: {
+    color: "#626A72",
+    fontSize: 15,
+    fontWeight: "bold",
+    marginLeft: 5,
+  },
+  iconMenuCategory: {
+    width: 25,
+    height: 25,
+    marginRight: 5,
+  },
+  activeTabButtonText: {
     color: "#333",
     fontSize: 16,
     fontWeight: "bold",
@@ -744,9 +855,10 @@ const styles = StyleSheet.create({
   foodListContainer: {
     marginBottom: 50,
     marginTop: 10,
-    paddingHorizontal: 10,
-    borderBottomWidth: 1,
-    borderColor: "#E0E0E0",
+    borderRadius: 10,
+    textAlign: "center",
+    flex: 1,
+    justifyContent: "center",
   },
   searchResultImage: {
     width: 50,
@@ -803,11 +915,15 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: "row",
-    alignItems: "center", // Alinea verticalmente los elementos en el centro
-    marginBottom: 10, // Espacio entre las filas
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  emptyFood: {
+    textAlign: "center",
+    color: "#c9c9c9",
   },
   addFoodInputSmall: {
-    flex: 1, // Ocupa la mayor parte del espacio disponible
+    flex: 1,
     height: 40,
     borderColor: "#ccc",
     borderRadius: 5,
@@ -815,10 +931,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     fontSize: 14,
     color: "#000",
-    marginRight: 10, // Espacio entre los elementos
+    marginRight: 10,
   },
   picker: {
-    flex: 1, // Ocupa la mayor parte del espacio disponible
+    flex: 1,
     height: 40,
     borderColor: "#3498DB",
     borderBottomWidth: 2,
@@ -907,7 +1023,7 @@ const styles = StyleSheet.create({
     padding: 12,
   },
   headerFood: {
-    backgroundColor: "#9D71E8",
+    backgroundColor: "#4F98FE",
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
     borderBottomLeftRadius: 0,

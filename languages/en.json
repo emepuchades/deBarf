@@ -262,7 +262,9 @@
       "yourFood": "Your food",
       "foodName": "Nombre del alimento:",
       "grams": "Grams:",
-      "addMeal": "Add Food"
+      "addMeal": "Add Food",
+      "emptyFood": "Añade un alimento",
+      "category": "Category"
     }
   }
 }

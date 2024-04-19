@@ -20,7 +20,6 @@ async function addMenu(db, date, petID, foodJSON) {
 export async function updateMenu(db, menuID, date, petID, foodJSON) {
   try {
     await db.transaction(async (tx) => {
-      console.log("menuID", menuID);
       await tx.executeSql(
         `UPDATE menu SET date = ?, petId = ?, food = ? WHERE id = ?`,
         [date, petID, foodJSON, menuID],
@@ -46,7 +45,6 @@ export async function getMenuData(db, petId, date) {
         [petId, date],
         (txObj, resultSet) => {
           try {
-            console.log("resultSet.rows.item(0)", resultSet.rows);
             if (resultSet.rows.length > 0) {
               const foodData = resultSet.rows.item(0);
               resolve(foodData);
