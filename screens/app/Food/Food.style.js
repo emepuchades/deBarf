@@ -14,11 +14,10 @@ export const styleFood = {
     flexWrap: "wrap",
     alignItems: "flex-start",
   },
-  rowContainer: {
-  },
+  rowContainer: {},
   menuItems: {
-    height: 100,
-    marginLeft: 5,
+    height: 90,
+    marginLeft: 10,
   },
   textMenu: {
     width: 34,
@@ -60,13 +59,11 @@ export const styleFood = {
   type: {
     color: "white",
     fontSize: 21,
-    margin: 10,
     marginLeft: 22,
     fontWeight: "600",
   },
   typeContainer: {
-    marginTop: 10,
-    height: 70,
+    height: 60,
   },
   searchInput: {
     flex: 1,
@@ -102,27 +99,22 @@ export const styleFood = {
     marginRight: 10,
   },
   imageContainerMenu: {
-    width: 30,
-    height: 30,
-    backgroundColor: "white",
-    borderRadius: 10,
-    marginBottom: 5,
-    justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "white",
+    borderRadius: 5,
+    width: 130,
   },
   iconMenu: {
-    width: 40,
-    height: 40,
+    width: 33,
+    height: 33,
   },
   textMenu: {
     color: "#111111",
     textAlign: "center",
   },
   menuItem: {
-    flexDirection: "column",
     alignItems: "center",
-    padding: 10,
+    padding: 6,
     borderRadius: 5,
-    marginBottom: 5,
   },
 };

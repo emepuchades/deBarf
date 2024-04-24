@@ -53,38 +53,27 @@ const Food = () => {
         key={type}
         onPress={() => handleTypeSelect(type)}
         style={{
-          padding: 5,
           margin: 5,
           alignItems: "center",
+          width: 150,
         }}
       >
         <View
           style={{
-            flexDirection: "column",
-            alignItems: "center",
             borderColor: isSelected ? "black" : "transparent",
             borderWidth: isSelected ? 1 : 0,
             backgroundColor: "white",
             borderRadius: 5,
-            width: 100,
-            height: 85,
+            width: 150,
           }}
         >
           <View style={styles.menuItem}>
             <View style={styles.imageContainerMenu}>
               <Image style={styles.iconMenu} source={menuImageItem[type]} />
-            </View>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center"
-              }}
-            >
               <Text
                 style={{
                   color: isSelected ? "black" : "black",
-                  fontSize: 13,
+                  fontSize: 14,
                   fontWeight: isSelected ? "bold" : "400",
                   textAlign: "center",
                 }}
@@ -93,7 +82,6 @@ const Food = () => {
               </Text>
             </View>
           </View>
-          <View style={styles.textMenu} />
         </View>
       </TouchableOpacity>
     );
