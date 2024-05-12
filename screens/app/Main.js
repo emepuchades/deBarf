@@ -11,6 +11,8 @@ import Calendar from "./Calendar/Calendar";
 import colors from "../../utils/colors";
 import { useTranslation } from "react-i18next";
 import Calculator from "./Calculator/Calculator";
+import Shoplist from "./Profile/Profile";
+import Food from "./Food/Food";
 
 const Tab = createBottomTabNavigator();
 
@@ -43,20 +45,33 @@ const MyTabs = () => {
       />
 
       <Tab.Screen
-        name={t("navBottom.newPet")}
-        component={Calculator}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <AntDesign name="plus" color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name={t("navBottom.planner")}
+        name={t("navBottom.menu")}
         component={Calendar}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="md-calendar-sharp" size={22} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name={"Barf destacados"}
+        component={Shoplist}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="flame-outline" size={22} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name={t("navBottom.foods")}
+        component={Food}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons
+              name="food-drumstick-outline"
+              color={color}
+              size={size}
+            />
           ),
         }}
       />

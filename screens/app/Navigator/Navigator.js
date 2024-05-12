@@ -16,6 +16,8 @@ import Calendar from "../Calendar/Calendar";
 import EditPet from "../../../components/EditPet";
 import AddFoodScreen from "../../../components/AddFoddScreen";
 import EditMenu from "../../../components/EditMenu";
+import Calculator from "../Calculator/Calculator";
+import Shoplist from "../Profile/Profile";
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
@@ -39,14 +41,14 @@ const DrawerNavigator = () => {
                 navigation.navigate(t("navBottom.pets"));
               }}
             >
-              <Ionicons name="ios-basket-outline" size={size} color={color} />
+              <Ionicons name="paw-outline" size={size} color={color} />
             </TouchableOpacity>
           ),
         })}
       />
       <Drawer.Screen
-        name={t("navBottom.foods")}
-        component={Food}
+        name={"Recetas"}
+        component={Shoplist}
         options={({ navigation, route }) => ({
           drawerIcon: ({ color, size }) => (
             <TouchableOpacity
@@ -60,8 +62,8 @@ const DrawerNavigator = () => {
         })}
       />
       <Drawer.Screen
-        name={t("navBottom.menu")}
-        component={Calendar}
+        name={"Recursos"}
+        component={Shoplist}
         options={({ navigation, route }) => ({
           drawerIcon: ({ color, size }) => (
             <TouchableOpacity
@@ -69,14 +71,14 @@ const DrawerNavigator = () => {
                 navigation.navigate(t("navBottom.menu"));
               }}
             >
-              <Ionicons name="reader-outline" size={size} color={color} />
+              <Ionicons name="library-outline" size={size} color={color} />
             </TouchableOpacity>
           ),
         })}
       />
       <Drawer.Screen
-        name={t("navBottom.shoppingList")}
-        component={Calendar}
+        name={"Lista de la compra"}
+        component={Shoplist}
         options={({ navigation, route }) => ({
           drawerIcon: ({ color, size }) => (
             <TouchableOpacity
@@ -122,6 +124,16 @@ const DrawerNavigator = () => {
       <Drawer.Screen
         name={"EditFood"}
         component={EditMenu}
+        options={{
+          drawerItemStyle: { height: 0 },
+          drawerLockMode: "locked-closed",
+          gestureEnabled: false,
+          drawerLabel: () => null,
+        }}
+      />
+      <Drawer.Screen
+        name={t("navBottom.newPet")}
+        component={Calculator}
         options={{
           drawerItemStyle: { height: 0 },
           drawerLockMode: "locked-closed",
