@@ -1,13 +1,27 @@
-import { windowHeight } from "../../../utils/Dimentions";
+import { windowHeight, windowWidth } from "../../../utils/Dimentions";
 import colors from "../../../utils/colors";
 
 export const styleHome = {
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: "#f0f0f0",
     alignItems: "center",
     padding: 10,
-    height: windowHeight,
+  },
+  settingsContainer: {
+    width: windowWidth,
+    backgroundColor: "white",
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   scrollContainer: {
     flex: 1,
@@ -32,7 +46,7 @@ export const styleHome = {
   containerNewPet: {
     flex: 1,
     alignItems: "center",
-    margin: 35,
+    margin: 8,
     fontSize: 18,
   },
   addPetTitle: {
@@ -42,7 +56,7 @@ export const styleHome = {
   itemContainer: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#f9f9f9",
+    backgroundColor: "white",
     borderRadius: 10,
     padding: 10,
     marginBottom: 10,
@@ -76,7 +90,65 @@ export const styleHome = {
   },
   deleteButtonContainer: {
     position: "absolute",
-    top: 15,
+    top: 25,
     right: 15,
+  },
+ settingsButtonContainer: {
+    position: "absolute",
+    top: 25,
+    right: 55,
+  },
+  tabsContainer: {
+    padding: 10,
+    paddingBottom: 10,
+    paddingTop: 10,
+    marginBottom: 10,
+    borderRadius: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    backgroundColor: "#ffffff",
+    height: 70,
+    margin: 5,
+  },
+  tabsContainerText: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    backgroundColor: "#f0f0f0",
+    borderRadius: 10,
+  },
+  tabButtonSectionFood: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    marginRight: 10,
+    margin: 5,
+    width: "46%",
+  },
+  activeTabSectionFood: {
+    backgroundColor: "white",
+    borderRadius: 10,
+  },
+  tabButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    marginRight: 10,
+    textAlign: "center",
+  },
+  tabButtonText: {
+    color: "#626A72",
+    fontSize: 15,
+    fontWeight: "bold",
+    marginLeft: 5,
+  },
+  activeTabButtonText: {
+    color: "#333",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 };

@@ -22,7 +22,7 @@ export default function Home() {
   const { t } = useTranslation();
   const CalculatorURL = t("navBottom.newPet");
   const { db } = useContext(AuthenticatedUserContext);
-
+  const [selectedTabKg, setSelectedTabKg] = useState(0);
   useEffect(() => {
     db.transaction((tx) => {
       tx.executeSql(
@@ -75,7 +75,7 @@ export default function Home() {
   if (isLoading) {
     return (
       <View style={styles.container}>
-        <Text>{t('home.loanding')}</Text>
+        <Text>{t("home.loanding")}</Text>
       </View>
     );
   }
@@ -94,6 +94,35 @@ export default function Home() {
     <>
       <ScrollView vertical showsHorizontalScrollIndicator={false}>
         <View style={styles.container}>
+          <View style={styles.tabsContainer}>
+            <View style={styles.tabsContainerText}>
+              <TouchableOpacity style={[styles.tabButtonSectionFood]}>
+                <Text
+                  style={[
+                    styles.tabButtonText,
+                    selectedTabKg === 1 && styles.activeTabButtonText,
+                  ]}
+                >
+                  KG
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  styles.tabButtonSectionFood,
+                  selectedTabKg === 0 && styles.activeTabSectionFood,
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.tabButtonText,
+                    selectedTabKg === 0 && styles.activeTabButtonText,
+                  ]}
+                >
+                  Libras
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
           {pets ? (
             <View style={styles.containerNewPet}>
               {pets.length === 0 ? (
@@ -104,11 +133,10 @@ export default function Home() {
                   />
                   <Text>
                     <Text style={styles.addPetTitle}>
-                      {t('home.registerTitle')}{"\n"}
+                      {t("home.registerTitle")}
+                      {"\n"}
                     </Text>
-                    <Text>
-                      {t('home.registerSubtitle')}
-                    </Text>
+                    <Text>{t("home.registerSubtitle")}</Text>
                   </Text>
                 </View>
               ) : (
@@ -134,16 +162,23 @@ export default function Home() {
                       )}
                     </View>
                     <View style={styles.textContainer}>
-                      <Text style={styles.nameText}> {t('home.name')} {item.name}</Text>
-                      <Text style={styles.petText}>
-                         {t('home.pets')} {item.typePet}
-                      </Text>
+                      <Text style={styles.nameText}>{item.name}</Text>
+                      <Text style={styles.petText}>{item.weight}Kg</Text>
+                    </View>
+                    <View style={styles.settingsButtonContainer}>
+                      <TouchableOpacity onPress={() => handlePetClick(item)}>
+                        <Ionicons
+                          name="options-outline"
+                          size={27}
+                          color="black"
+                        />
+                      </TouchableOpacity>
                     </View>
                     <View style={styles.deleteButtonContainer}>
                       <TouchableOpacity onPress={() => handleDeletePet(index)}>
                         <Ionicons
                           name="trash-outline"
-                          size={20}
+                          size={27}
                           color="black"
                         />
                       </TouchableOpacity>
@@ -160,11 +195,10 @@ export default function Home() {
               />
               <Text>
                 <Text style={styles.addPetTitle}>
-                   {t('home.registerTitle')}{"\n"}
+                  {t("home.registerTitle")}
+                  {"\n"}
                 </Text>
-                <Text>
-                      {t('home.registerSubtitle')}
-                </Text>
+                <Text>{t("home.registerSubtitle")}</Text>
               </Text>
             </View>
           )}
