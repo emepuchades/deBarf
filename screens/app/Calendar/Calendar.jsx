@@ -277,15 +277,15 @@ const Calendar = () => {
         style={styles.navigationWrapper}
       >
         <View style={styles.navigation}>
-          <TouchableOpacity onPress={() => cambiarSemana(-1)}>
-            <Text style={styles.navigationText}>{"<"}</Text>
-          </TouchableOpacity>
           <Text style={styles.monthText}>{fecha.format("MMMM YYYY")}</Text>
-          <TouchableOpacity onPress={() => cambiarSemana(1)}>
-            <Text style={styles.navigationText}>{">"}</Text>
-          </TouchableOpacity>
         </View>
         <View style={styles.daysContainer}>
+          <TouchableOpacity
+            onPress={() => cambiarSemana(-1)}
+            style={styles.navigationContainer}
+          >
+            <Text style={styles.navigationText}>{"<"}</Text>
+          </TouchableOpacity>
           {diasSemana.map((dia, index) => (
             <TouchableOpacity
               key={dia}
@@ -320,6 +320,12 @@ const Calendar = () => {
               )}
             </TouchableOpacity>
           ))}
+          <TouchableOpacity
+            onPress={() => cambiarSemana(1)}
+            style={styles.navigationContainer}
+          >
+            <Text style={styles.navigationText}>{">"}</Text>
+          </TouchableOpacity>
         </View>
       </ImageBackground>
       <View style={styles.mascotasContainer}>
@@ -410,7 +416,6 @@ const Calendar = () => {
               <View style={styles.foodDataContainer}>
                 {Array.isArray(foodData) &&
                   foodData.map((item, index) => {
-                    // Buscar la categoría en foodTypes
                     const category = foodInfo[item.category];
                     const foodType = category.find(
                       (type) => type.name === item.name
@@ -452,9 +457,7 @@ const Calendar = () => {
           <View style={styles.modalContent}>
             <Text style={styles.modalText}>{t(`calendar.noPeterror`)}</Text>
             <TouchableOpacity onPress={closeModal} style={styles.closeButton}>
-              <Text style={styles.closeButtonText}>
-                {t(`calendar.close`)}
-              </Text>
+              <Text style={styles.closeButtonText}>{t(`calendar.close`)}</Text>
             </TouchableOpacity>
           </View>
         </Modal>
@@ -472,9 +475,10 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     height: windowHeight,
     width: windowWidth,
+    backgroundColor: "#ffffff",
   },
   navigationWrapper: {
-    padding: 15,
+    padding: 5,
     height: 140,
   },
   navigation: {
@@ -482,8 +486,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  navigationContainer: {
+    width: 20,
+    height: "100%",
+    marginVertical: 15,
+  },
   navigationText: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: "bold",
     color: "white",
   },
@@ -492,6 +501,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     fontWeight: "bold",
     color: "white",
+    marginTop: 5,
   },
   daysContainer: {
     marginTop: 10,
@@ -505,8 +515,9 @@ const styles = StyleSheet.create({
   },
   dayNumber: {
     fontSize: 14,
-    fontWeight: "bold",
+    marginRight: 10,
     color: "white",
+    textAlign: "center",
   },
   dayName: {
     fontSize: 14,
@@ -514,8 +525,8 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     flexDirection: "row",
-    justifyContent: "space-between", 
-    alignItems: "center", 
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   addButtonContainer: {
     flex: 1,
@@ -533,13 +544,14 @@ const styles = StyleSheet.create({
   },
   selectedDay: {
     fontSize: 14,
-    marginRight: 10,
+    padding: 10,
     color: "white",
   },
   dayNumberNoSelected: {
     fontSize: 14,
     marginRight: 10,
     color: "white",
+    textAlign: "center",
   },
   dayNameNoSelected: {
     fontSize: 14,
@@ -639,7 +651,7 @@ const styles = StyleSheet.create({
     width: windowWidth - 70,
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "white", 
+    backgroundColor: "white",
     padding: 10,
     marginBottom: 10,
     borderBottomColor: "#ccc",
@@ -695,7 +707,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
-    borderBottomLeftRadius: 8, 
+    borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8,
     padding: 16,
     borderWidth: 1,
