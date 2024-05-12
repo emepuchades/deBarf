@@ -42,17 +42,6 @@ const DrawerComponent = props => {
             <DrawerContentScrollView
                 {...props}
                 contentContainerStyle={{ backgroundColor: colors.primary }}>
-                <ImageBackground
-                    source={require('../../assets/images/menu-bg.jpeg')}
-                    style={styles.imageBackground}>
-                    <Image
-                        source={require('../../assets/images/user-profile.jpeg')}
-                        style={styles.imageProfile}
-                    />
-                    <Text style={styles.textUsername}>
-                        Arya Puchades
-                    </Text>
-                </ImageBackground>
                 <View style={styles.listNavigaton}>
                     <DrawerItemList {...props} />
                 </View>
