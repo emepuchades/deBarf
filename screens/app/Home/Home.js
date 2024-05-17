@@ -14,6 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { AuthenticatedUserContext } from "../../../utils/context/context";
 import { Ionicons } from "@expo/vector-icons";
+import DualButtonTab from "../../../components/DualButtonTab";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -22,7 +23,7 @@ export default function Home() {
   const { t } = useTranslation();
   const CalculatorURL = t("navBottom.newPet");
   const { db } = useContext(AuthenticatedUserContext);
-  const [selectedTabKg, setSelectedTabKg] = useState(0);
+  const [selectedTabKg, setSelectedTabKg] = useState(true);
   useEffect(() => {
     db.transaction((tx) => {
       tx.executeSql(
@@ -84,6 +85,10 @@ export default function Home() {
     navigation.navigate("PetDetails", { selectedPet: pet });
   };
 
+  const updateKg = () => {
+    setSelectedTabKg(!selectedTabKg)
+  }
+
   const petImageMap = {
     perro: require("../../../assets/pets/dogDefault.png"),
     gato: require("../../../assets/pets/catDefault.png"),
@@ -94,35 +99,12 @@ export default function Home() {
     <>
       <ScrollView vertical showsHorizontalScrollIndicator={false}>
         <View style={styles.container}>
-          <View style={styles.tabsContainer}>
-            <View style={styles.tabsContainerText}>
-              <TouchableOpacity style={[styles.tabButtonSectionFood]}>
-                <Text
-                  style={[
-                    styles.tabButtonText,
-                    selectedTabKg === 1 && styles.activeTabButtonText,
-                  ]}
-                >
-                  KG
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[
-                  styles.tabButtonSectionFood,
-                  selectedTabKg === 0 && styles.activeTabSectionFood,
-                ]}
-              >
-                <Text
-                  style={[
-                    styles.tabButtonText,
-                    selectedTabKg === 0 && styles.activeTabButtonText,
-                  ]}
-                >
-                  Libras
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+          <DualButtonTab
+            onClick={updateKg}
+            activeTab={selectedTabKg}
+            leftButtonText="KG"
+            rightButtonText="Libras"
+          />
           {pets ? (
             <View style={styles.containerNewPet}>
               {pets.length === 0 ? (
@@ -134,7 +116,6 @@ export default function Home() {
                   <Text>
                     <Text style={styles.addPetTitle}>
                       {t("home.registerTitle")}
-                      {"\n"}
                     </Text>
                     <Text>{t("home.registerSubtitle")}</Text>
                   </Text>
