@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
+import Slider from "@react-native-community/slider";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { calculateBARFDiet, getAge } from "../utils/getPercentage";
@@ -16,8 +24,24 @@ const PetDetails = ({ route }) => {
   const [age, setAge] = useState();
   const [months, setMonths] = useState();
   const { t } = useTranslation();
+  const [value, setValue] = useState(meatPercentage);
 
   const navigation = useNavigation();
+  const [counter, setCounter] = useState(1);
+  const increment = () => {
+    if (counter + 1 <= 15) {
+      setCounter(counter + 1);
+    }
+  };
+  const decrement = () => {
+    if (counter - 1 > 1) {
+      setCounter(counter - 1);
+    }
+  };
+
+  const handleValueChange = (newValue) => {
+    setValue(newValue);
+  };
 
   if (!selectedPet) {
     return (
@@ -63,6 +87,21 @@ const PetDetails = ({ route }) => {
     return "#FF5733";
   };
 
+  const COLORS = [
+    "#ffca3a",
+    "#ff595e",
+    "#3498DB",
+    "#9D71E8",
+    "#8ac926",
+    "#ff9914",
+    "#abff4f",
+    "#2980B9",
+    "#F39C12",
+    "#8E44AD",
+    "#C0392B",
+    "#16A085",
+  ];
+
   return (
     <ScrollView
       style={styles.container}
@@ -85,9 +124,8 @@ const PetDetails = ({ route }) => {
             )}
           </View>
           <View style={styles.petDetails}>
-            <Text style={styles.petName}>Name: {selectedPet.name}</Text>
-            <Text style={styles.petMascota}>Pet: {selectedPet.typePet}</Text>
-            <Text style={styles.petWeight}>Peso: {selectedPet.weight}</Text>
+            <Text style={styles.petName}>{selectedPet.name}</Text>
+            <Text style={styles.petWeight}>Peso: {selectedPet.weight} kg</Text>
             <Text style={styles.petWeight}>
               Anos: {age} | Meses: {months}
             </Text>
@@ -103,7 +141,9 @@ const PetDetails = ({ route }) => {
         <View style={styles.containerlegend}>
           <View style={styles.headerContainer}>
             <Text style={styles.barfDietText}>
-              Total Daily Diet: {barfDiet.grTotal}
+              <Text style={styles.barfDietTexttBlod}>Total Daily Diet: </Text>
+              {barfDiet.grTotal}
+              <Text>Editar porcentage</Text>
             </Text>
             <View style={styles.grTotalContainer}>
               <PieChart
@@ -117,19 +157,14 @@ const PetDetails = ({ route }) => {
               />
             </View>
           </View>
-
           <View style={styles.tableContainer}>
-            <View style={styles.tableRow}>
-              <Text style={styles.tableHeader}>Elemento</Text>
-              <Text style={styles.tableHeader}>Texto</Text>
-            </View>
-            {Object.entries(barfDiet).map(([key, value]) =>
+            {Object.entries(barfDiet).map(([key, value], index) =>
               key === "grTotal" ? null : (
                 <View key={key} style={styles.tableRow}>
                   <View
                     style={[
                       styles.colorPoint,
-                      { backgroundColor: getColorForKey(key) },
+                      { backgroundColor: COLORS[index] },
                     ]}
                   />
                   <Text style={styles.tableItem}>{key}</Text>
@@ -142,22 +177,36 @@ const PetDetails = ({ route }) => {
         <View style={styles.containerDietDetails}>
           <Text style={styles.barfDietTitle}>Configuracion dieta:</Text>
           <Text>Porcentaje diaria de acuerdo a su peso</Text>
+          <View
+            style={{
+              flex: 1,
+              alignItems: "stretch",
+              justifyContent: "center",
+            }}
+          >
+            <Slider
+              style={{ width: 200, height: 40 }}
+              minimumValue={0}
+              maximumValue={1}
+              value={value}
+              minimumTrackTintColor="#1565C0"
+              maximumTrackTintColor="#000000"
+              onValueChange={handleValueChange}
+            />
+            <Text style={{ fontSize: 16 }}>{value}</Text>
+          </View>
           <Text>{(meatPercentage * 100).toFixed(2)}</Text>
           <View>
             <Text>Porciones al dia</Text>
-            <Text>1</Text>
-          </View>
-          <View>
-            <Text>Huevo</Text>
-            <Text>1/ semana *abria que calcularlo</Text>
-          </View>
-          <View>
-            <Text>Incluir pescado </Text>
-            <Text>1 / semana *abria que calcularlo</Text>
-          </View>
-          <View>
-            <Text>Suplementos: </Text>
-            <Text>Omega 3</Text>
+            <View style={styles.containerCounter}>
+              <TouchableOpacity onPress={() => decrement()}>
+                <Text>-</Text>
+              </TouchableOpacity>
+              <Text>{counter <= 1 ? 1 : counter}</Text>
+              <TouchableOpacity onPress={() => increment()}>
+                <Text>+</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </View>
@@ -200,6 +249,14 @@ const styles = StyleSheet.create({
   petName: {
     fontSize: 18,
     fontWeight: "bold",
+  },
+  barfDietTexttBlod: {
+    fontWeight: "bold",
+  },
+  containerCounter: {
+    flex: 1,
+    flexDirection: "row",
+    flexWrap: "wrap",
   },
   petMascota: {
     fontSize: 16,
@@ -251,24 +308,26 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   tableContainer: {
+    width: "85%",
     backgroundColor: "#ffffff",
-    padding: 10,
+    padding: 15,
     marginTop: 10,
-    width: "92%",
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
+    alignSelf: "center",
+    justifyContent: "center",
+    marginLeft: 52,
   },
   tableRow: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 5,
-  },
-  tableHeader: {
-    flex: 1,
-    fontWeight: "bold",
+    alignSelf: "center",
+    justifyContent: "center",
   },
   tableItem: {
     flex: 1,
+    width: "30%",
+    justifyContent: "center",
+    alignSelf: "center",
   },
   colorPoint: {
     width: 10,
