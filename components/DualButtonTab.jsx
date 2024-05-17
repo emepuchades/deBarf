@@ -8,7 +8,6 @@ function DualButtonTab({
   leftButtonText,
   rightButtonText,
 }) {
-  console.log("activeTab", activeTab);
   return (
     <View style={styles.tabsContainer}>
       <View style={styles.tabsContainerText}>
