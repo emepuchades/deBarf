@@ -20,7 +20,7 @@ import { windowHeight, windowWidth } from "../../../utils/Dimentions";
 import { AuthenticatedUserContext } from "../../../utils/context/context";
 import { useNavigation } from "@react-navigation/native";
 import Modal from "react-native-modal";
-import { checkIfMenuDataExists, getMenuData } from "../../../utils/dbMenu";
+import { checkIfMenuDataExists, getMenuData } from "../../../utils/db/dbMenu.js";
 import { LinearGradient } from "expo-linear-gradient";
 import foodTypes from "../../../utils/info/food.js";
 import backgroundImage from "../../../assets/images/header.png";

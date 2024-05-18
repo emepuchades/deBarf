@@ -11,15 +11,15 @@ import {
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
-import { styleCalculator } from "../screens/app/Calculator/Calculator.style";
+import { styleCalculator } from "../../screens/app/Calculator/Calculator.style";
 import * as ImagePicker from "expo-image-picker";
 import { Ionicons } from "@expo/vector-icons";
 import { Button as PaperButton } from "react-native-paper";
-import { AuthenticatedUserContext } from "../utils/context/context";
+import { AuthenticatedUserContext } from "../../utils/context/context";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { getPetById, updatePet } from "../utils/dbPetsInfo";
-import ErrorMessage from "./ErrorMessage";
+import { getPetById, updatePet } from "../../utils/db/dbPetsInfo";
+import ErrorMessage from "../ErrorMessage";
 
 function EditPet({ route }) {
   const { user, db } = useContext(AuthenticatedUserContext);
@@ -90,16 +90,16 @@ function EditPet({ route }) {
   let petImageSource = null;
   switch (selectedPet) {
     case "perro":
-      petImageSource = require("../assets/pets/dogDefault.png");
+      petImageSource = require("../../assets/pets/dogDefault.png");
       break;
     case "gato":
-      petImageSource = require("../assets/pets/catDefault.png");
+      petImageSource = require("../../assets/pets/catDefault.png");
       break;
     case "huron":
-      petImageSource = require("../assets/pets/ferretDefault.png");
+      petImageSource = require("../../assets/pets/ferretDefault.png");
       break;
     default:
-      petImageSource = require("../assets/pets/dogDefault.png");
+      petImageSource = require("../../assets/pets/dogDefault.png");
       break;
   }
 
@@ -219,7 +219,7 @@ function EditPet({ route }) {
           >
             <Image
               style={styles.tinyLogo}
-              source={require("../assets/pets/dogDefault.png")}
+              source={require("../../assets/pets/dogDefault.png")}
             />
             <Text
               style={[
@@ -239,7 +239,7 @@ function EditPet({ route }) {
           >
             <Image
               style={styles.tinyLogo}
-              source={require("../assets/pets/catDefault.png")}
+              source={require("../../assets/pets/catDefault.png")}
             />
             <Text
               style={[
@@ -259,7 +259,7 @@ function EditPet({ route }) {
           >
             <Image
               style={styles.tinyLogo}
-              source={require("../assets/pets/ferretDefault.png")}
+              source={require("../../assets/pets/ferretDefault.png")}
             />
             <Text
               style={[

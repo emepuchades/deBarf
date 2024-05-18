@@ -8,17 +8,17 @@ import {
   Image,
   StyleSheet,
 } from "react-native";
-import { AuthenticatedUserContext } from "../utils/context/context";
+import { AuthenticatedUserContext } from "../../../utils/context/context.js";
 import { useTranslation } from "react-i18next";
-import foodTypes from "../utils/info/food.js";
-import { calculateBARFDiet } from "../utils/getPercentage.js";
+import foodTypes from "../../../utils/info/food.js";
+import { calculateBARFDiet } from "../../../utils/getPercentage.js";
 import { PieChart } from "react-native-gifted-charts";
 import { Picker } from "@react-native-picker/picker";
 import { Ionicons } from "@expo/vector-icons";
-import ErrorMessage from "./ErrorMessage.js";
-import addMenu from "../utils/dbMenu.js";
-import backgroundImage from "../assets/images/header.png";
-import { windowHeight, windowWidth } from "../utils/Dimentions";
+import ErrorMessage from "../../../components/ErrorMessage.js";
+import addMenu from "../../../utils/db/dbMenu.js";
+import backgroundImage from "../../../assets/images/header.png";
+import { windowHeight, windowWidth } from "../../../utils/Dimentions.js";
 import Modal from "react-native-modal";
 
 const AddFoodScreen = ({ navigation, route }) => {
@@ -44,12 +44,12 @@ const AddFoodScreen = ({ navigation, route }) => {
   const { db } = useContext(AuthenticatedUserContext);
   const MenuURL = t("navBottom.planner");
   const menuImageItem = {
-    carne: require("../assets/iconsFood/carne.png"),
-    pescado: require("../assets/iconsFood/pescado.png"),
-    higado: require("../assets/iconsFood/higado.png"),
-    masvisceras: require("../assets/iconsFood/masvisceras.png"),
-    huesosCarnosos: require("../assets/iconsFood/huesosCarnosos.png"),
-    frutasverduras: require("../assets/iconsFood/frutasverduras.png"),
+    carne: require("../../../assets/iconsFood/carne.png"),
+    pescado: require("../../../assets/iconsFood/pescado.png"),
+    higado: require("../../../assets/iconsFood/higado.png"),
+    masvisceras: require("../../../assets/iconsFood/masvisceras.png"),
+    huesosCarnosos: require("../../../assets/iconsFood/huesosCarnosos.png"),
+    frutasverduras: require("../../../assets/iconsFood/frutasverduras.png"),
   };
   const COLORS = [
     "#ffca3a",

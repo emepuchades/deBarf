@@ -17,7 +17,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Button as PaperButton } from "react-native-paper";
 import { AuthenticatedUserContext } from "../../../utils/context/context";
 import { useNavigation } from "@react-navigation/native";
-import addPet from "../../../utils/dbPetsInfo";
+import addPet from "../../../utils/db/dbPetsInfo";
 import { useTranslation } from "react-i18next";
 import ErrorMessage from "../../../components/ErrorMessage";
 

@@ -9,13 +9,13 @@ import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { styleNavigator } from "./navigator.style";
 import Food from "../Food/Food";
-import PetDetails from "../../../components/PetDetails";
+import PetDetails from "../PetDetails/PetDetails";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native";
 import Calendar from "../Calendar/Calendar";
-import EditPet from "../../../components/EditPet";
-import AddFoodScreen from "../../../components/AddFoddScreen";
-import EditMenu from "../../../components/EditMenu";
+import EditPet from "../../../components/Edit/EditPet";
+import AddFoodScreen from "../AddMeal/AddFoddScreen";
+import EditMenu from "../../../components/Edit/EditMenu";
 import Calculator from "../Calculator/Calculator";
 import Shoplist from "../Profile/Profile";
 const Drawer = createDrawerNavigator();
@@ -134,6 +134,16 @@ const DrawerNavigator = () => {
       <Drawer.Screen
         name={t("navBottom.newPet")}
         component={Calculator}
+        options={{
+          drawerItemStyle: { height: 0 },
+          drawerLockMode: "locked-closed",
+          gestureEnabled: false,
+          drawerLabel: () => null,
+        }}
+      />
+      <Drawer.Screen
+        name={"Planificador"}
+        component={Calendar}
         options={{
           drawerItemStyle: { height: 0 },
           drawerLockMode: "locked-closed",

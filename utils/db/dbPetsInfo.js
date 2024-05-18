@@ -1,5 +1,5 @@
 import * as FileSystem from "expo-file-system";
-import getPercentage from "./getPercentage";
+import getPercentage from "../getPercentage";
 
 export const getAllPets = async (
   db,

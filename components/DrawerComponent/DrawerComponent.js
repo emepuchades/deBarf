@@ -17,7 +17,7 @@ import { useTranslation } from 'react-i18next';
 import { styleDrawer } from './drawerComponent.style';
 import colors from '../../utils/colors';
 import { signOut } from 'firebase/auth';
-import { auth } from '../../utils/firebase';
+import { auth } from '../../utils/db/firebase';
 
 const DrawerComponent = props => {
 

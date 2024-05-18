@@ -10,10 +10,10 @@ import {
 import Slider from "@react-native-community/slider";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { calculateBARFDiet, getAge } from "../utils/getPercentage";
-import updateData from "../utils/functions/piedData";
+import { calculateBARFDiet, getAge } from "../../../utils/getPercentage";
+import updateData from "../../../utils/functions/piedData";
 import { PieChart } from "react-native-gifted-charts";
-import { windowWidth } from "../utils/Dimentions";
+import { windowWidth } from "../../../utils/Dimentions";
 
 const PetDetails = ({ route }) => {
   const { selectedPet } = route.params;
@@ -67,9 +67,9 @@ const PetDetails = ({ route }) => {
   }, [selectedPet]);
 
   const petImageMap = {
-    perro: require("../assets/pets/dogDefault.png"),
-    gato: require("../assets/pets/catDefault.png"),
-    huron: require("../assets/pets/ferretDefault.png"),
+    perro: require("../../../assets/pets/dogDefault.png"),
+    gato: require("../../../assets/pets/catDefault.png"),
+    huron: require("../../../assets/pets/ferretDefault.png"),
   };
 
   const decodeBase64Image = (base64Data) => {
