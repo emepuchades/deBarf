@@ -20,11 +20,14 @@ import { windowHeight, windowWidth } from "../../../utils/Dimentions";
 import { AuthenticatedUserContext } from "../../../utils/context/context";
 import { useNavigation } from "@react-navigation/native";
 import Modal from "react-native-modal";
-import { checkIfMenuDataExists, getMenuData } from "../../../utils/db/dbMenu.js";
+import {
+  getMenuData,
+} from "../../../utils/db/dbMenu.js";
 import { LinearGradient } from "expo-linear-gradient";
 import foodTypes from "../../../utils/info/food.js";
 import backgroundImage from "../../../assets/images/header.png";
 import { useTranslation } from "react-i18next";
+import BottomTabNavigator from "../../../components/BottomTabNavigator.jsx";
 
 const Calendar = () => {
   const { user, db } = useContext(AuthenticatedUserContext);
@@ -267,202 +270,213 @@ const Calendar = () => {
   };
 
   return (
-    <ScrollView
-      style={styles.container}
-      vertical
-      showsHorizontalScrollIndicator={false}
-    >
-      <ImageBackground
-        source={backgroundImage}
-        style={styles.navigationWrapper}
+    <>
+      <ScrollView
+        style={styles.container}
+        vertical
+        showsHorizontalScrollIndicator={false}
       >
-        <View style={styles.navigation}>
-          <Text style={styles.monthText}>{fecha.format("MMMM YYYY")}</Text>
-        </View>
-        <View style={styles.daysContainer}>
-          <TouchableOpacity
-            onPress={() => cambiarSemana(-1)}
-            style={styles.navigationContainer}
-          >
-            <Text style={styles.navigationText}>{"<"}</Text>
-          </TouchableOpacity>
-          {diasSemana.map((dia, index) => (
-            <TouchableOpacity
-              key={dia}
-              onPress={() =>
-                handleDayPress(
-                  fecha
-                    .clone()
-                    .startOf("week")
-                    .add(index, "day")
-                    .format("YYYY-MM-DD")
-                )
-              }
-              style={styles.dayButton}
-            >
-              {parseFloat(diasNumeros[index]) ===
-              parseFloat(dayFecha(selectedDay)) ? (
-                <>
-                  <View style={styles.selectedDay}>
-                    <Text style={styles.dayNumber}>{diasNumeros[index]}</Text>
-                    <Text style={styles.dayName}>{dia}</Text>
-                  </View>
-                </>
-              ) : (
-                <>
-                  <View style={styles.nonSelectedDay}>
-                    <Text style={styles.dayNumberNoSelected}>
-                      {diasNumeros[index]}
-                    </Text>
-                    <Text style={styles.dayNameNoSelected}>{dia}</Text>
-                  </View>
-                </>
-              )}
-            </TouchableOpacity>
-          ))}
-          <TouchableOpacity
-            onPress={() => cambiarSemana(1)}
-            style={styles.navigationContainer}
-          >
-            <Text style={styles.navigationText}>{">"}</Text>
-          </TouchableOpacity>
-        </View>
-      </ImageBackground>
-      <View style={styles.mascotasContainer}>
-        <ScrollView
-          horizontal
-          ref={menuScrollViewRef}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.mascotasScrollContainer}
+        <ImageBackground
+          source={backgroundImage}
+          style={styles.navigationWrapper}
         >
-          {pets.map((mascota) => (
+          <View style={styles.navigation}>
+            <Text style={styles.monthText}>{fecha.format("MMMM YYYY")}</Text>
+          </View>
+          <View style={styles.daysContainer}>
             <TouchableOpacity
-              key={mascota.id}
-              onPress={() => handleMascotaPress(mascota)}
-              style={[
-                styles.mascotaButton,
-                {
-                  backgroundColor:
-                    selectedPet?.id === mascota.id ? "#5b8afd" : "white",
-                  borderColor:
-                    selectedPet?.id === mascota.id ? "white" : "#ddd",
-                },
-              ]}
+              onPress={() => cambiarSemana(-1)}
+              style={styles.navigationContainer}
             >
-              <View style={styles.mascotaImageContainer}>
-                {!mascota.image ? (
-                  <Image
-                    style={styles.imagePet}
-                    source={petImageMap[mascota.typePet]}
-                  />
+              <Text style={styles.navigationText}>{"<"}</Text>
+            </TouchableOpacity>
+            {diasSemana.map((dia, index) => (
+              <TouchableOpacity
+                key={dia}
+                onPress={() =>
+                  handleDayPress(
+                    fecha
+                      .clone()
+                      .startOf("week")
+                      .add(index, "day")
+                      .format("YYYY-MM-DD")
+                  )
+                }
+                style={styles.dayButton}
+              >
+                {parseFloat(diasNumeros[index]) ===
+                parseFloat(dayFecha(selectedDay)) ? (
+                  <>
+                    <View style={styles.selectedDay}>
+                      <Text style={styles.dayNumber}>{diasNumeros[index]}</Text>
+                      <Text style={styles.dayName}>{dia}</Text>
+                    </View>
+                  </>
                 ) : (
-                  <Image
-                    style={styles.imagePet}
-                    source={{ uri: decodeBase64Image(mascota.image) }}
-                  />
+                  <>
+                    <View style={styles.nonSelectedDay}>
+                      <Text style={styles.dayNumberNoSelected}>
+                        {diasNumeros[index]}
+                      </Text>
+                      <Text style={styles.dayNameNoSelected}>{dia}</Text>
+                    </View>
+                  </>
                 )}
-              </View>
-              <Text
+              </TouchableOpacity>
+            ))}
+            <TouchableOpacity
+              onPress={() => cambiarSemana(1)}
+              style={styles.navigationContainer}
+            >
+              <Text style={styles.navigationText}>{">"}</Text>
+            </TouchableOpacity>
+          </View>
+        </ImageBackground>
+        <View style={styles.mascotasContainer}>
+          <ScrollView
+            horizontal
+            ref={menuScrollViewRef}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.mascotasScrollContainer}
+          >
+            {pets.map((mascota) => (
+              <TouchableOpacity
+                key={mascota.id}
+                onPress={() => handleMascotaPress(mascota)}
                 style={[
-                  styles.mascotaName,
+                  styles.mascotaButton,
                   {
-                    color: selectedPet?.id === mascota.id ? "#FFF" : "#333",
+                    backgroundColor:
+                      selectedPet?.id === mascota.id ? "#5b8afd" : "white",
+                    borderColor:
+                      selectedPet?.id === mascota.id ? "white" : "#ddd",
                   },
                 ]}
               >
-                {mascota.name}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
-      </View>
-      <View style={styles.inputContainer}>
-        {selectedPet && foodData && foodData.length > 0 ? (
-          <View style={styles.addButtonContainer}>
-            <TouchableOpacity
-              onPress={() => editMenu()}
-              style={styles.addButton}
-            >
-              <Text style={styles.addButtonLabel}>
-                {t(`calendar.editFood`)}
-              </Text>
-            </TouchableOpacity>
-          </View>
-        ) : selectedPet ? (
-          <View style={styles.addButtonContainer}>
-            <TouchableOpacity onPress={handleAddFood} style={styles.addButton}>
-              <Text style={styles.addButtonLabel}>
-                {t(`calendar.mealRation`)}
-              </Text>
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <View style={styles.addButtonContainer}>
-            <TouchableOpacity onPress={handleAddFood} style={styles.addButton}>
-              <Text style={styles.addButtonLabel}>
-                {t(`calendar.mealRation`)}
-              </Text>
-            </TouchableOpacity>
-          </View>
-        )}
-      </View>
-      <View style={styles.containerFood}>
-        <View style={styles.headerFood}>
-          <Text style={styles.headerTextFood}>{t(`calendar.feed`)} 1</Text>
+                <View style={styles.mascotaImageContainer}>
+                  {!mascota.image ? (
+                    <Image
+                      style={styles.imagePet}
+                      source={petImageMap[mascota.typePet]}
+                    />
+                  ) : (
+                    <Image
+                      style={styles.imagePet}
+                      source={{ uri: decodeBase64Image(mascota.image) }}
+                    />
+                  )}
+                </View>
+                <Text
+                  style={[
+                    styles.mascotaName,
+                    {
+                      color: selectedPet?.id === mascota.id ? "#FFF" : "#333",
+                    },
+                  ]}
+                >
+                  {mascota.name}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
         </View>
-        <View style={styles.contentFood}>
-          {foodData ? (
-            foodData.length > 0 ? (
-              <View style={styles.foodDataContainer}>
-                {Array.isArray(foodData) &&
-                  foodData.map((item, index) => {
-                    const category = foodInfo[item.category];
-                    const foodType = category.find(
-                      (type) => type.name === item.name
-                    );
+        <View style={styles.inputContainer}>
+          {selectedPet && foodData && foodData.length > 0 ? (
+            <View style={styles.addButtonContainer}>
+              <TouchableOpacity
+                onPress={() => editMenu()}
+                style={styles.addButton}
+              >
+                <Text style={styles.addButtonLabel}>
+                  {t(`calendar.editFood`)}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          ) : selectedPet ? (
+            <View style={styles.addButtonContainer}>
+              <TouchableOpacity
+                onPress={handleAddFood}
+                style={styles.addButton}
+              >
+                <Text style={styles.addButtonLabel}>
+                  {t(`calendar.mealRation`)}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <View style={styles.addButtonContainer}>
+              <TouchableOpacity
+                onPress={handleAddFood}
+                style={styles.addButton}
+              >
+                <Text style={styles.addButtonLabel}>
+                  {t(`calendar.mealRation`)}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        </View>
+        <View style={styles.containerFood}>
+          <View style={styles.headerFood}>
+            <Text style={styles.headerTextFood}>{t(`calendar.feed`)} 1</Text>
+          </View>
+          <View style={styles.contentFood}>
+            {foodData ? (
+              foodData.length > 0 ? (
+                <View style={styles.foodDataContainer}>
+                  {Array.isArray(foodData) &&
+                    foodData.map((item, index) => {
+                      const category = foodInfo[item.category];
+                      const foodType = category.find(
+                        (type) => type.name === item.name
+                      );
 
-                    return (
-                      <View key={index} style={styles.foodItemContainer}>
-                        {foodType && (
-                          <Image
-                            source={foodType.img}
-                            style={styles.foodImage}
-                          />
-                        )}
-                        <View style={styles.foodInfo}>
-                          <Text style={styles.textFood}>{item.name}</Text>
-                          <Text style={styles.textCategory}>
-                            {mapFoodTypeToLabel(item.category)}
-                          </Text>
+                      return (
+                        <View key={index} style={styles.foodItemContainer}>
+                          {foodType && (
+                            <Image
+                              source={foodType.img}
+                              style={styles.foodImage}
+                            />
+                          )}
+                          <View style={styles.foodInfo}>
+                            <Text style={styles.textFood}>{item.name}</Text>
+                            <Text style={styles.textCategory}>
+                              {mapFoodTypeToLabel(item.category)}
+                            </Text>
+                          </View>
+                          <View style={styles.containerGrams}>
+                            <Text style={styles.textGrams}>
+                              {item.editGrams} {t(`gr`)}
+                            </Text>
+                          </View>
                         </View>
-                        <View style={styles.containerGrams}>
-                          <Text style={styles.textGrams}>
-                            {item.editGrams} {t(`gr`)}
-                          </Text>
-                        </View>
-                      </View>
-                    );
-                  })}
-              </View>
-            ) : (
-              <View style={styles.noFoodCOntainer}>
-                <Text>{t(`calendar.noFoodError`)}</Text>
-              </View>
-            )
-          ) : null}
-        </View>
-      </View>
-      <View style={styles.foodDataContainer}>
-        <Modal isVisible={isModalVisible}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalText}>{t(`calendar.noPeterror`)}</Text>
-            <TouchableOpacity onPress={closeModal} style={styles.closeButton}>
-              <Text style={styles.closeButtonText}>{t(`calendar.close`)}</Text>
-            </TouchableOpacity>
+                      );
+                    })}
+                </View>
+              ) : (
+                <View style={styles.noFoodCOntainer}>
+                  <Text>{t(`calendar.noFoodError`)}</Text>
+                </View>
+              )
+            ) : null}
           </View>
-        </Modal>
-      </View>
-    </ScrollView>
+        </View>
+        <View style={styles.foodDataContainer}>
+          <Modal isVisible={isModalVisible}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalText}>{t(`calendar.noPeterror`)}</Text>
+              <TouchableOpacity onPress={closeModal} style={styles.closeButton}>
+                <Text style={styles.closeButtonText}>
+                  {t(`calendar.close`)}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </Modal>
+        </View>
+      </ScrollView>
+      <BottomTabNavigator />
+    </>
   );
 };
 
@@ -475,7 +489,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     height: windowHeight,
     width: windowWidth,
-    backgroundColor: "#ffffff",
+    backgroundColor: "#F6F6F6",
   },
   navigationWrapper: {
     padding: 5,

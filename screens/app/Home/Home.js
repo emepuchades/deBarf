@@ -15,6 +15,7 @@ import { useTranslation } from "react-i18next";
 import { AuthenticatedUserContext } from "../../../utils/context/context";
 import { Ionicons } from "@expo/vector-icons";
 import DualButtonTab from "../../../components/DualButtonTab";
+import BottomTabNavigator from "../../../components/BottomTabNavigator";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -22,7 +23,7 @@ export default function Home() {
   const [selectedPet, setSelectedPet] = useState(null);
   const { t } = useTranslation();
   const CalculatorURL = t("navBottom.newPet");
-  const { db } = useContext(AuthenticatedUserContext);
+  const { db, setBottomTabSelected } = useContext(AuthenticatedUserContext);
   const [selectedTabKg, setSelectedTabKg] = useState(true);
   useEffect(() => {
     db.transaction((tx) => {
@@ -48,7 +49,9 @@ export default function Home() {
         );
       });
       setSelectedPet(null);
+      setBottomTabSelected(0);
     });
+
     return refreshed;
   }, [navigation]);
 
@@ -86,8 +89,8 @@ export default function Home() {
   };
 
   const updateKg = () => {
-    setSelectedTabKg(!selectedTabKg)
-  }
+    setSelectedTabKg(!selectedTabKg);
+  };
 
   const petImageMap = {
     perro: require("../../../assets/pets/dogDefault.png"),
@@ -190,6 +193,7 @@ export default function Home() {
         icon="plus"
         onPress={() => navigation.navigate(CalculatorURL)}
       />
+      <BottomTabNavigator />
     </>
   );
 }

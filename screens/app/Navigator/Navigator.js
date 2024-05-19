@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
 
@@ -18,6 +18,8 @@ import AddFoodScreen from "../AddMeal/AddFoddScreen";
 import EditMenu from "../../../components/Edit/EditMenu";
 import Calculator from "../Calculator/Calculator";
 import Shoplist from "../Profile/Profile";
+import Home from "../Home/Home";
+import { AuthenticatedUserContext } from "../../../utils/context/context";
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
@@ -33,16 +35,10 @@ const DrawerNavigator = () => {
     >
       <Drawer.Screen
         name={t("navBottom.home")}
-        component={Main}
+        component={Home}
         options={({ navigation, route }) => ({
           drawerIcon: ({ color, size }) => (
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate(t("navBottom.pets"));
-              }}
-            >
-              <Ionicons name="paw-outline" size={size} color={color} />
-            </TouchableOpacity>
+            <Ionicons name="paw-outline" size={size} color={color} />
           ),
         })}
       />
@@ -51,13 +47,7 @@ const DrawerNavigator = () => {
         component={Shoplist}
         options={({ navigation, route }) => ({
           drawerIcon: ({ color, size }) => (
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate(t("navBottom.foods"));
-              }}
-            >
-              <Ionicons name="md-nutrition-outline" size={size} color={color} />
-            </TouchableOpacity>
+            <Ionicons name="md-nutrition-outline" size={size} color={color} />
           ),
         })}
       />
@@ -66,13 +56,7 @@ const DrawerNavigator = () => {
         component={Shoplist}
         options={({ navigation, route }) => ({
           drawerIcon: ({ color, size }) => (
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate(t("navBottom.menu"));
-              }}
-            >
-              <Ionicons name="library-outline" size={size} color={color} />
-            </TouchableOpacity>
+            <Ionicons name="library-outline" size={size} color={color} />
           ),
         })}
       />
@@ -81,13 +65,7 @@ const DrawerNavigator = () => {
         component={Shoplist}
         options={({ navigation, route }) => ({
           drawerIcon: ({ color, size }) => (
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate(t("navBottom.shoppingList"));
-              }}
-            >
-              <Ionicons name="ios-basket-outline" size={size} color={color} />
-            </TouchableOpacity>
+            <Ionicons name="ios-basket-outline" size={size} color={color} />
           ),
         })}
       />
@@ -142,8 +120,28 @@ const DrawerNavigator = () => {
         }}
       />
       <Drawer.Screen
-        name={"Planificador"}
+        name={t("navBottom.menu")}
         component={Calendar}
+        options={{
+          drawerItemStyle: { height: 0 },
+          drawerLockMode: "locked-closed",
+          gestureEnabled: false,
+          drawerLabel: () => null,
+        }}
+      />
+      <Drawer.Screen
+        name={"Home"}
+        component={Home}
+        options={{
+          drawerItemStyle: { height: 0 },
+          drawerLockMode: "locked-closed",
+          gestureEnabled: false,
+          drawerLabel: () => null,
+        }}
+      />
+      <Drawer.Screen
+        name={"Food"}
+        component={Food}
         options={{
           drawerItemStyle: { height: 0 },
           drawerLockMode: "locked-closed",

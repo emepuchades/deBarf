@@ -4,9 +4,10 @@ import colors from "../../../utils/colors";
 export const styleHome = {
   container: {
     flex: 1,
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#F6F6F6",
     alignItems: "center",
     padding: 10,
+    marginBottom: 70,
   },
   settingsContainer: {
     width: windowWidth,
@@ -35,8 +36,8 @@ export const styleHome = {
     position: "absolute",
     margin: 16,
     right: 0,
-    bottom: 20,
-    backgroundColor: colors.secondary,
+    bottom: 65,
+    backgroundColor: "#92AEF1",
     borderRadius: 28,
   },
   tinyLogo: {
@@ -93,7 +94,7 @@ export const styleHome = {
     top: 25,
     right: 15,
   },
- settingsButtonContainer: {
+  settingsButtonContainer: {
     position: "absolute",
     top: 25,
     right: 55,

@@ -2,7 +2,7 @@
 
 export const styleNavigator = {
     headerShown: true,
-    drawerActiveBackgroundColor: '#aa18ea',
+    drawerActiveBackgroundColor: "#92AEF1",
     drawerActiveTintColor: '#fff',
     drawerInactiveTintColor: '#333',
     drawerLabelStyle: {
