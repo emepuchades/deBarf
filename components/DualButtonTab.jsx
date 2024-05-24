@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     backgroundColor: "#ffffff",
-    height: 70,
+    height: 60,
     margin: 5,
   },
   tabsContainerText: {
@@ -72,8 +72,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 10,
-    paddingHorizontal: 15,
+    paddingVertical: 4,
+    paddingHorizontal: 10,
     marginRight: 10,
     margin: 5,
     width: "46%",
@@ -84,13 +84,13 @@ const styles = StyleSheet.create({
   },
   tabButtonText: {
     color: "#626A72",
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: "bold",
     marginLeft: 5,
   },
   activeTabButtonText: {
     color: "#333",
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "bold",
   },
 });
