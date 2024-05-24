@@ -130,11 +130,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: 10,
     borderTopWidth: 2,
-    borderTopColor: "#92AEF1",
-    color: "#92AEF1",
+    borderTopColor: "#4F98FE",
+    color: "#4F98FE",
   },
   tabIconSelected: {
-    color: "#92AEF1",
+    color: "#4F98FE",
   },
   tabIcon: {
     color: "#505359",
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
   },
   textTabSelected: {
     fontSize: 13,
-    color: "#92AEF1",
+    color: "#4F98FE",
     fontWeight: "bold",
   },
 });

@@ -37,7 +37,7 @@ export const styleHome = {
     margin: 16,
     right: 0,
     bottom: 65,
-    backgroundColor: "#92AEF1",
+    backgroundColor: "#4F98FE",
     borderRadius: 28,
   },
   tinyLogo: {

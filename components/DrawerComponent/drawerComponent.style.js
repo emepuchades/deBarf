@@ -18,25 +18,43 @@ export const styleDrawer = {
   listNavigation: {
     flex: 1,
     backgroundColor: colors.primary,
-    paddingTop: 20,
+    paddingTop: 15,
   },
   navBottom: {
-    padding: 20,
+    paddingTop: 10,
+    paddingLeft: 2,
     borderTopWidth: 1,
-    borderTopColor: colors.grey,
+    borderTopColor: "#4F98FE",
+  },
+  titleSection: {
+    color: "#4F98FE",
+    fontWeight: "bold",
+  },
+  navContainer: {
+    padding: 15,
   },
   textSignOut: {
     fontSize: 15,
     marginLeft: 5,
+    padding: 15,
   },
   containerSignOut: {
     flexDirection: "row",
     alignItems: "center",
   },
   buttons: {
-    paddingVertical: 15,
+    paddingVertical: 8,
   },
   listNavigaton: {
     paddingTop: 35,
-  }
+  },
+  versionContainer: {
+    paddingBottom: 15,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  versionText: {
+    textAlign: "center",
+    paddingLeft: '25%'
+  },
 };

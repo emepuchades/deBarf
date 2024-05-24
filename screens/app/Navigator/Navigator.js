@@ -126,16 +126,7 @@ const DrawerNavigator = () => {
           drawerItemStyle: { height: 0 },
           drawerLockMode: "locked-closed",
           gestureEnabled: false,
-          drawerLabel: () => null,
-        }}
-      />
-      <Drawer.Screen
-        name={"Home"}
-        component={Home}
-        options={{
-          drawerItemStyle: { height: 0 },
-          drawerLockMode: "locked-closed",
-          gestureEnabled: false,
+          hideStatusBar: false,
           drawerLabel: () => null,
         }}
       />

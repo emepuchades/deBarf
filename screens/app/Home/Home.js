@@ -102,12 +102,6 @@ export default function Home() {
     <>
       <ScrollView vertical showsHorizontalScrollIndicator={false}>
         <View style={styles.container}>
-          <DualButtonTab
-            onClick={updateKg}
-            activeTab={selectedTabKg}
-            leftButtonText="KG"
-            rightButtonText="Libras"
-          />
           {pets ? (
             <View style={styles.containerNewPet}>
               {pets.length === 0 ? (
