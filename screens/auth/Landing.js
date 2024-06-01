@@ -3,25 +3,31 @@ import { Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import styleLanding from './Landing.style'
 import { windowWidth } from '../../utils/Dimentions';
 import colors from '../../utils/colors';
+import { useTranslation } from "react-i18next";
 
 export default function Landing({ navigation }) {
+    const { t } = useTranslation();
+
     return (
-        <View style={styles.container}>
-            <Image
-                source={require('../../assets/logo.png')}
-                style={styles.logo}
-            />
-            <Text style={styles.title1}>Barfeando</Text>
-            <Text style={styles.description}>Alimentar bien a tu animal nunca fue tan fácil</Text>
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity onPress={() => navigation.navigate("Signup")} style={styles.buttonR}>
-                    <Text style={styles.textR}>Register</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate("Login")} style={styles.buttonL}>
-                    <Text style={styles.textL}>Login</Text>
-                </TouchableOpacity>
-            </View>
+      <View style={styles.container}>
+        <Image source={require("../../assets/logo.png")} style={styles.logo} />
+        <Text style={styles.title1}>{t(`landig.title`)}</Text>
+        <Text style={styles.description}>{t(`landig.subtitle`)}</Text>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Signup")}
+            style={styles.buttonR}
+          >
+            <Text style={styles.textR}>{t(`landig.register`)}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Login")}
+            style={styles.buttonL}
+          >
+            <Text style={styles.textL}>{t(`landig.login`)}</Text>
+          </TouchableOpacity>
         </View>
+      </View>
     );
 };
 

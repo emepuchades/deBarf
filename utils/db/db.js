@@ -33,6 +33,17 @@ async function createTables(db) {
     `
     );
   });
+  db.transaction((tx) => {
+    tx.executeSql(
+      `
+      CREATE TABLE IF NOT EXISTS language (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        code TEXT,
+        tag TEXT
+      )
+    `
+    );
+  });
 }
 
 async function initDatabase(db) {

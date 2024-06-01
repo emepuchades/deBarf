@@ -5,6 +5,7 @@ import { View, ActivityIndicator } from "react-native";
 
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./utils/db/firebase";
+import * as Localization from "expo-localization";
 
 import Login from "./screens/auth/Login/Login";
 import Signup from "./screens/auth/Register/Signup";
@@ -16,6 +17,8 @@ import {
   AuthenticatedUserProvider,
 } from "./utils/context/context";
 import initDatabase from "./utils/db/db";
+import { addLanguage, getLanguage } from "./utils/db/dbMenu";
+import { parseLanguages } from "./utils/info/languages";
 
 const Stack = createStackNavigator();
 
@@ -30,8 +33,9 @@ function AuthStack() {
 }
 
 function RootNavigator() {
-  const { user, setUser, db } = useContext(AuthenticatedUserContext);
+  const { user, setUser, db, language} = useContext(AuthenticatedUserContext);
   const [isLoading, setIsLoading] = useState(true);
+  const [locale, setLocale] = useState(Localization.locale);
 
   useEffect(() => {
     const unsubscribeAuth = onAuthStateChanged(
@@ -47,6 +51,8 @@ function RootNavigator() {
   useEffect(() => {
     async function initDB() {
       await initDatabase(db);
+      const isLanguage = await getLanguage(db);
+      isLanguage.length === 0  && (await addLanguage(db, locale, parseLanguages(locale)));
     }
     initDB();
   }, []);

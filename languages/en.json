@@ -8,6 +8,37 @@
     "kilos": "kilos",
     "pounds": "pounds",
     "loading": "Loading...",
+    "landig": {
+      "title": "Barfeando",
+      "subtitle": "Feeding your animal well has never been so easy",
+      "register": "Register",
+      "login": "Login"
+    },
+    "signup": {
+      "title": "Account Signup",
+      "button": "Submit",
+      "subtitile": "Don't have an account?",
+      "login": "Login",
+      "inputEmail": "Email address",
+      "inputPassword": "Password"
+    },
+    "login": {
+      "title": "Account Login",
+      "button": "Login",
+      "subtitile": "Don't have an account?",
+      "login": "Login"
+    },
+    "drawer": {
+      "settings": "Settings",
+      "help": "Help",
+      "privacy_policy": "Privacy Policy",
+      "faq": "FAQ"
+    },
+    "screen": {
+      "recipes": "Recipes",
+      "resources": "Resources",
+      "shoppinglist": "Shopping list"
+    },
     "navBottom": {
       "home": "Home",
       "pets": "Pets",
@@ -17,13 +48,15 @@
       "profile": "Profile",
       "signOut": "Sign Out",
       "planner": "Planner",
+      "picks": "Barf Picks",
       "menu": "Menu",
       "shoppingList": "Shopping list",
       "newPet": "Add Pet"
     },
     "languages": {
-      "en": "English",
-      "es": "Spanish"
+      "us": "English (United States)",
+      "es": "Spanish (Spain)",
+      "gb": "English (United Kingdom)"
     },
     "home": {
       "loading": "Loading...",
@@ -260,8 +293,8 @@
       "selectFood": "Select a food to add it",
       "food": "Food",
       "yourFood": "Your food",
-      "foodName": "Nombre del alimento:",
-      "grams": "Grams:",
+      "foodName": "Meal name",
+      "grams": "Grams",
       "addMeal": "Add Food",
       "emptyFood": "Añade un alimento",
       "category": "Category"

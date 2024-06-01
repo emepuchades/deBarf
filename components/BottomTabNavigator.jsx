@@ -37,7 +37,7 @@ function BottomTabNavigator() {
               bottomTabSelected === 0 ? styles.textTabSelected : styles.textTab
             }
           >
-            Pets
+            {t("navBottom.pets")}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -56,7 +56,7 @@ function BottomTabNavigator() {
               bottomTabSelected === 1 ? styles.textTabSelected : styles.textTab
             }
           >
-            Menu
+            {t("navBottom.planner")}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -75,7 +75,7 @@ function BottomTabNavigator() {
               bottomTabSelected === 2 ? styles.textTabSelected : styles.textTab
             }
           >
-            Desctacados
+            {t("navBottom.picks")}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -94,7 +94,7 @@ function BottomTabNavigator() {
               bottomTabSelected === 3 ? styles.textTabSelected : styles.textTab
             }
           >
-            Foods
+            {t("navBottom.foods")}
           </Text>
         </TouchableOpacity>
       </View>

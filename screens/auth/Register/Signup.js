@@ -1,19 +1,30 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Image, SafeAreaView, TouchableOpacity, StatusBar, Alert } from "react-native";
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../../utils/db/firebase';
-import { styleRegister } from './Signup.style';
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  Image,
+  SafeAreaView,
+  TouchableOpacity,
+  StatusBar,
+  Alert,
+} from "react-native";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../../utils/db/firebase";
+import { styleRegister } from "./Signup.style";
+import { useTranslation } from "react-i18next";
 const backImage = require("../../../assets/images/fondoLogin.png");
 
 export default function Signup({ navigation }) {
+  const { t } = useTranslation();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const onHandleSignup = () => {
-    if (email !== '' && password !== '') {
+  const onHandleSignup = async () => {
+    if (email !== "" && password !== "") {
       createUserWithEmailAndPassword(auth, email, password)
-        .then(() => console.log('Signup success'))
+        .then(() => console.log("Signup success"))
         .catch((err) => Alert.alert("Login error", err.message));
     }
   };
@@ -23,10 +34,10 @@ export default function Signup({ navigation }) {
       <Image source={backImage} style={styles.backImage} />
       <View style={styles.whiteSheet} />
       <SafeAreaView style={styles.form}>
-        <Text style={styles.title}>Sign Up</Text>
+        <Text style={styles.title}>{t(`signup.title`)}</Text>
         <TextInput
           style={styles.input}
-          placeholder="Enter email"
+          placeholder={t(`signup.inputEmail`)}
           autoCapitalize="none"
           keyboardType="email-address"
           textContentType="emailAddress"
@@ -36,7 +47,7 @@ export default function Signup({ navigation }) {
         />
         <TextInput
           style={styles.input}
-          placeholder="Enter password"
+          placeholder={t(`signup.inputPassword`)}
           autoCapitalize="none"
           autoCorrect={false}
           secureTextEntry={true}
@@ -45,13 +56,13 @@ export default function Signup({ navigation }) {
           onChangeText={(text) => setPassword(text)}
         />
         <TouchableOpacity style={styles.button} onPress={onHandleSignup}>
-          <Text style={styles.textInput}> Sign Up</Text>
+          <Text style={styles.textInput}>{t(`signup.button`)}</Text>
         </TouchableOpacity>
 
         <View style={styles.containerLogIn}>
-          <Text style={styles.textSecondary}>Don't have an account? </Text>
+          <Text style={styles.textSecondary}>{t(`signup.subtitle`)}</Text>
           <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-            <Text style={styles.textLogIn}> Log In</Text>
+            <Text style={styles.textLogIn}>{t(`signup.login`)}</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>

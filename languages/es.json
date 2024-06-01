@@ -8,6 +8,37 @@
     "kilos": "kilos",
     "pounds": "libras",
     "loading": "Cargando...",
+    "landig": {
+      "title": "Barfeando",
+      "subtitle": "Alimentar bien a tu animal nunca fue tan fácil",
+      "register": "Registrarte",
+      "login": "Acceder"
+    },
+    "signup": {
+      "title": "Regístrate",
+      "button": "Registrarte",
+      "subtitle": "¿Ya eres miembro?",
+      "login": "Accede",
+      "inputEmail": "Correo electronico",
+      "inputPassword": "Contraseña"
+    },
+    "login": {
+      "title": "Inicia sesión",
+      "button": "Inicia sesión",
+      "subtitle": "¿No eres miembro todavía?",
+      "login": "Registrate"
+    },
+    "drawer": {
+      "settings": "Ajustes",
+      "help": "Soporte",
+      "privacy_policy": "Politica de privacidad",
+      "faq": "Preguntas Frecuentes"
+    },
+    "screen": {
+      "recipes": "Recetas",
+      "resources": "Recursos",
+      "shoppinglist": "Lista de la compra"
+    },
     "navBottom": {
       "home": "Inicio",
       "pets": "Mascotas",
@@ -17,13 +48,15 @@
       "profile": "Perfil",
       "signOut": "Cerrar Sesión",
       "planner": "Planificador",
+      "picks": "Destacados",
       "menu": "Menu",
       "shoppingList": "Lista de la compra",
       "newPet": "Agregar Mascota"
     },
     "languages": {
-      "en": "Inglés",
-      "es": "Español"
+      "us": "English (United States)",
+      "es": "Español (España)",
+      "gb": "English (United Kingdom)"
     },
     "home": {
       "loading": "Cargando...",
@@ -243,15 +276,15 @@
       "save": "Guardar",
       "edit": "Editar"
     },
-    "planner":{
-      "exceeded":"Has excedido la cantidad recomendada de ",
+    "planner": {
+      "exceeded": "Has excedido la cantidad recomendada de ",
       "meat": "Carne",
       "bones": "Huesos Carnosos",
       "visceras": "Visceras",
       "higado": "Higado",
       "vegetables": "Vegetales",
       "fish": "Pescado"
-    }, 
+    },
     "addMeal": {
       "total": "Total",
       "goal": "Objetivo",

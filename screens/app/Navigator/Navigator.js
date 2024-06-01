@@ -43,7 +43,7 @@ const DrawerNavigator = () => {
         })}
       />
       <Drawer.Screen
-        name={"Recetas"}
+        name={t("screen.recipes")}
         component={Shoplist}
         options={({ navigation, route }) => ({
           drawerIcon: ({ color, size }) => (
@@ -52,7 +52,7 @@ const DrawerNavigator = () => {
         })}
       />
       <Drawer.Screen
-        name={"Recursos"}
+        name={t("screen.resources")}
         component={Shoplist}
         options={({ navigation, route }) => ({
           drawerIcon: ({ color, size }) => (
@@ -61,7 +61,7 @@ const DrawerNavigator = () => {
         })}
       />
       <Drawer.Screen
-        name={"Lista de la compra"}
+        name={t("screen.shoppinglist")}
         component={Shoplist}
         options={({ navigation, route }) => ({
           drawerIcon: ({ color, size }) => (
