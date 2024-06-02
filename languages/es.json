@@ -274,7 +274,8 @@
       "isGreyhound": "Es Galgo",
       "strayCat": "Gato callejero",
       "save": "Guardar",
-      "edit": "Editar"
+      "edit": "Editar",
+      "change": "Cambiar"
     },
     "planner": {
       "exceeded": "Has excedido la cantidad recomendada de ",

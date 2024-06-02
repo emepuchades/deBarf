@@ -41,7 +41,7 @@ function EditPet({ route }) {
   const [existingUri, setExistingUri] = useState("");
   const [errorMessages, setErrorMessages] = useState({});
 
-  const HomeURL = t("navBottom.pets");
+  const HomeURL = t("navBottom.home");
 
   const { editPetId } = route.params;
 
@@ -151,7 +151,7 @@ function EditPet({ route }) {
         return;
       }
 
-      if (isNaN(weight) ||   parseFloat(weight) === 0 || !weight) {
+      if (isNaN(weight) || parseFloat(weight) === 0 || !weight) {
         setErrorMessages((prevErrors) => ({
           ...prevErrors,
           weight: t(`calculator.weigthError`),
@@ -274,27 +274,48 @@ function EditPet({ route }) {
         <View style={styles.containerPetInfo}>
           <TouchableOpacity onPress={handleImageSelect}>
             <View style={styles.petImage}>
-              <View
-                style={{
-                  ...StyleSheet.absoluteFillObject,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  backgroundColor: "#f0f0f0",
-                  borderRadius: 20,
-                }}
-              >
-                <Ionicons name="camera" size={27} color="#111" />
-                <Text
+              {selectedImage ? (
+                <View
                   style={{
-                    paddingVertical: 2,
-                    paddingHorizontal: 10,
-                    textAlign: "center",
-                    fontSize: 13,
+                    ...StyleSheet.absoluteFillObject,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: 20,
                   }}
                 >
-                  {t(`calculator.addImage`)}
-                </Text>
-              </View>
+                  <Image
+                    source={{ uri: selectedImage }}
+                    style={styles.petImage}
+                  />
+                  <View style={styles.petImageContainer}>
+                    <Text style={styles.changePetImageText}>
+                      {t(`calculator.change`)}
+                    </Text>
+                  </View>
+                </View>
+              ) : (
+                <View
+                  style={{
+                    ...StyleSheet.absoluteFillObject,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    backgroundColor: "#f0f0f0",
+                    borderRadius: 20,
+                  }}
+                >
+                  <Ionicons name="camera" size={27} color="#111" />
+                  <Text
+                    style={{
+                      paddingVertical: 2,
+                      paddingHorizontal: 10,
+                      textAlign: "center",
+                      fontSize: 13,
+                    }}
+                  >
+                    {t(`calculator.addImage`)}
+                  </Text>
+                </View>
+              )}
             </View>
           </TouchableOpacity>
           <View style={styles.petNameConatiner}>

@@ -42,8 +42,20 @@ export const styleCalculator = {
     height: 100,
     resizeMode: "contain",
     flex: 1,
+  },
+  petImageContainer: {
+    position: "absolute",
+    bottom: -9,
+    width: "100%",
+    backgroundColor: "#919191",
+    paddingVertical: 2,
+    justifyContent: "center",
     alignItems: "center",
-    marginBottom: 5,
+  },
+  changePetImageText: {
+    textAlign: "center",
+    fontSize: 13,
+    color: "white",
   },
   namePet: {
     width: "70%",

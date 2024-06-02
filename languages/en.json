@@ -274,7 +274,8 @@
       "isGreyhound": "Is a greyhound",
       "strayCat": "Stray cat",
       "save": "Save",
-      "edit": "Edit"
+      "edit": "Edit",
+      "change": "Change"
     },
     "planner": {
       "exceeded": "You have exceeded the recommended amount of grams of",
