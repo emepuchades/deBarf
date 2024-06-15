@@ -42,7 +42,7 @@ const EditMenu = ({ navigation, route }) => {
   const [yourGrFood, setYourGrFood] = useState("");
   const [errorMessages, setErrorMessages] = useState({});
   const { db } = useContext(AuthenticatedUserContext);
-  const MenuURL = t("navBottom.planner");
+  const MenuURL = t("navBottom.menu");
   const [idMenu, setIdMenu] = useState();
   const menuImageItem = {
     carne: require("../../assets/iconsFood/carne.png"),

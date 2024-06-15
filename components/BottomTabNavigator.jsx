@@ -80,7 +80,7 @@ function BottomTabNavigator() {
         </TouchableOpacity>
         <TouchableOpacity
           style={bottomTabSelected === 3 ? styles.tabSelected : styles.tab}
-          onPress={() => navigation.navigate("Food")}
+          onPress={() => navigation.navigate(t("screen.food"))}
         >
           <MaterialCommunityIcons
             name="food-drumstick-outline"

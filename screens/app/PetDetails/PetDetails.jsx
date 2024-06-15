@@ -77,7 +77,7 @@ const PetDetails = ({ route }) => {
   };
 
   const handleEditPet = (petId) => {
-    navigation.navigate("EditPet", {
+    navigation.navigate(t("drawer.editPet"), {
       isEditing: true,
       editPetId: selectedPet.id,
     });

@@ -70,7 +70,7 @@ const DrawerNavigator = () => {
         })}
       />
       <Drawer.Screen
-        name={"PetDetails"}
+        name={t("drawer.petDetails")}
         component={PetDetails}
         options={{
           drawerItemStyle: { height: 0 },
@@ -80,7 +80,7 @@ const DrawerNavigator = () => {
         }}
       />
       <Drawer.Screen
-        name={"EditPet"}
+        name={t("drawer.editPet")}
         component={EditPet}
         options={{
           drawerItemStyle: { height: 0 },
@@ -90,7 +90,7 @@ const DrawerNavigator = () => {
         }}
       />
       <Drawer.Screen
-        name={"AddFood"}
+        name={t("drawer.addFood")}
         component={AddFoodScreen}
         options={{
           drawerItemStyle: { height: 0 },
@@ -100,7 +100,7 @@ const DrawerNavigator = () => {
         }}
       />
       <Drawer.Screen
-        name={"EditFood"}
+        name={t("drawer.editFood")}
         component={EditMenu}
         options={{
           drawerItemStyle: { height: 0 },
@@ -131,7 +131,7 @@ const DrawerNavigator = () => {
         }}
       />
       <Drawer.Screen
-        name={"Food"}
+        name={t("screen.food")}
         component={Food}
         options={{
           drawerItemStyle: { height: 0 },

@@ -29,6 +29,10 @@
       "login": "Registrate"
     },
     "drawer": {
+      "addFood": "Añade la racion",
+      "editFood": "Edita la racion",
+      "editPet": "Editar",
+      "petDetails": "Detalles",
       "settings": "Ajustes",
       "help": "Soporte",
       "privacy_policy": "Politica de privacidad",
@@ -37,7 +41,8 @@
     "screen": {
       "recipes": "Recetas",
       "resources": "Recursos",
-      "shoppinglist": "Lista de la compra"
+      "shoppinglist": "Lista de la compra",
+      "food": "Alimentos"
     },
     "navBottom": {
       "home": "Inicio",

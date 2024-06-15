@@ -203,14 +203,14 @@ const Calendar = () => {
       setModalVisible(true);
       return;
     }
-    navigation.navigate("AddFood", {
+    navigation.navigate(t("drawer.addFood"), {
       selectedPet: selectedPet,
       fecha: selectedDay,
     });
   };
 
   const editMenu = () => {
-    navigation.navigate("EditFood", {
+    navigation.navigate(t("drawer.editFood"), {
       selectedPet: selectedPet,
       fecha: selectedDay,
       foodData: foodData,

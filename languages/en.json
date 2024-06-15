@@ -29,6 +29,10 @@
       "login": "Login"
     },
     "drawer": {
+      "addFood": "Add Meal",
+      "editFood": "Edit Meal",
+      "editPet": "Edit",
+      "petDetails": "Details",
       "settings": "Settings",
       "help": "Help",
       "privacy_policy": "Privacy Policy",
@@ -37,7 +41,8 @@
     "screen": {
       "recipes": "Recipes",
       "resources": "Resources",
-      "shoppinglist": "Shopping list"
+      "shoppinglist": "Shopping list",
+      "food": "Food"
     },
     "navBottom": {
       "home": "Home",

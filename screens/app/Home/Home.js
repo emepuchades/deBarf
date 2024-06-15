@@ -85,7 +85,7 @@ export default function Home() {
   }
   const handlePetClick = (pet) => {
     setSelectedPet(pet);
-    navigation.navigate("PetDetails", { selectedPet: pet });
+    navigation.navigate(t("drawer.petDetails"), { selectedPet: pet });
   };
 
   const updateKg = () => {
