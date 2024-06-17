@@ -1,7 +1,5 @@
-
 import { windowHeight } from "../../../utils/Dimentions";
 import { windowWidth } from "../../../utils/Dimentions";
-
 
 export const styleFood = {
   container: {
@@ -102,18 +100,23 @@ export const styleFood = {
     alignItems: "center",
     backgroundColor: "white",
     borderRadius: 5,
-    width: 130,
+    width: 185,
+    height: 40,
+    flex: 1,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
   },
   iconMenu: {
-    width: 33,
-    height: 33,
+    width: 35,
+    height: 35,
+    marginRight: 5,
   },
   textMenu: {
     color: "#111111",
     textAlign: "center",
   },
   menuItem: {
-    alignItems: "center",
     padding: 6,
     borderRadius: 5,
   },

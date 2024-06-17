@@ -55,7 +55,7 @@ const Food = () => {
         style={{
           margin: 5,
           alignItems: "center",
-          width: 150,
+          width: 190,
         }}
       >
         <View
@@ -64,7 +64,10 @@ const Food = () => {
             borderWidth: isSelected ? 1 : 0,
             backgroundColor: "white",
             borderRadius: 5,
-            width: 150,
+            width: 190,
+            height: 50,
+            alignItems: "center",
+            textAlign: "center",
           }}
         >
           <View style={styles.menuItem}>

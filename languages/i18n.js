@@ -3,7 +3,7 @@ import { initReactI18next } from "react-i18next";
 import en from "./en.json";
 import es from "./es.json";
 import * as SQLite from "expo-sqlite";
-import { getLanguage } from "../utils/db/dbMenu";
+import { getLanguage } from "../utils/db/dbLanguage";
 
 export const initializeI18n = async () => {
   const defaultLanguage = await getLanguage(SQLite.openDatabase("debarf.db"));
