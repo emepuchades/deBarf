@@ -17,7 +17,7 @@ import {
   AuthenticatedUserProvider,
 } from "./utils/context/context";
 import initDatabase from "./utils/db/db";
-import { addLanguage, getLanguage } from "./utils/db/dbMenu";
+import { addLanguage, getLanguage } from "./utils/db/dbLanguage";
 import { parseLanguages } from "./utils/info/languages";
 
 const Stack = createStackNavigator();

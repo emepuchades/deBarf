@@ -22,7 +22,7 @@ import { Picker } from "@react-native-picker/picker";
 import DualButtonTab from "../DualButtonTab";
 import { languages, parseLanguages } from "../../utils/info/languages";
 import { AuthenticatedUserContext } from "../../utils/context/context";
-import { getLanguage, updateLanguage } from "../../utils/db/dbMenu";
+import { getLanguage, updateLanguage } from "../../utils/db/dbLanguage";
 const DrawerComponent = (props) => {
   const { t, i18n } = useTranslation();
   const { db } = useContext(AuthenticatedUserContext);
