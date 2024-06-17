@@ -35,11 +35,12 @@ function EditPet({ route }) {
   const [isSportingDog, setIsSportingDog] = useState(false);
   const [isGreyhound, setIsGreyhound] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
-  const [weight, setWeight] = useState(0);
+  const [weight, setWeight] = useState("");
   const [weightUnit, setWeightUnit] = useState("kilos");
   const [petID, setPetID] = useState();
-  const [existingUri, setExistingUri] = useState("");
+  const [existingUri, setExistingUri] = useState(false);
   const [errorMessages, setErrorMessages] = useState({});
+  //const [firstImage, setFirstImage] = useState("");
 
   const HomeURL = t("navBottom.home");
 
@@ -52,6 +53,13 @@ function EditPet({ route }) {
       return null;
     }
   };
+
+  async function convertImageToBase64(uri) {
+    const response = await FileSystem.readAsStringAsync(uri, {
+      encoding: FileSystem.EncodingType.Base64,
+    });
+    return response;
+  }
 
   useEffect(() => {
     async function getPet() {
@@ -68,7 +76,6 @@ function EditPet({ route }) {
         setWeight(petData.weight.toFixed(0));
         setWeightUnit(petData.weightUnit);
         setSelectedImage(decodeBase64Image(petData.image));
-        setExistingUri(petData.image);
       }
     }
 
@@ -114,6 +121,7 @@ function EditPet({ route }) {
 
       if (!result.canceled) {
         setSelectedImage(result.assets[0].uri);
+        setExistingUri(true);
       } else {
         setSelectedImage(null);
       }
@@ -178,6 +186,8 @@ function EditPet({ route }) {
         }));
         return;
       }
+      //console.log("selectedImage", codeBase64Image(selectedImage));
+      //const imageDecode = await codeBase64Image(selectedImage);
 
       await updatePet(
         db,
@@ -360,7 +370,7 @@ function EditPet({ route }) {
           <View style={styles.weightInputContainer}>
             <TextInput
               style={styles.weightInput}
-              value={weight}
+              value={String(weight)}
               onChangeText={setWeight}
               keyboardType="numeric"
             />

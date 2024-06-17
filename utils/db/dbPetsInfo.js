@@ -1,9 +1,7 @@
 import * as FileSystem from "expo-file-system";
 import getPercentage from "../getPercentage";
 
-export const getAllPets = async (
-  db,
-) => {
+export const getAllPets = async (db) => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
@@ -110,7 +108,8 @@ export const updatePet = async (
     if (
       selectedImage &&
       typeof selectedImage === "string" &&
-      selectedImage !== ""
+      selectedImage !== "" &&
+      existingUri
     ) {
       imageBase64 = await convertImageToBase64(selectedImage);
       await saveImageToDevice(selectedImage);
@@ -128,25 +127,33 @@ export const updatePet = async (
 
     try {
       await db.transaction(async (tx) => {
-        const updateQuery =
-          "UPDATE pets SET typePet=?, name=?, activity=?, image=?, date=?, sterilized=?, sportingDog=?, isGreyhound=?, weight=?, weightUnit=?, percentage=? WHERE id=?;";
+        let updateQuery;
+        let queryParams = [
+          selectedPet,
+          searchText,
+          activity,
+          formattedDate,
+          isSterilized ? 1 : 0,
+          isSportingDog ? 1 : 0,
+          isGreyhound ? 1 : 0,
+          parseFloat(weight),
+          weightUnit,
+          percentage,
+          parseFloat(petId),
+        ];
+
+        if (existingUri) {
+          updateQuery =
+            "UPDATE pets SET typePet=?, name=?, activity=?, image=?, date=?, sterilized=?, sportingDog=?, isGreyhound=?, weight=?, weightUnit=?, percentage=? WHERE id=?;";
+          queryParams.splice(3, 0, imageBase64);
+        } else {
+          updateQuery =
+            "UPDATE pets SET typePet=?, name=?, activity=?, date=?, sterilized=?, sportingDog=?, isGreyhound=?, weight=?, weightUnit=?, percentage=? WHERE id=?;";
+        }
 
         await tx.executeSql(
           updateQuery,
-          [
-            selectedPet,
-            searchText,
-            activity,
-            imageBase64,
-            formattedDate,
-            isSterilized ? 1 : 0,
-            isSportingDog ? 1 : 0,
-            isGreyhound ? 1 : 0,
-            parseFloat(weight),
-            weightUnit,
-            percentage,
-            parseFloat(petId),
-          ],
+          queryParams,
           (txObj, resultSet) => {
             tx.executeSql("COMMIT");
           },

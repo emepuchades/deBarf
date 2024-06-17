@@ -35,9 +35,9 @@ function Calculator() {
   const [isSportingDog, setIsSportingDog] = useState(false);
   const [isGreyhound, setIsGreyhound] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
-  const [weight, setWeight] = useState(0);
+  const [weight, setWeight] = useState("");
   const [weightUnit, setWeightUnit] = useState("kilos");
-  const HomeURL = t("navBottom.pets");
+  const HomeURL = t("navBottom.home");
   const [errorMessages, setErrorMessages] = useState({});
 
   const handleSearchTextChange = (text) => {
@@ -331,7 +331,7 @@ function Calculator() {
           <View style={styles.weightInputContainer}>
             <TextInput
               style={styles.weightInput}
-              value={weight}
+              value={String(weight)}
               onChangeText={setWeight}
               keyboardType="numeric"
             />
