@@ -28,7 +28,7 @@ const DrawerComponent = (props) => {
   const { db } = useContext(AuthenticatedUserContext);
 
   // getLanguage(db).tag
-  const [currentLanguage, setLanguage] = useState("es-ES");
+  const [currentLanguages, setLanguage] = useState("es-ES");
   const [selectedTabKg, setSelectedTabKg] = useState(true);
 
   useEffect(() => {
@@ -41,12 +41,12 @@ const DrawerComponent = (props) => {
 
   useEffect(() => {
     async function update() {
-      await updateLanguage(db, currentLanguage, parseLanguages(currentLanguage));
+      await updateLanguage(db, currentLanguages, parseLanguages(currentLanguages));
     }
     update();
-  }, [currentLanguage]);
+  }, [currentLanguages]);
 
-  const changeLanguage = (value) => {
+  const currentLanguagei18 = (value) => {
     i18n
       .changeLanguage(parseLanguages(value))
       .then(() => setLanguage(value))
@@ -57,7 +57,7 @@ const DrawerComponent = (props) => {
     signOut(auth).catch((error) => console.log("Error logging out: ", error));
   };
   const handleActivityChange = (value) => {
-    changeLanguage(value);
+    currentLanguagei18(value);
   };
   const updateKg = () => {
     setSelectedTabKg(!selectedTabKg);
@@ -78,7 +78,7 @@ const DrawerComponent = (props) => {
         <View style={styles.navBottom}>
           <Picker
             style={styles.buttons}
-            selectedValue={currentLanguage}
+            selectedValue={currentLanguages}
             onValueChange={handleActivityChange}
           >
             {languages.map((language, index) => (

@@ -1,23 +1,24 @@
-async function addLanguage(db, code, tag) {
-  try {
-    db.transaction((tx) => {
+import * as SQLite from "expo-sqlite";
+
+export async function addLanguage(db, code, tag) {
+
+  return new Promise((resolve, reject) => {
+    db.transaction(tx => {
       tx.executeSql(
         `INSERT INTO language (code, tag) VALUES (?, ?)`,
         [code, tag],
         (txObj, resultSet) => {
-          tx.executeSql("COMMIT");
+          resolve(resultSet);
         },
         (txObj, error) => {
-          tx.executeSql("ROLLBACK");
+          reject(error);
         }
       );
     });
-  } catch (error) {
-    console.log("Error al procesar", error);
-  }
+  });
 }
 
-export const getLanguage = async (db) => {
+export const getLanguage = (db) => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
@@ -53,6 +54,14 @@ export async function updateLanguage(db, code, tag) {
     });
   } catch (error) {
     console.log("Error al procesar", error);
+  }
+}
+
+export async function getLanguaguesAsync() {
+  try {
+    const languages = await getLanguage(SQLite.openDatabase("debarf.db"));
+    return languages;
+  } catch (error) {
   }
 }
 

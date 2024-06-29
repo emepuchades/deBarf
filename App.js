@@ -33,7 +33,7 @@ function AuthStack() {
 }
 
 function RootNavigator() {
-  const { user, setUser, db, language} = useContext(AuthenticatedUserContext);
+  const { user, setUser, db } = useContext(AuthenticatedUserContext);
   const [isLoading, setIsLoading] = useState(true);
   const [locale, setLocale] = useState(Localization.locale);
 
@@ -52,7 +52,9 @@ function RootNavigator() {
     async function initDB() {
       await initDatabase(db);
       const isLanguage = await getLanguage(db);
-      isLanguage.length === 0  && (await addLanguage(db, locale, parseLanguages(locale)));
+      if (isLanguage.length === 0) {
+        await addLanguage(db, locale, parseLanguages(locale));
+      }
     }
     initDB();
   }, []);
