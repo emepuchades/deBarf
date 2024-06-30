@@ -14,7 +14,7 @@ export const styleFood = {
   },
   rowContainer: {},
   menuItems: {
-    height: 90,
+    height: 80,
     marginLeft: 10,
   },
   textMenu: {

@@ -82,7 +82,6 @@ const Calendar = () => {
     };
 
     fetchFoodData();
-
     setIsLoading(false);
   }, []);
 
@@ -120,7 +119,6 @@ const Calendar = () => {
           }
         }
       };
-
       fetchFoodData();
     });
     return refreshed;
@@ -440,9 +438,9 @@ const Calendar = () => {
                             />
                           )}
                           <View style={styles.foodInfo}>
-                            <Text style={styles.textFood}>{item.name}</Text>
+                            <Text style={styles.textFood}>{t(`food.${item.name}`)}</Text>
                             <Text style={styles.textCategory}>
-                              {mapFoodTypeToLabel(item.category)}
+                              {t(`food.${mapFoodTypeToLabel(item.category)}`)}
                             </Text>
                           </View>
                           <View style={styles.containerGrams}>
@@ -490,6 +488,7 @@ const styles = StyleSheet.create({
     height: windowHeight,
     width: windowWidth,
     backgroundColor: "#F6F6F6",
+    marginBottom: 60,
   },
   navigationWrapper: {
     padding: 5,

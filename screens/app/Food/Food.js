@@ -116,7 +116,7 @@ const Food = () => {
                     />
                   ) : null}
                 </View>
-                <Text style={styles.foodText}>{item.name}</Text>
+                <Text style={styles.foodText}>{t(`food.${item.name}`)}</Text>
               </View>
             ))}
         </View>

@@ -361,7 +361,7 @@ const AddFoodScreen = ({ navigation, route }) => {
                       { backgroundColor: COLORS[index % COLORS.length] },
                     ]}
                   />
-                  <Text style={styles.legendLabel}>{item.label}</Text>
+                  <Text style={styles.legendLabel}>{item.label}Leyendas</Text>
                   <Text style={styles.legendText}>{item.amount} g</Text>
                   <Text style={styles.legendText}>{statsPet[item.label]}</Text>
                 </View>
@@ -411,7 +411,7 @@ const AddFoodScreen = ({ navigation, route }) => {
                 )}
                 {selectedFoods.map((food, index) => (
                   <View key={food.name + index} style={styles.selectedFoodItem}>
-                    <Text>{food.name}</Text>
+                    <Text>{t(`food.${food.name}`)}</Text>
                     <View style={styles.editContainer}>
                       {food.isEditing ? (
                         <>
@@ -580,7 +580,7 @@ const AddFoodScreen = ({ navigation, route }) => {
                           source={food.img}
                           style={styles.searchResultImage}
                         />
-                        <Text style={styles.foodName}>{food.name}</Text>
+                        <Text style={styles.foodName}>{t(`food.${food.name}`)}</Text>
                         <Ionicons
                           name="ios-add-circle"
                           size={24}
