@@ -1,11 +1,13 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { View, ActivityIndicator } from "react-native";
+import { View, ActivityIndicator, Text, Image } from "react-native";
+
+import * as Font from "expo-font";
+import * as Localization from "expo-localization";
 
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./utils/db/firebase";
-import * as Localization from "expo-localization";
 
 import Login from "./screens/auth/Login/Login";
 import Signup from "./screens/auth/Register/Signup";
@@ -19,6 +21,7 @@ import {
 import initDatabase from "./utils/db/db";
 import { addLanguage, getLanguage } from "./utils/db/dbLanguage";
 import { parseLanguages } from "./utils/info/languages";
+import Loader from "./components/Loader/Loader";
 
 const Stack = createStackNavigator();
 
@@ -64,29 +67,46 @@ function RootNavigator() {
       <View
         style={{
           flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
         }}
       >
-        <ActivityIndicator size="large" />
+        <Loader />
       </View>
     );
   }
 
   return (
     <NavigationContainer>
-      {user ? (
-        <>
-          <DrawerNavigator />
-        </>
-      ) : (
-        <AuthStack />
-      )}
+      {user ? <DrawerNavigator /> : <AuthStack />}
     </NavigationContainer>
   );
 }
 
 export default function App() {
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+
+  useEffect(() => {
+    const loadFonts = async () => {
+      await Font.loadAsync({
+        "MonaSans-Regular": require("./assets/fonts/MonaSans-Regular.ttf"),
+      });
+      setFontsLoaded(true);
+    };
+
+    loadFonts();
+  }, []);
+
+  if (!fontsLoaded) {
+    return (
+      <View
+        style={{
+          flex: 1,
+        }}
+      >
+        <Loader />
+      </View>
+    );
+  }
+
   return (
     <AuthenticatedUserProvider>
       <RootNavigator />
