@@ -37,9 +37,19 @@ async function createTables(db) {
     tx.executeSql(
       `
       CREATE TABLE IF NOT EXISTS language (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,cdcd
         code TEXT,
         tag TEXT
+      )
+    `
+    );
+  });
+  db.transaction((tx) => {
+    tx.executeSql(
+      `
+      CREATE TABLE IF NOT EXISTS units (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        is_kilos BOOLEAN,
       )
     `
     );
