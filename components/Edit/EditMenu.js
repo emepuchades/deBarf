@@ -20,6 +20,7 @@ import addMenu, { updateMenu } from "../../utils/db/dbMenu.js";
 import backgroundImage from "../../assets/images/header.png"; // Import your background image
 import { windowHeight, windowWidth } from "../../utils/Dimentions.js";
 import Modal from "react-native-modal";
+import { graphicInfo } from "../../utils/functions/piedData.js";
 
 const EditMenu = ({ navigation, route }) => {
   const [foodName, setFoodName] = useState("");
@@ -68,47 +69,6 @@ const EditMenu = ({ navigation, route }) => {
   ];
 
   useEffect(() => {
-    const graphicInfo = async (selectedPet) => {
-      switch (selectedPet) {
-        case "perro":
-          return [
-            {
-              color: "#ffca3a",
-              text: "30%",
-              value: 30,
-            },
-            { color: "#ff595e", text: "45%", value: 45 },
-            { color: "#3498DB", text: "5%", value: 5 },
-            { color: "#9D71E8", text: "5%", value: 5 },
-            { color: "#8ac926", text: "15%", value: 5 },
-          ];
-        case "gato":
-          return [
-            {
-              color: "#ffca3a",
-              text: "30%",
-              value: 30,
-            },
-            { color: "#ff595e", text: "45%", value: 45 },
-            { color: "#3498DB", text: "5%", value: 15 },
-            { color: "#9D71E8", text: "5%", value: 5 },
-            { color: "#8ac926", text: "15%", value: 5 },
-          ];
-        case "huron":
-          return [
-            {
-              color: "#ffca3a",
-              text: "80%",
-              value: 80,
-            },
-            { color: "#ff595e", text: "10%", value: 10 },
-            { color: "#3498DB", text: "10%", value: 10 },
-          ];
-        default:
-          return "";
-      }
-    };
-
     const updateData = async () => {
       const newStatsPet = await calculateBARFDiet(route.params.selectedPet);
       setSelectedPet(route.params.selectedPet);
@@ -300,6 +260,8 @@ const EditMenu = ({ navigation, route }) => {
       category: category,
     };
 
+    console.log('selectedFood', selectedFood);
+
     const isDuplicate = selectedFoods.some(
       (food) => food.name === selectedFoodNew.name
     );
@@ -379,7 +341,7 @@ const EditMenu = ({ navigation, route }) => {
                           { backgroundColor: COLORS[index % COLORS.length] },
                         ]}
                       />
-                      <Text style={styles.legendLabel}>{item.label}</Text>
+                      <Text style={styles.legendLabel}>{t(`food.${item.label}`)}</Text>
                       <Text style={styles.legendText}>{item.amount} g</Text>
                       <Text style={styles.legendText}>
                         {statsPet[item.label]}
@@ -423,7 +385,6 @@ const EditMenu = ({ navigation, route }) => {
             <View style={styles.containerFood}>
               <View style={styles.headerFood}>
                 <Text style={styles.headerTextFood}>
-                  {" "}
                   {t(`addMeal.mealDay`)} {day}
                 </Text>
               </View>
@@ -433,7 +394,7 @@ const EditMenu = ({ navigation, route }) => {
                 )}
                 {selectedFoods.map((food, index) => (
                   <View key={food.name + index} style={styles.selectedFoodItem}>
-                    <Text>{food.name}</Text>
+                    <Text>{t(`food.${food.name}`)}</Text>
                     <View style={styles.editContainer}>
                       {food.isEditing ? (
                         <>
@@ -600,7 +561,7 @@ const EditMenu = ({ navigation, route }) => {
                           source={food.img}
                           style={styles.searchResultImage}
                         />
-                        <Text style={styles.foodName}>{food.name}</Text>
+                        <Text style={styles.foodName}>{t(`food.${food.name}`)}</Text>
                         <Ionicons
                           name="ios-add-circle"
                           size={24}

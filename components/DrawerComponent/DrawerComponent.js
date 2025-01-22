@@ -15,7 +15,7 @@ import "../../languages/i18n";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { styleDrawer } from "./drawerComponent.style";
-import colors from "../../utils/colors";
+import colors from "../../utils/theme";
 import { signOut } from "firebase/auth";
 import { auth } from "../../utils/db/firebase";
 import { Picker } from "@react-native-picker/picker";

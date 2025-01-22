@@ -167,7 +167,7 @@ const PetDetails = ({ route }) => {
                       { backgroundColor: COLORS[index] },
                     ]}
                   />
-                  <Text style={styles.tableItem}>{key}</Text>
+                  <Text style={styles.tableItem}>{t(`food.${key}`)}</Text>
                   <Text style={styles.tableItem}>{value}</Text>
                 </View>
               )
@@ -308,13 +308,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   tableContainer: {
-    width: "85%",
+    width: "100%",
     backgroundColor: "#ffffff",
-    padding: 15,
+    padding: 5,
     marginTop: 10,
     alignSelf: "center",
     justifyContent: "center",
-    marginLeft: 52,
   },
   tableRow: {
     flexDirection: "row",
@@ -325,7 +324,7 @@ const styles = StyleSheet.create({
   },
   tableItem: {
     flex: 1,
-    width: "30%",
+    width: "100%",
     justifyContent: "center",
     alignSelf: "center",
   },

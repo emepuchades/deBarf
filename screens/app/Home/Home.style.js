@@ -1,5 +1,5 @@
 import { windowHeight, windowWidth } from "../../../utils/Dimentions";
-import colors from "../../../utils/colors";
+import colors from "../../../utils/theme";
 
 export const styleHome = {
   container: {

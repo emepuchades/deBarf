@@ -1,4 +1,4 @@
-import colors from '../../utils/colors'
+import { lightTheme } from "../../utils/theme";
 
 export const styleDrawer = {
   imageProfile: {
@@ -8,27 +8,30 @@ export const styleDrawer = {
     marginBottom: 10,
   },
   textUsername: {
-    color: colors.primary,
+    color: lightTheme.colors.primary,
     fontSize: 18,
     marginBottom: 5,
+    fontWeight: 'bold',
   },
   imageBackground: {
-    padding: 20,
+    padding: lightTheme.dimensions.paddingHorizontal,
   },
   listNavigation: {
     flex: 1,
-    backgroundColor: colors.primary,
+    backgroundColor: lightTheme.colors.primary,
     paddingTop: 15,
   },
   navBottom: {
     paddingTop: 10,
     paddingLeft: 2,
     borderTopWidth: 1,
-    borderTopColor: "#4F98FE",
+    borderTopColor: lightTheme.colors.secondary,
   },
   titleSection: {
-    color: "#4F98FE",
+    color: lightTheme.colors.primary,
     fontWeight: "bold",
+    fontSize: 16,
+    paddingBottom: 10,
   },
   navContainer: {
     padding: 15,
@@ -37,6 +40,7 @@ export const styleDrawer = {
     fontSize: 15,
     marginLeft: 5,
     padding: 15,
+    color: lightTheme.colors.textSecondary,
   },
   containerSignOut: {
     flexDirection: "row",
@@ -55,6 +59,7 @@ export const styleDrawer = {
   },
   versionText: {
     textAlign: "center",
-    paddingLeft: '25%'
+    paddingLeft: "25%",
+    color: lightTheme.colors.textSecondary,
   },
 };

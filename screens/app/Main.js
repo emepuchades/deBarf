@@ -8,7 +8,7 @@ import { Ionicons } from "@expo/vector-icons";
 import Home from "./Home/Home";
 import ProfileScreen from "./Profile/Profile";
 import Calendar from "./Calendar/Calendar";
-import colors from "../../utils/colors";
+import colors from "../../utils/theme";
 import { useTranslation } from "react-i18next";
 import Calculator from "./Calculator/Calculator";
 import Shoplist from "./Profile/Profile";

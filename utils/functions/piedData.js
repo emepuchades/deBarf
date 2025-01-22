@@ -1,5 +1,5 @@
 
-  const graphicInfo = async (selectedPet) => {
+  export const graphicInfo = async (selectedPet) => {
     switch (selectedPet) {
       case "perro":
         return [
@@ -8,7 +8,7 @@
             text: "30%",
             value: 30,
           },
-          { color: "#F65454", text: "45%", value: 45 },
+          { color: "#F65454", text: "45%", value: 50 },
           { color: "#3498DB", text: "5%", value: 5 },
           { color: "#6765F8", text: "5%", value: 5 },
           { color: "#1BC760", text: "15%", value: 5 },

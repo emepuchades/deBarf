@@ -361,7 +361,7 @@ const AddFoodScreen = ({ navigation, route }) => {
                       { backgroundColor: COLORS[index % COLORS.length] },
                     ]}
                   />
-                  <Text style={styles.legendLabel}>{item.label}Leyendas</Text>
+                  <Text style={styles.legendLabel}>{t(`food.${item.label}`)}</Text>
                   <Text style={styles.legendText}>{item.amount} g</Text>
                   <Text style={styles.legendText}>{statsPet[item.label]}</Text>
                 </View>

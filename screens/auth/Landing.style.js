@@ -1,0 +1,81 @@
+import { windowHeight, windowWidth } from "../../utils/Dimentions";
+import { lightTheme } from "../../utils/theme";
+
+export const styleLanding = {
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingTop: 100,
+    paddingHorizontal: lightTheme.dimensions.paddingHorizontal,
+    backgroundColor: lightTheme.colors.backgroundSecondary,
+  },
+  headerContainer: {
+    width: "100%",
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  logo: {
+    width: windowWidth,
+    height: windowHeight * 0.3,
+    resizeMode: "contain",
+    marginBottom: 20,
+  },
+  title1: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: lightTheme.colors.textPrimary,
+    fontFamily: lightTheme.fonts.regular,
+    textAlign: "center",
+    marginVertical: 5,
+    marginTop: 20,
+  },
+  description: {
+    fontSize: 17,
+    color: lightTheme.colors.textSecondary,
+    fontFamily: lightTheme.fonts.regular,
+    textAlign: "center",
+    lineHeight: 22,
+  },
+  buttonContainer: {
+    width: "100%",
+    alignItems: "center",
+    marginBottom: 40,
+  },
+  primaryButton: {
+    width: windowWidth * 0.8,
+    height: lightTheme.dimensions.buttonHeight,
+    backgroundColor: lightTheme.colors.primary,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: lightTheme.dimensions.borderRadius,
+    marginVertical: 10,
+    ...lightTheme.shadows,
+  },
+  secondaryButton: {
+    width: windowWidth * 0.8,
+    height: lightTheme.dimensions.buttonHeight,
+    backgroundColor: lightTheme.colors.background,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: lightTheme.dimensions.borderRadius,
+    borderWidth: 1,
+    borderColor: lightTheme.colors.primary,
+    marginVertical: 10,
+    ...lightTheme.shadows,
+  },
+  primaryButtonText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: lightTheme.colors.buttonText,
+    fontFamily: lightTheme.fonts.regular,
+    textTransform: "uppercase",
+  },
+  secondaryButtonText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: lightTheme.colors.primary,
+    fontFamily: lightTheme.fonts.regular,
+    textTransform: "uppercase",
+  },
+};
