@@ -1,19 +1,18 @@
 import React, { useState, useEffect, useContext } from "react";
+import { View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { View, ActivityIndicator, Text, Image } from "react-native";
-
+import * as SplashScreen from "expo-splash-screen"; // Importa SplashScreen
 import * as Font from "expo-font";
 import * as Localization from "expo-localization";
-
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./utils/db/firebase";
 
 import Login from "./screens/auth/Login/Login";
 import Signup from "./screens/auth/Register/Signup";
 import Landing from "./screens/auth/Landing";
-
 import DrawerNavigator from "./screens/app/Navigator/Navigator";
+
 import {
   AuthenticatedUserContext,
   AuthenticatedUserProvider,
@@ -63,15 +62,7 @@ function RootNavigator() {
   }, []);
 
   if (isLoading) {
-    return (
-      <View
-        style={{
-          flex: 1,
-        }}
-      >
-        <Loader />
-      </View>
-    );
+    return <Loader />;
   }
 
   return (
@@ -83,28 +74,29 @@ function RootNavigator() {
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
-
   useEffect(() => {
-    const loadFonts = async () => {
-      await Font.loadAsync({
-        "MonaSans-Regular": require("./assets/fonts/MonaSans-Regular.ttf"),
-      });
-      setFontsLoaded(true);
+    const prepareApp = async () => {
+      try {
+        await SplashScreen.preventAutoHideAsync();
+        await Font.loadAsync({
+          "MonaSans-Regular": require("./assets/fonts/MonaSans-Regular.ttf"),
+          "MonaSans-Bold": require("./assets/fonts/MonaSans-Bold.ttf"),
+
+        });
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        setFontsLoaded(true);
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        await SplashScreen.hideAsync();
+      }
     };
 
-    loadFonts();
+    prepareApp();
   }, []);
 
   if (!fontsLoaded) {
-    return (
-      <View
-        style={{
-          flex: 1,
-        }}
-      >
-        <Loader />
-      </View>
-    );
+    return null;
   }
 
   return (
