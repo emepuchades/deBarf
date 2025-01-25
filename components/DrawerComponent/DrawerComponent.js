@@ -15,7 +15,7 @@ import "../../languages/i18n";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { styleDrawer } from "./drawerComponent.style";
-import colors from "../../utils/theme";
+import { lightTheme } from "../../utils/theme";
 import { signOut } from "firebase/auth";
 import { auth } from "../../utils/db/firebase";
 import { Picker } from "@react-native-picker/picker";
@@ -67,7 +67,7 @@ const DrawerComponent = (props) => {
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView
         {...props}
-        contentContainerStyle={{ backgroundColor: colors.primary }}
+        contentContainerStyle={{ backgroundColor: lightTheme.colors.primary }}
       >
         <View style={styles.listNavigaton}>
           <DrawerItemList {...props} />

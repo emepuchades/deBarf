@@ -4,7 +4,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../utils/db/firebase";
 import { styleLogin } from "./Login.style";
 import { useTranslation } from "react-i18next";
-const backImage = require("../../../assets/images/fondoLogin.png");
+const backImage = require("../../../assets/images/signin.jpg");
 
 export default function Login({ navigation }) {
   const { t } = useTranslation();
@@ -23,7 +23,7 @@ export default function Login({ navigation }) {
   return (
     <View style={styles.container}>
       <Image source={backImage} style={styles.backImage} />
-      <View style={styles.whiteSheet} />
+      <View style={styles.whiteSheet}>
       <SafeAreaView style={styles.form}>
         <Text style={styles.title}>{t(`login.title`)}</Text>
         <TextInput
@@ -56,6 +56,7 @@ export default function Login({ navigation }) {
           </TouchableOpacity>
         </View>
       </SafeAreaView>
+      </View>
       <StatusBar barStyle="light-content" />
     </View>
   );

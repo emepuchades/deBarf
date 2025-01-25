@@ -6,19 +6,19 @@ const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 export const styleLogin = {
   container: {
     flex: 1,
+    justifyContent: "center",
     backgroundColor: lightTheme.colors.background,
   },
   title: {
     fontSize: 32,
-    fontWeight: "bold",
-    color: lightTheme.colors.secondary,
+    color: lightTheme.colors.title,
     alignSelf: "center",
     paddingBottom: 24,
     fontFamily: lightTheme.fonts.bold,
     textAlign: "center",
   },
   input: {
-    backgroundColor: lightTheme.colors.inputBackground,
+    backgroundColor: lightTheme.colors.backgroundSecondary,
     height: lightTheme.dimensions.inputHeight,
     marginBottom: 20,
     fontSize: 16,
@@ -45,14 +45,16 @@ export const styleLogin = {
     borderTopLeftRadius: 60,
     borderTopRightRadius: 60,
     paddingHorizontal: lightTheme.dimensions.paddingHorizontal,
+    justifyContent: "center",
   },
   form: {
     flex: 1,
     justifyContent: "center",
     marginHorizontal: lightTheme.dimensions.paddingHorizontal,
+    marginTop: 20,
   },
   button: {
-    backgroundColor: lightTheme.colors.secondary,
+    backgroundColor: lightTheme.colors.primary,
     height: lightTheme.dimensions.buttonHeight,
     borderRadius: lightTheme.dimensions.borderRadius,
     justifyContent: "center",
@@ -63,8 +65,8 @@ export const styleLogin = {
   textInput: {
     fontSize: 18,
     fontWeight: "bold",
-    color: lightTheme.colors.textButton,
-    fontFamily: lightTheme.fonts.bold,
+    color: lightTheme.colors.buttonText,
+    fontFamily: lightTheme.fonts.regular,
     textAlign: "center",
   },
   textSecondary: {
@@ -72,7 +74,6 @@ export const styleLogin = {
     fontSize: 14,
     fontFamily: lightTheme.fonts.regular,
     textAlign: "center",
-    marginTop: 10,
   },
   containerLogIn: {
     flexDirection: "row",
@@ -80,7 +81,7 @@ export const styleLogin = {
     justifyContent: "center",
     marginTop: 20,
   },
-  textSignIn: {
+  textLogIn: {
     color: lightTheme.colors.secondary,
     fontWeight: "600",
     fontSize: 14,

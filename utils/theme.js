@@ -11,15 +11,18 @@ export const lightTheme = {
     textSecondary: "#666666",
     buttonText: "#FFFFFF",
     border: "#E5E5E5",
+    title: '#122148',
+    button: '#845EF1',
   },
   fonts: {
     regular: "MonaSans-Regular",
     bold: "MonaSans-Bold",
   },
   dimensions: {
-    borderRadius: 10,
+    borderRadius: 5,
     paddingHorizontal: 20,
-    buttonHeight: 50,
+    buttonHeight: 40,
+    inputHeight: 40,
   },
   shadows: Platform.select({
     ios: {

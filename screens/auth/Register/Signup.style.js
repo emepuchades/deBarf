@@ -6,19 +6,19 @@ const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 export const styleRegister = {
   container: {
     flex: 1,
+    justifyContent: "center",
     backgroundColor: lightTheme.colors.background,
   },
   title: {
     fontSize: 32,
-    fontWeight: "bold",
-    color: lightTheme.colors.secondary,
+    color: lightTheme.colors.title,
     alignSelf: "center",
     paddingBottom: 24,
     fontFamily: lightTheme.fonts.bold,
     textAlign: "center",
   },
   input: {
-    backgroundColor: lightTheme.colors.inputBackground,
+    backgroundColor: lightTheme.colors.backgroundSecondary,
     height: lightTheme.dimensions.inputHeight,
     marginBottom: 20,
     fontSize: 16,
@@ -45,14 +45,16 @@ export const styleRegister = {
     borderTopLeftRadius: 60,
     borderTopRightRadius: 60,
     paddingHorizontal: lightTheme.dimensions.paddingHorizontal,
+    justifyContent: "center",
   },
   form: {
     flex: 1,
     justifyContent: "center",
     marginHorizontal: lightTheme.dimensions.paddingHorizontal,
+    marginTop: 20,
   },
   button: {
-    backgroundColor: lightTheme.colors.secondary,
+    backgroundColor: lightTheme.colors.primary,
     height: lightTheme.dimensions.buttonHeight,
     borderRadius: lightTheme.dimensions.borderRadius,
     justifyContent: "center",
@@ -63,8 +65,8 @@ export const styleRegister = {
   textInput: {
     fontSize: 18,
     fontWeight: "bold",
-    color: lightTheme.colors.textButton,
-    fontFamily: lightTheme.fonts.bold,
+    color: lightTheme.colors.buttonText,
+    fontFamily: lightTheme.fonts.regular,
     textAlign: "center",
   },
   textSecondary: {
@@ -72,7 +74,6 @@ export const styleRegister = {
     fontSize: 14,
     fontFamily: lightTheme.fonts.regular,
     textAlign: "center",
-    marginTop: 10,
   },
   containerLogIn: {
     flexDirection: "row",
@@ -88,4 +89,32 @@ export const styleRegister = {
     textDecorationLine: "underline",
     marginLeft: 5,
   },
+  contarinerPP: {
+    flexDirection: 'row',
+    paddingLeft: 5,
+  },
+  checkBox: {
+    width: 20,
+    height: 20,
+    borderWidth: 1,
+    borderColor: lightTheme.colors.border,
+    backgroundColor: lightTheme.colors.backgroundSecondary,
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 5,
+  },
+  checkBoxSelected: {
+    backgroundColor: lightTheme.colors.primary,
+    borderWidth: 0,
+  },
+  checkBoxText: {
+    fontSize: 13,
+    color: lightTheme.colors.backgroundSecondary,
+    fontFamily: lightTheme.fonts.regular,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  checkBoxTextSelected: {
+    fontFamily: lightTheme.fonts.bold,
+  }
 };

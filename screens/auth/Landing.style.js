@@ -23,9 +23,8 @@ export const styleLanding = {
   },
   title1: {
     fontSize: 24,
-    fontWeight: "bold",
     color: lightTheme.colors.textPrimary,
-    fontFamily: lightTheme.fonts.regular,
+    fontFamily: lightTheme.fonts.bold,
     textAlign: "center",
     marginVertical: 5,
     marginTop: 20,
