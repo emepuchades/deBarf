@@ -20,7 +20,9 @@
       "subtitle": "¿Ya eres miembro?",
       "login": "Accede",
       "inputEmail": "Correo electronico",
-      "inputPassword": "Contraseña"
+      "inputPassword": "Contraseña",
+      "privacy_policy": "He leído y acepto la [Política de Privacidad]"
+
     },
     "login": {
       "title": "Inicia sesión",

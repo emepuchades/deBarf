@@ -17,16 +17,17 @@
     "signup": {
       "title": "Account Signup",
       "button": "Submit",
-      "subtitile": "Don't have an account?",
+      "subtitle": "You are already a member?",
       "login": "Login",
       "inputEmail": "Email address",
-      "inputPassword": "Password"
+      "inputPassword": "Password", 
+      "privacy_policy": "I have read and accept the [Privacy Policy]"
     },
     "login": {
       "title": "Account Login",
       "button": "Login",
-      "subtitile": "Don't have an account?",
-      "login": "Login"
+      "subtitle": "Don't have an account?",
+      "login": "Register"
     },
     "drawer": {
       "addFood": "Add Meal",
