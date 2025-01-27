@@ -12,7 +12,7 @@
       ]
     },
     "splash": {
-      "image": "./assets/splashScreen.png",
+      "image": "./assets/splashScreen.jpg",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

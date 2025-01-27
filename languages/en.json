@@ -21,13 +21,32 @@
       "login": "Login",
       "inputEmail": "Email address",
       "inputPassword": "Password", 
-      "privacy_policy": "I have read and accept the [Privacy Policy]"
+      "privacy_policy": "I have read and accept the [Privacy Policy]",
+      "privacyPolicyError": "You must accept the terms and conditions to continue.",
+      "emptyFieldsError": "Please fill in all the fields.",
+      "successMessage": "Account created successfully.",
+      "registerError": "Registration error",
+      "privacyPolicy": "Privacy Policy"
     },
     "login": {
       "title": "Account Login",
       "button": "Login",
       "subtitle": "Don't have an account?",
-      "login": "Register"
+      "login": "Register",
+      "error": "Login error",
+      "success": "Login successful",
+      "emptyFields": "Please fill in both fields.",
+      "welcomeBack": "Welcome back!"
+    },
+    "firebaseErrors": {
+      "emailAlreadyInUse": "The email is already in use. Please try another one.",
+      "invalidEmail": "The email address is not valid.",
+      "weakPassword": "The password must be at least 6 characters long.",
+      "networkError": "Network error. Please check your internet connection.",
+      "unexpectedError": "An unexpected error occurred. Please try again.",
+      "userNotFound": "No account found with that email address.",
+      "wrongPassword": "The password entered is incorrect. Please try again.",
+      "tooManyRequests": "You have tried to log in too many times. Please wait a few minutes and try again."
     },
     "drawer": {
       "addFood": "Add Meal",
