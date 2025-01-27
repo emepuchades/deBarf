@@ -5,8 +5,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import * as SplashScreen from "expo-splash-screen"; // Importa SplashScreen
 import * as Font from "expo-font";
 import * as Localization from "expo-localization";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./utils/db/firebase";
 
 import Login from "./screens/auth/Login/Login";
 import Signup from "./screens/auth/Register/Signup";
@@ -21,6 +19,7 @@ import initDatabase from "./utils/db/db";
 import { addLanguage, getLanguage } from "./utils/db/dbLanguage";
 import { parseLanguages } from "./utils/info/languages";
 import Loader from "./components/Loader/Loader";
+import { supabase } from "./utils/db/supabaseClient";
 
 const Stack = createStackNavigator();
 
@@ -35,19 +34,22 @@ function AuthStack() {
 }
 
 function RootNavigator() {
-  const { user, setUser, db } = useContext(AuthenticatedUserContext);
+  const { user, setUser, db, setSession } = useContext(
+    AuthenticatedUserContext
+  );
   const [isLoading, setIsLoading] = useState(true);
   const [locale, setLocale] = useState(Localization.locale);
 
   useEffect(() => {
-    const unsubscribeAuth = onAuthStateChanged(
-      auth,
-      async (authenticatedUser) => {
-        authenticatedUser ? setUser(authenticatedUser) : setUser(null);
-        setIsLoading(false);
-      }
-    );
-    return unsubscribeAuth;
+    const { data } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log(`Supabase auth event: ${event}`);
+      setUser(session ? true : false);
+      setSession(session);
+      setIsLoading(false);
+    });
+    return () => {
+      data.subscription.unsubscribe();
+    };
   }, [user]);
 
   useEffect(() => {
@@ -81,7 +83,6 @@ export default function App() {
         await Font.loadAsync({
           "MonaSans-Regular": require("./assets/fonts/MonaSans-Regular.ttf"),
           "MonaSans-Bold": require("./assets/fonts/MonaSans-Bold.ttf"),
-
         });
         await new Promise((resolve) => setTimeout(resolve, 1000));
         setFontsLoaded(true);

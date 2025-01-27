@@ -23,9 +23,11 @@ import DualButtonTab from "../DualButtonTab";
 import { languages, parseLanguages } from "../../utils/info/languages";
 import { AuthenticatedUserContext } from "../../utils/context/context";
 import { getLanguage, updateLanguage } from "../../utils/db/dbLanguage";
+import {supabase} from "../../utils/db/supabaseClient";
+
 const DrawerComponent = (props) => {
   const { t, i18n } = useTranslation();
-  const { db } = useContext(AuthenticatedUserContext);
+  const { db, user, session } = useContext(AuthenticatedUserContext);
 
   // getLanguage(db).tag
   const [currentLanguages, setLanguage] = useState("es-ES");
@@ -53,8 +55,14 @@ const DrawerComponent = (props) => {
       .catch((err) => console.log(err));
   };
 
-  const onSignOut = () => {
-    signOut(auth).catch((error) => console.log("Error logging out: ", error));
+  const onSignOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (!error) {
+      alert("Signed out!");
+    }
+    if (error) {
+      alert(error.message);
+    }
   };
   const handleActivityChange = (value) => {
     currentLanguagei18(value);

@@ -7,7 +7,7 @@ export function AuthenticatedUserProvider({ children }) {
   const [user, setUser] = useState(null);
   const [db, setDb] = useState(SQLite.openDatabase("debarf.db"));
   const [bottomTabSelected, setBottomTabSelected] = useState(0);
-
+  const [session, setSession] = useState(null);
 
   return (
     <AuthenticatedUserContext.Provider
@@ -18,6 +18,8 @@ export function AuthenticatedUserProvider({ children }) {
         setDb,
         bottomTabSelected,
         setBottomTabSelected,
+        session,
+        setSession
       }}
     >
       {children}

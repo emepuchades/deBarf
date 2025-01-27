@@ -4,7 +4,8 @@ export const lightTheme = {
   colors: {
     background: "#F9F9F9",
     backgroundSecondary: "#FFFFFF",
-    primary: "#4A90E2",
+    //primary: "#4A90E2",
+    primary: "#db5228",
     secondary: "#6C757D",
     accent: "#FFD700",
     textPrimary: "#333333",
@@ -12,7 +13,7 @@ export const lightTheme = {
     buttonText: "#FFFFFF",
     border: "#E5E5E5",
     title: '#122148',
-    button: '#845EF1',
+    button: '#db5228',
   },
   fonts: {
     regular: "MonaSans-Regular",

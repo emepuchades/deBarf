@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useContext} from "react";
 import { Text, View, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { useTranslation } from "react-i18next";
 import { styleLanding } from "./Landing.style";
+import { AuthenticatedUserContext } from "../../utils/context/context";
 
 export default function Landing({ navigation }) {
   const { t } = useTranslation();
+  const { user, setUser, db } = useContext(AuthenticatedUserContext);
+  console.log('user', user);
 
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <Image source={require("../../assets/logo.png")} style={styles.logo} />
-        <Text style={styles.title1}>{t(`landig.title`)}</Text>
+        <Image source={require("../../assets/logo.jpg")} style={styles.logo} />
         <Text style={styles.description}>{t(`landig.subtitle`)}</Text>
       </View>
       <View style={styles.buttonContainer}>

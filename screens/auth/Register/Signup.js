@@ -10,28 +10,44 @@ import {
   StatusBar,
   Alert,
 } from "react-native";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../../utils/db/firebase";
+import {getAuth,  createUserWithEmailAndPassword } from "firebase/auth";
+import Toast from "react-native-toast-message";
+import { handleFirebaseError } from "../../../utils/functions/firebaseErrors";
+import { showToast } from "../../../components/Toast/Toast";
 import { styleRegister } from "./Signup.style";
 import { useTranslation } from "react-i18next";
 const backImage = require("../../../assets/images/login.jpg");
+import { supabase } from "../../../utils/db/supabaseClient";
 
 export default function Signup({ navigation }) {
   const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSelected, setSelection] = useState(false);
-
+  
   const onHandleSignup = async () => {
-    if (email !== "" && password !== "") {
-      createUserWithEmailAndPassword(auth, email, password)
-        .then(() => console.log("Signup success"))
-        .catch((err) => {
-          console.log("err", err);
-          Alert.alert("Login error", err.message);
-        });
+    if (!email || !password) {
+      Alert.alert('Error', 'Por favor, llena todos los campos.');
+      return;
+    }
+
+    try {
+      const { user, error } = await supabase.auth.signUp({
+        email,
+        password
+      });
+
+      if (error) {
+        Alert.alert('Error', error.message); // Muestra un mensaje de error en caso de fallo
+      } else {
+        Alert.alert('Éxito', 'Usuario registrado correctamente. Verifica tu correo.');
+        navigation.navigate('Login'); // Navega al login después de un registro exitoso
+      }
+    } catch (error) {
+      Alert.alert('Error', error.message);
     }
   };
+  
 
   return (
     <View style={styles.container}>
@@ -81,6 +97,7 @@ export default function Signup({ navigation }) {
               <Text style={styles.textLogIn}>{t(`signup.login`)}</Text>
             </TouchableOpacity>
           </View>
+          <Toast />
         </SafeAreaView>
       </View>
       <StatusBar barStyle="light-content" />
