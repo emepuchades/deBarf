@@ -16,8 +16,6 @@ import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { styleDrawer } from "./drawerComponent.style";
 import { lightTheme } from "../../utils/theme";
-import { signOut } from "firebase/auth";
-import { auth } from "../../utils/db/firebase";
 import { Picker } from "@react-native-picker/picker";
 import DualButtonTab from "../DualButtonTab";
 import { languages, parseLanguages } from "../../utils/info/languages";

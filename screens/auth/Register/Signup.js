@@ -10,12 +10,10 @@ import {
   StatusBar,
   Alert,
 } from "react-native";
-import {getAuth,  createUserWithEmailAndPassword } from "firebase/auth";
 import Toast from "react-native-toast-message";
-import { handleFirebaseError } from "../../../utils/functions/firebaseErrors";
-import { showToast } from "../../../components/Toast/Toast";
 import { styleRegister } from "./Signup.style";
 import { useTranslation } from "react-i18next";
+import { validateInputs, handleFeedback } from "../../../utils/functions/registerErrors";
 const backImage = require("../../../assets/images/login.jpg");
 import { supabase } from "../../../utils/db/supabaseClient";
 
@@ -26,28 +24,23 @@ export default function Signup({ navigation }) {
   const [isSelected, setSelection] = useState(false);
   
   const onHandleSignup = async () => {
-    if (!email || !password) {
-      Alert.alert('Error', 'Por favor, llena todos los campos.');
-      return;
-    }
+    if (!validateInputs({ email, password, isSelected, t })) return;
 
     try {
-      const { user, error } = await supabase.auth.signUp({
-        email,
-        password
-      });
+      const { error } = await supabase.auth.signUp({ email, password });
 
       if (error) {
-        Alert.alert('Error', error.message); // Muestra un mensaje de error en caso de fallo
+        const errorMessage = error?.message || error?.name || null;
+        handleFeedback({ type: "error", key: errorMessage, t });
       } else {
-        Alert.alert('Éxito', 'Usuario registrado correctamente. Verifica tu correo.');
-        navigation.navigate('Login'); // Navega al login después de un registro exitoso
+        handleFeedback({ type: "success", t });
+        navigation.navigate("Login");
       }
-    } catch (error) {
-      Alert.alert('Error', error.message);
+    } catch (e) {
+      console.error("Error inesperado:", e);
+      handleFeedback({ type: "error", t });
     }
   };
-  
 
   return (
     <View style={styles.container}>

@@ -3,49 +3,54 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
   TextInput,
   Image,
   SafeAreaView,
   TouchableOpacity,
   StatusBar,
-  Alert,
 } from "react-native";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../../utils/db/firebase";
 import { styleLogin } from "./Login.style";
 import { useTranslation } from "react-i18next";
 import Toast from "react-native-toast-message";
-import { showToast } from "../../../components/Toast/Toast";
-import { handleFirebaseLoginError } from "../../../utils/functions/firebaseErrors";
-const backImage = require("../../../assets/images/signin.jpg");
+import {
+  handleFeedback,
+  validateInputs,
+} from "../../../utils/functions/loginErrors";
 import { supabase } from "../../../utils/db/supabaseClient";
 
+const backImage = require("../../../assets/images/signin.jpg");
 import { AuthenticatedUserContext } from "../../../utils/context/context";
 
 export default function Login({ navigation }) {
   const { t } = useTranslation();
-  const { user, setUser, db } = useContext(AuthenticatedUserContext);
+  const { setUser } = useContext(AuthenticatedUserContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const onHandleLogin = async () => {
-    console.log('email', email)
-    console.log('password', password)
+    if (!validateInputs({ email, password, t })) return;
 
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: email,
-      password: password,
-    });
-    if (!error && !data) {
-      alert("Check your email for the login link!");
-    } else {
-      setUser(data);
-      console.log("userLogged", data.user);
-    }
-    if (error) {
-      alert(error.message);
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) {
+        console.log("errors", error);
+        const errorMessage =
+          error?.message || error?.name || "Invalid credentials";
+        handleFeedback({ type: "error", key: errorMessage, t });
+      } else if (!data) {
+        handleFeedback({ type: "error", key: "invalidCredentials", t });
+      } else {
+        setUser(data);
+        handleFeedback({ type: "success", t });
+      }
+    } catch (e) {
+      console.error("Error inesperado:", e);
+      handleFeedback({ type: "error", t });
     }
   };
 
@@ -91,4 +96,5 @@ export default function Login({ navigation }) {
     </View>
   );
 }
+
 const styles = StyleSheet.create(styleLogin);

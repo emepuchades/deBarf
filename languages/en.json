@@ -20,13 +20,22 @@
       "subtitle": "You are already a member?",
       "login": "Login",
       "inputEmail": "Email address",
-      "inputPassword": "Password", 
+      "inputPassword": "Password",
       "privacy_policy": "I have read and accept the [Privacy Policy]",
       "privacyPolicyError": "You must accept the terms and conditions to continue.",
       "emptyFieldsError": "Please fill in all the fields.",
       "successMessage": "Account created successfully.",
       "registerError": "Registration error",
-      "privacyPolicy": "Privacy Policy"
+      "privacyPolicy": "Privacy Policy",
+      "weakPassword": "The password must be at least 6 characters long.",
+      "invalidEmail": "The email format is invalid.",
+      "userExists": "The user is already registered.",
+      "unexpectedError": "An unexpected error occurred. Please try again.",
+      "success": "Success!",
+      "verifyEmail": "User successfully registered.",
+      "fillFields": "Please fill out all fields.",
+      "acceptPrivacyPolicy": "You must accept the privacy policy.",
+      "error": "Error"
     },
     "login": {
       "title": "Account Login",
@@ -34,9 +43,12 @@
       "subtitle": "Don't have an account?",
       "login": "Register",
       "error": "Login error",
-      "success": "Login successful",
-      "emptyFields": "Please fill in both fields.",
-      "welcomeBack": "Welcome back!"
+      "emptyFields": "Please fill out both fields.",
+      "invalidCredentials": "Incorrect email or password.",
+      "userNotFound": "User not found.",
+      "unexpectedError": "An unexpected error occurred, please try again.",
+      "success": "Welcome back!",
+      "welcomeBack": "You have successfully logged in."
     },
     "firebaseErrors": {
       "emailAlreadyInUse": "The email is already in use. Please try another one.",

@@ -26,8 +26,16 @@
       "emptyFieldsError": "Por favor completa todos los campos.",
       "successMessage": "Cuenta creada exitosamente.",
       "registerError": "Error al registrar",
-      "privacyPolicy": "Política de privacidad"
-
+      "privacyPolicy": "Política de privacidad",
+      "weakPassword": "La contraseña debe tener al menos 6 caracteres.",
+      "invalidEmail": "El formato del correo electrónico no es válido.",
+      "userExists": "El usuario ya está registrado.",
+      "unexpectedError": "Ocurrió un error inesperado. Inténtalo nuevamente.",
+      "success": "¡Éxito!",
+      "verifyEmail": "Usuario registrado correctamente.",
+      "fillFields": "Por favor, completa todos los campos.",
+      "acceptPrivacyPolicy": "Debes aceptar la política de privacidad.",
+      "error": "Error"
     },
     "login": {
       "title": "Inicia sesión",
@@ -35,9 +43,12 @@
       "subtitle": "¿No eres miembro todavía?",
       "login": "Registrate",
       "error": "Error de inicio de sesión",
-      "success": "Inicio de sesión exitoso",
       "emptyFields": "Por favor, completa ambos campos.",
-      "welcomeBack": "¡Bienvenido de nuevo!"
+      "invalidCredentials": "Correo electrónico o contraseña incorrectos.",
+      "userNotFound": "Usuario no encontrado.",
+      "unexpectedError": "Ocurrió un error inesperado, por favor intenta de nuevo.",
+      "success": "¡Bienvenido de nuevo!",
+      "welcomeBack": "Has iniciado sesión correctamente."
     },
     "firebaseErrors": {
       "emailAlreadyInUse": "El correo electrónico ya está en uso. Por favor, prueba con otro.",
