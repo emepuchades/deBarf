@@ -56,6 +56,11 @@
       "forgotPassword": "¿Olvidaste tu contraseña?",
       "reset": "Restablecer"
     },
+    "welcome": {
+      "title": "¡Bienvenido!",
+      "message": "Te has registrado con éxito. Ya puedes empezar a usar la app.",
+      "button": "Entendido"
+    },
     "firebaseErrors": {
       "emailAlreadyInUse": "El correo electrónico ya está en uso. Por favor, prueba con otro.",
       "invalidEmail": "El correo electrónico ingresado no es válido.",

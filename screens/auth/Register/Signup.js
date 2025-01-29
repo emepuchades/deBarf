@@ -13,7 +13,10 @@ import {
 import Toast from "react-native-toast-message";
 import { styleRegister } from "./Signup.style";
 import { useTranslation } from "react-i18next";
-import { validateInputs, handleFeedback } from "../../../utils/functions/registerErrors";
+import {
+  validateInputs,
+  handleFeedback,
+} from "../../../utils/functions/registerErrors";
 const backImage = require("../../../assets/images/login.jpg");
 import { supabase } from "../../../utils/db/supabaseClient";
 
@@ -22,7 +25,7 @@ export default function Signup({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSelected, setSelection] = useState(false);
-  
+
   const onHandleSignup = async () => {
     if (!validateInputs({ email, password, isSelected, t })) return;
 
@@ -35,6 +38,18 @@ export default function Signup({ navigation }) {
       } else {
         handleFeedback({ type: "success", t });
         navigation.navigate("Login");
+        Alert.alert(
+          t('welcome.title'),
+          t('welcome.message'),
+          [
+            {
+              text: t('welcome.button'),
+              onPress: () => {
+               console.log('');
+              }
+            }
+          ]
+        );
       }
     } catch (e) {
       console.error("Error inesperado:", e);
