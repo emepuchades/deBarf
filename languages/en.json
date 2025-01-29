@@ -48,7 +48,13 @@
       "userNotFound": "User not found.",
       "unexpectedError": "An unexpected error occurred, please try again.",
       "success": "Welcome back!",
-      "welcomeBack": "You have successfully logged in."
+      "welcomeBack": "You have successfully logged in.",
+      "emailSent": "Email sent",
+      "checkInbox": "Check your inbox to reset your password.",
+      "errorResetEmail": "Error",
+      "enterEmail": "Please enter your email address.",
+      "forgotPassword": "Forgot password?",
+      "reset": "Reset"
     },
     "firebaseErrors": {
       "emailAlreadyInUse": "The email is already in use. Please try another one.",

@@ -81,6 +81,10 @@ export const styleLogin = {
     justifyContent: "center",
     marginTop: 20,
   },
+  containerReset: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
   textLogIn: {
     color: lightTheme.colors.secondary,
     fontWeight: "600",

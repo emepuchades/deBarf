@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   StatusBar,
+  Alert,
 } from "react-native";
 import { styleLogin } from "./Login.style";
 import { useTranslation } from "react-i18next";
@@ -54,6 +55,23 @@ export default function Login({ navigation }) {
     }
   };
 
+  const revertPassword = async () => {
+    if (!email) {
+      Alert.alert(t(`login.errorResetEmail`), t(`login.enterEmail`));
+      return;
+    }
+
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: "https://my-barf.vercel.app/reset-password",
+    });
+
+    if (error) {
+      Alert.alert("Error", error.message);
+    } else {
+      Alert.alert(t(`login.emailSent`), t(`login.checkInbox`));
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Image source={backImage} style={styles.backImage} />
@@ -80,13 +98,23 @@ export default function Login({ navigation }) {
             value={password}
             onChangeText={(text) => setPassword(text)}
           />
+
+          <View style={styles.containerReset}>
+            <Text style={styles.textSecondary}>
+              {t(`login.forgotPassword`)} /{" "}
+            </Text>
+            <TouchableOpacity onPress={revertPassword}>
+              <Text style={styles.textSignIn}>{t(`login.reset`)}</Text>
+            </TouchableOpacity>
+          </View>
+
           <TouchableOpacity style={styles.button} onPress={onHandleLogin}>
             <Text style={styles.textInput}>{t(`login.button`)}</Text>
           </TouchableOpacity>
           <View style={styles.containerLogIn}>
             <Text style={styles.textSecondary}>{t(`login.subtitle`)}</Text>
             <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
-              <Text style={styles.textSignIn}>{t(`login.login`)}</Text>
+              <Text style={styles.textSignIn}> {t(`login.login`)}</Text>
             </TouchableOpacity>
           </View>
           <Toast />
