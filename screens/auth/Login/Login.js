@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   StatusBar,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import { styleLogin } from "./Login.style";
 import { useTranslation } from "react-i18next";
@@ -18,7 +19,7 @@ import {
   validateInputs,
 } from "../../../utils/functions/loginErrors";
 import { supabase } from "../../../utils/db/supabaseClient";
-
+import Icon from "react-native-vector-icons/Feather";
 const backImage = require("../../../assets/images/signin.jpg");
 import { AuthenticatedUserContext } from "../../../utils/context/context";
 
@@ -28,10 +29,16 @@ export default function Login({ navigation }) {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isPasswordVisible, setPasswordVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!isPasswordVisible);
+  };
 
   const onHandleLogin = async () => {
     if (!validateInputs({ email, password, t })) return;
-
+    setIsLoading(true);
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
@@ -52,6 +59,8 @@ export default function Login({ navigation }) {
     } catch (e) {
       console.error("Error inesperado:", e);
       handleFeedback({ type: "error", t });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -88,16 +97,28 @@ export default function Login({ navigation }) {
             value={email}
             onChangeText={(text) => setEmail(text)}
           />
-          <TextInput
-            style={styles.input}
-            placeholder={t(`signup.inputPassword`)}
-            autoCapitalize="none"
-            autoCorrect={false}
-            secureTextEntry={true}
-            textContentType="password"
-            value={password}
-            onChangeText={(text) => setPassword(text)}
-          />
+          <View style={styles.passwordContainer}>
+            <TextInput
+              style={styles.inputPass}
+              placeholder={t(`signup.inputPassword`)}
+              autoCapitalize="none"
+              autoCorrect={false}
+              secureTextEntry={!isPasswordVisible}
+              textContentType="password"
+              value={password}
+              onChangeText={(text) => setPassword(text)}
+            />
+            <TouchableOpacity
+              onPress={togglePasswordVisibility}
+              style={styles.eyeIcon}
+            >
+              <Icon
+                name={isPasswordVisible ? "eye-off" : "eye"}
+                size={24}
+                color="#aaa"
+              />
+            </TouchableOpacity>
+          </View>
 
           <View style={styles.containerReset}>
             <Text style={styles.textSecondary}>
@@ -108,15 +129,25 @@ export default function Login({ navigation }) {
             </TouchableOpacity>
           </View>
 
-          <TouchableOpacity style={styles.button} onPress={onHandleLogin}>
-            <Text style={styles.textInput}>{t(`login.button`)}</Text>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={onHandleLogin}
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <ActivityIndicator size="small" color="#fff" />
+            ) : (
+              <Text style={styles.textInput}>{t(`login.button`)}</Text>
+            )}
           </TouchableOpacity>
+
           <View style={styles.containerLogIn}>
             <Text style={styles.textSecondary}>{t(`login.subtitle`)}</Text>
             <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
               <Text style={styles.textSignIn}> {t(`login.login`)}</Text>
             </TouchableOpacity>
           </View>
+
           <Toast />
         </SafeAreaView>
       </View>

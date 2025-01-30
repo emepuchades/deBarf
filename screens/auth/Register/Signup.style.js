@@ -63,7 +63,7 @@ export const styleRegister = {
     ...lightTheme.shadows,
   },
   textInput: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
     color: lightTheme.colors.buttonText,
     fontFamily: lightTheme.fonts.regular,
@@ -116,5 +116,47 @@ export const styleRegister = {
   },
   checkBoxTextSelected: {
     fontFamily: lightTheme.fonts.bold,
-  }
+  },
+  containerPolicy: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    },
+  regularText: {
+    fontSize: 13,
+    color: '#333',
+  },
+  linkText: {
+    fontSize: 13,
+    color: '#4a4a4a',
+    textDecorationLine: 'underline',
+    marginLeft: 4,
+  },
+  linkTextSelected: {
+    fontWeight: 'bold',
+  },
+  passwordContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 5,
+    marginBottom: 20,
+  },
+  inputPass: {
+    flex: 1,
+    paddingRight: 40,
+    backgroundColor: lightTheme.colors.backgroundSecondary,
+    height: lightTheme.dimensions.inputHeight,
+    fontSize: 16,
+    borderRadius: lightTheme.dimensions.borderRadius,
+    paddingHorizontal: 15,
+    borderWidth: 1,
+    borderColor: lightTheme.colors.border,
+    color: lightTheme.colors.textPrimary,
+    fontFamily: lightTheme.fonts.regular,
+  },
+  eyeIcon: {
+    position: "absolute",
+    right: 10,
+    height: "100%",
+    justifyContent: "center",
+  },
 };
