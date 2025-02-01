@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { lightTheme } from "../utils/theme";
 
 function DualButtonTab({
   onClick,
@@ -50,14 +51,13 @@ function DualButtonTab({
 export default DualButtonTab;
 const styles = StyleSheet.create({
   tabsContainer: {
-    padding: 10,
     paddingBottom: 10,
     paddingTop: 10,
     marginBottom: 10,
     borderRadius: 10,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    backgroundColor: "#ffffff",
+    backgroundColor: lightTheme.colors.backgroundSecondary,
     height: 60,
     margin: 5,
   },
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-around",
-    backgroundColor: "#f0f0f0",
+    backgroundColor: lightTheme.colors.dualButtonTab.backgroundColor,
     borderRadius: 10,
   },
   tabButtonSectionFood: {
@@ -83,13 +83,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   tabButtonText: {
-    color: "#626A72",
+    color:  lightTheme.colors.dualButtonTab.color,
     fontSize: 14,
     fontWeight: "bold",
     marginLeft: 5,
   },
   activeTabButtonText: {
-    color: "#333",
+    color: lightTheme.colors.dualButtonTab.activeBackground,
     fontSize: 14,
     fontWeight: "bold",
   },

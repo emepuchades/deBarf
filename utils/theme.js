@@ -14,6 +14,16 @@ export const lightTheme = {
     border: "#E5E5E5",
     title: '#122148',
     button: '#db5228',
+    text: '#111111',
+    dualButtonTab: {
+      color: "#626A72",
+      activeBackground: "#333333",
+      backgroundColor: "#f0f0f0"
+    },
+    settings:{
+      border: '#eeeeee',
+      borderItem: '#f5f5f5',
+    }
   },
   fonts: {
     regular: "MonaSans-Regular",

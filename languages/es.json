@@ -80,7 +80,12 @@
       "settings": "Ajustes",
       "help": "Soporte",
       "privacy_policy": "Politica de privacidad",
-      "faq": "Preguntas Frecuentes"
+      "faq": "Preguntas Frecuentes",
+      "ajustes_privacidad": "Ajustes y privacidad"
+    },
+    "settings": {
+      "section_header": "Políticas y Términos",
+      "terms_conditions": "Términos y Condiciones"
     },
     "screen": {
       "recipes": "Recetas",

@@ -12,7 +12,7 @@ import {
   DrawerItemList,
 } from "@react-navigation/drawer";
 import "../../languages/i18n";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, AntDesign } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { styleDrawer } from "./drawerComponent.style";
 import { lightTheme } from "../../utils/theme";
@@ -21,19 +21,20 @@ import DualButtonTab from "../DualButtonTab";
 import { languages, parseLanguages } from "../../utils/info/languages";
 import { AuthenticatedUserContext } from "../../utils/context/context";
 import { getLanguage, updateLanguage } from "../../utils/db/dbLanguage";
-import {supabase} from "../../utils/db/supabaseClient";
+import { supabase } from "../../utils/db/supabaseClient";
+import { useNavigation } from "@react-navigation/native";
 
 const DrawerComponent = (props) => {
   const { t, i18n } = useTranslation();
   const { db, user, session } = useContext(AuthenticatedUserContext);
-
-  // getLanguage(db).tag
+  const navigation = useNavigation();
   const [currentLanguages, setLanguage] = useState("es-ES");
   const [selectedTabKg, setSelectedTabKg] = useState(true);
 
   useEffect(() => {
     async function initDB() {
       const isLanguage = await getLanguage(db);
+      console.log('isLanguage', isLanguage);
       setLanguage(isLanguage.data.code);
     }
     initDB();
@@ -73,7 +74,7 @@ const DrawerComponent = (props) => {
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView
         {...props}
-        contentContainerStyle={{ backgroundColor: lightTheme.colors.primary }}
+        contentContainerStyle={{ backgroundColor: lightTheme.colors.backgroundSecondary }}
       >
         <View style={styles.listNavigaton}>
           <DrawerItemList {...props} />
@@ -103,37 +104,12 @@ const DrawerComponent = (props) => {
             rightButtonText={t("pounds")}
           />
         </View>
-        <Text style={styles.titleSection}>{t("drawer.help")}</Text>
-        <View style={styles.navBottom}>
-          <View>
-            <TouchableOpacity
-              onPress={() => console.log()}
-              style={styles.buttons}
-            >
-              <Text
-                style={{
-                  fontSize: 15,
-                  marginLeft: 5,
-                }}
-              >
-                {t("drawer.faq")}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => console.log()}
-              style={styles.buttons}
-            >
-              <Text
-                style={{
-                  fontSize: 15,
-                  marginLeft: 5,
-                }}
-              >
-                {t("drawer.privacy_policy")}
-              </Text>
-            </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Settings')} style={styles.buttons}>
+          <View style={styles.containerSignOut}>
+            <AntDesign name="setting" size={22} color="black" />
+            <Text style={styles.textSignOut}>{t("drawer.ajustes_privacidad")}</Text>
           </View>
-        </View>
+        </TouchableOpacity>
         <TouchableOpacity onPress={() => onSignOut()} style={styles.buttons}>
           <View style={styles.containerSignOut}>
             <Ionicons name="exit-outline" size={22} />

@@ -1,10 +1,11 @@
+import { lightTheme } from "../../../utils/theme";
 
 
 export const styleNavigator = {
   headerShown: true,
-  drawerActiveBackgroundColor: "#4F98FE",
-  drawerActiveTintColor: "#fff",
-  drawerInactiveTintColor: "#333",
+  drawerActiveBackgroundColor: lightTheme.colors.button,
+  drawerActiveTintColor: lightTheme.colors.backgroundSecondary,
+  drawerInactiveTintColor:  lightTheme.colors.textPrimary,
   drawerLabelStyle: {
     marginLeft: -25,
     fontSize: 15,

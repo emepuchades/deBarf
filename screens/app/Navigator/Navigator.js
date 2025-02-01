@@ -20,11 +20,12 @@ import Calculator from "../Calculator/Calculator";
 import Shoplist from "../Profile/Profile";
 import Home from "../Home/Home";
 import { AuthenticatedUserContext } from "../../../utils/context/context";
+import SettingsScreen from "../SettingsScreen/SettingsScreen";
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
   const { t } = useTranslation();
-  const size = 22;
+  const size = 20;
   const Stack = createStackNavigator();
   const navigation = useNavigation();
 
@@ -77,6 +78,17 @@ const DrawerNavigator = () => {
           drawerLockMode: "locked-closed",
           gestureEnabled: false,
           drawerLabel: () => null,
+        }}
+      />
+      <Stack.Screen 
+        name="Settings" 
+        component={SettingsScreen}
+        options={{
+          drawerItemStyle: { height: 0 },
+          drawerLockMode: "locked-closed",
+          gestureEnabled: false,
+          drawerLabel: () => null,
+          headerShown: false
         }}
       />
       <Drawer.Screen

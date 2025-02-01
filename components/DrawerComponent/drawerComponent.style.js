@@ -1,56 +1,41 @@
 import { lightTheme } from "../../utils/theme";
 
 export const styleDrawer = {
-  imageProfile: {
-    height: 80,
-    width: 80,
-    borderRadius: 40,
-    marginBottom: 10,
-  },
-  textUsername: {
-    color: lightTheme.colors.primary,
-    fontSize: 18,
-    marginBottom: 5,
-    fontWeight: 'bold',
-  },
-  imageBackground: {
-    padding: lightTheme.dimensions.paddingHorizontal,
-  },
   listNavigation: {
     flex: 1,
-    backgroundColor: lightTheme.colors.primary,
+    backgroundColor: lightTheme.colors.backgroundSecondary,
     paddingTop: 15,
   },
   navBottom: {
     paddingTop: 10,
-    paddingLeft: 2,
     borderTopWidth: 1,
     borderTopColor: lightTheme.colors.secondary,
   },
   titleSection: {
     color: lightTheme.colors.primary,
     fontWeight: "bold",
-    fontSize: 16,
+    fontSize: 17,
     paddingBottom: 10,
   },
   navContainer: {
-    padding: 15,
+    paddingLeft: 15,
   },
   textSignOut: {
     fontSize: 15,
     marginLeft: 5,
     padding: 15,
-    color: lightTheme.colors.textSecondary,
+    color: lightTheme.colors.text,
   },
   containerSignOut: {
     flexDirection: "row",
     alignItems: "center",
   },
   buttons: {
-    paddingVertical: 8,
+    paddingVertical: 4,
   },
   listNavigaton: {
-    paddingTop: 35,
+    paddingTop: 20,
+    backgroundColor: lightTheme.colors.backgroundSecondary,
   },
   versionContainer: {
     paddingBottom: 15,
