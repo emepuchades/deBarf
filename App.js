@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import { View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import * as SplashScreen from "expo-splash-screen"; // Importa SplashScreen
-import * as Font from "expo-font";
 import * as Localization from "expo-localization";
 
 import Login from "./screens/auth/Login/Login";
@@ -20,6 +17,7 @@ import { addLanguage, getLanguage } from "./utils/db/dbLanguage";
 import { parseLanguages } from "./utils/info/languages";
 import Loader from "./components/Loader/Loader";
 import { supabase } from "./utils/db/supabaseClient";
+import useLoadFonts from "./hooks/useLoadFonts";
 
 const Stack = createStackNavigator();
 
@@ -34,36 +32,51 @@ function AuthStack() {
 }
 
 function RootNavigator() {
-  const { user, setUser, db, setSession } = useContext(
-    AuthenticatedUserContext
-  );
-  const [isLoading, setIsLoading] = useState(true);
-  const [locale, setLocale] = useState(Localization.locale);
+  const { user, setUser, db, setSession } = useContext(AuthenticatedUserContext);
+  const [isAppReady, setIsAppReady] = useState(false);
 
   useEffect(() => {
-    const { data } = supabase.auth.onAuthStateChange(async (event, session) => {
-      console.log(`Supabase auth event: ${event}`);
-      setUser(session ? true : false);
-      setSession(session);
-      setIsLoading(false);
-    });
-    return () => {
-      data.subscription.unsubscribe();
+    const restoreSession = async () => {
+      const { data, error } = await supabase.auth.getSession();
+      if (error) {
+        console.error("Error restaurando la sesión:", error);
+      } else {
+        setUser(!!data.session);
+        setSession(data.session);
+      }
     };
-  }, [user]);
+
+    restoreSession();
+
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log("Evento de auth:", event);
+      if (event === "SIGNED_IN" || event === "TOKEN_REFRESHED") {
+        setUser(!!session);
+        setSession(session);
+      } else if (event === "SIGNED_OUT") {
+        setUser(false);
+        setSession(null);
+      }
+      setIsAppReady(true);
+    });
+
+    return () => {
+      authListener?.subscription.unsubscribe();
+    };
+  }, []);
 
   useEffect(() => {
     async function initDB() {
       await initDatabase(db);
       const isLanguage = await getLanguage(db);
       if (isLanguage.length === 0) {
-        await addLanguage(db, locale, parseLanguages(locale));
+        await addLanguage(db, Localization.locale, parseLanguages(Localization.locale));
       }
     }
     initDB();
   }, []);
 
-  if (isLoading) {
+  if (!isAppReady) {
     return <Loader />;
   }
 
@@ -75,30 +88,8 @@ function RootNavigator() {
 }
 
 export default function App() {
-  const [fontsLoaded, setFontsLoaded] = useState(false);
-  useEffect(() => {
-    const prepareApp = async () => {
-      try {
-        await SplashScreen.preventAutoHideAsync();
-        await Font.loadAsync({
-          "MonaSans-Regular": require("./assets/fonts/MonaSans-Regular.ttf"),
-          "MonaSans-Bold": require("./assets/fonts/MonaSans-Bold.ttf"),
-        });
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        setFontsLoaded(true);
-      } catch (e) {
-        console.warn(e);
-      } finally {
-        await SplashScreen.hideAsync();
-      }
-    };
-
-    prepareApp();
-  }, []);
-
-  if (!fontsLoaded) {
-    return null;
-  }
+  const fontsLoaded = useLoadFonts();
+  !fontsLoaded && null;
 
   return (
     <AuthenticatedUserProvider>
