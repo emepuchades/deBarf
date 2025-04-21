@@ -89,10 +89,6 @@ export const styleRegister = {
     textDecorationLine: "underline",
     marginLeft: 5,
   },
-  contarinerPP: {
-    flexDirection: 'row',
-    paddingLeft: 5,
-  },
   checkBox: {
     width: 20,
     height: 20,
@@ -117,22 +113,38 @@ export const styleRegister = {
   checkBoxTextSelected: {
     fontFamily: lightTheme.fonts.bold,
   },
+  contarinerPP: {
+    flexDirection: "column",
+    paddingLeft: 5,
+  },
+  rowContainer: {
+    flexDirection: "row",
+    alignItems: "center", // Alinea verticalmente
+  },
+  containerTerms: {
+  },
   containerPolicy: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    },
+    flexDirection: "row", // Asegura que el texto fluya correctamente
+    flexWrap: "wrap",
+    marginTop: 5, // Espaciado para estar en la línea de abajo
+  },
   regularText: {
-    fontSize: 13,
-    color: '#333',
+    fontSize: 14,
+    color: "#333",
+  },
+  regularTextPrivacy: {
+    marginTop: 5,
+    fontSize: 14,
+    color: "#333",
   },
   linkText: {
-    fontSize: 13,
-    color: '#4a4a4a',
-    textDecorationLine: 'underline',
+    fontSize: 14,
+    color: "#4a4a4a",
+    textDecorationLine: "underline",
     marginLeft: 4,
   },
   linkTextSelected: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   passwordContainer: {
     flexDirection: "row",

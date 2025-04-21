@@ -23,24 +23,18 @@ const backImage = require("../../../assets/images/login.jpg");
 import { supabase } from "../../../utils/db/supabaseClient";
 import PrivacyPolicyModal from "../PrivacyPolicy/PrivacyPolicy";
 import Icon from "react-native-vector-icons/Feather";
+import Terms from "../../../components/Terms/Terms";
 
 export default function Signup({ navigation }) {
   const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSelected, setSelection] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(null);
 
-  const handleClose = () => {
-    setIsModalVisible(false);
-  };
-
-  const handleAccept = () => {
-    setIsModalVisible(false);
-  };
+  const openModal = (modalName) => setModalVisible(modalName);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!isPasswordVisible);
@@ -52,7 +46,15 @@ export default function Signup({ navigation }) {
     setIsLoading(true);
 
     try {
-      const { error } = await supabase.auth.signUp({ email, password });
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            accepted_terms: isSelected,
+          },
+        },
+      });
 
       if (error) {
         const errorMessage = error?.message || error?.name || null;
@@ -104,33 +106,57 @@ export default function Signup({ navigation }) {
               value={password}
               onChangeText={(text) => setPassword(text)}
             />
-            <TouchableOpacity onPress={togglePasswordVisibility} style={styles.eyeIcon}>
-              <Icon name={isPasswordVisible ? "eye-off" : "eye"} size={24} color="#aaa" />
+            <TouchableOpacity
+              onPress={togglePasswordVisibility}
+              style={styles.eyeIcon}
+            >
+              <Icon
+                name={isPasswordVisible ? "eye-off" : "eye"}
+                size={24}
+                color="#aaa"
+              />
             </TouchableOpacity>
           </View>
 
           <View style={styles.contarinerPP}>
-            <TouchableOpacity
-              style={[styles.checkBox, isSelected && styles.checkBoxSelected]}
-              onPress={() => setSelection(!isSelected)}
-            >
-              {isSelected && <Text style={styles.checkBoxText}>✓</Text>}
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => setIsModalVisible(true)}>
-              <View style={styles.containerPolicy}>
+            <View style={styles.rowContainer}>
+              <TouchableOpacity
+                style={[styles.checkBox, isSelected && styles.checkBoxSelected]}
+                onPress={() => setSelection(!isSelected)}
+              >
+                {isSelected && <Text style={styles.checkBoxText}>✓</Text>}
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => openModal("terms")}>
+                <View style={styles.containerTerms}>
+                  <Text style={styles.regularText}>
+                    {t(`signup.privacy_policy`)}{" "}
+                    <Text
+                      style={[
+                        styles.linkText,
+                        isSelected && styles.linkTextSelected,
+                      ]}
+                    >
+                      {t(`settings.terms_conditions`)}
+                    </Text>
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.containerPolicy}>
+              <TouchableOpacity onPress={() => openModal("privacy")}>
                 <Text style={styles.regularText}>
-                  {t(`signup.privacy_policy`)}
+                  {t(`signup.check`)}{" "}
+                  <Text
+                    style={[
+                      styles.linkText,
+                      isSelected && styles.linkTextSelected,
+                    ]}
+                  >
+                    {t(`signup.privacy_policy_link`)}
+                  </Text>
                 </Text>
-                <Text
-                  style={[
-                    styles.linkText,
-                    isSelected && styles.linkTextSelected,
-                  ]}
-                >
-                  {t(`signup.privacy_policy_link`)}
-                </Text>
-              </View>
-            </TouchableOpacity>
+              </TouchableOpacity>
+            </View>
           </View>
 
           <TouchableOpacity
@@ -155,11 +181,15 @@ export default function Signup({ navigation }) {
         </SafeAreaView>
       </View>
       <StatusBar barStyle="light-content" />
-
+      <Terms
+        isVisible={modalVisible === "terms"}
+        onClose={() => setModalVisible(null)}
+        onAccept={() => setModalVisible(null)}
+      />
       <PrivacyPolicyModal
-        isVisible={isModalVisible}
-        onClose={handleClose}
-        onAccept={handleAccept}
+        isVisible={modalVisible === "privacy"}
+        onClose={() => setModalVisible(null)}
+        onAccept={() => setModalVisible(null)}
       />
     </View>
   );

@@ -15,6 +15,7 @@ export const lightTheme = {
     title: '#122148',
     button: '#db5228',
     text: '#111111',
+    iconMenu: "#505359",
     dualButtonTab: {
       color: "#626A72",
       activeBackground: "#333333",
