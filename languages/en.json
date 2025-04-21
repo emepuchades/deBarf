@@ -36,7 +36,8 @@
       "verifyEmail": "User successfully registered.",
       "fillFields": "Please fill out all fields.",
       "acceptPrivacyPolicy": "You must accept the privacy policy.",
-      "error": "Error"
+      "error": "Error",
+      "check": "Check our" 
     },
     "login": {
       "title": "Account Login",
@@ -82,7 +83,6 @@
       "privacy_policy": "Privacy Policy",
       "faq": "FAQ",
       "ajustes_privacidad": "Settings and Privacy"
-            
     },
     "settings": {
       "section_header": "Policies and Terms",
@@ -93,6 +93,30 @@
       "resources": "Resources",
       "shoppinglist": "Shopping list",
       "food": "Food"
+    },
+    "terms": {
+      "title": "Terms and Conditions - BARF App",
+      "version": "Version 1.0 | July 25, 2016",
+      "usageTitle": "1. Use of the App",
+      "usageText": "This application provides information on BARF feeding for pets. It does not replace veterinary advice.",
+      "close": "CLOSE THE APPLICATION",
+      "accept": "ACCEPT AND CONTINUE"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "q1": "How does the app work?",
+      "a1": "The app helps you calculate and manage your pet's BARF diet.",
+      "q2": "Do I need to consult a veterinarian?",
+      "a2": "Yes, it is always recommended to consult a veterinarian before changing your pet's diet.",
+      "close": "CLOSE"
+    },
+    "privacy": {
+      "title": "PRIVACY POLICY",
+      "version": "Version 1.0 | July 25, 2016",
+      "sectionTitle": "WHAT DOES THIS DOCUMENT INCLUDE?",
+      "bodyText": "For optimal functioning of this app, it is necessary to collect and process certain information obtained from the device on which it is installed. This information helps improve the app, tailor content optimally for each user, or contact the user if necessary. To show that we care about our users' privacy...",
+      "close": "CLOSE APPLICATION",
+      "accept": "ACCEPT AND CONTINUE"
     },
     "navBottom": {
       "home": "Home",

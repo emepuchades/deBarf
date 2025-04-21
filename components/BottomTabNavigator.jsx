@@ -5,6 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { AuthenticatedUserContext } from "../utils/context/context";
+import { lightTheme } from "../utils/theme";
 
 function BottomTabNavigator() {
   const navigation = useNavigation();
@@ -113,7 +114,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    backgroundColor: "#fff",
+    backgroundColor: lightTheme.colors.backgroundSecondary,
     paddingBottom: 10,
     width: "100%",
     height: 60,
@@ -130,22 +131,22 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: 10,
     borderTopWidth: 2,
-    borderTopColor: "#4F98FE",
-    color: "#4F98FE",
+    borderTopColor: lightTheme.colors.primary,
+    color: lightTheme.colors.primary,
   },
   tabIconSelected: {
-    color: "#4F98FE",
+    color: lightTheme.colors.primary,
   },
   tabIcon: {
-    color: "#505359",
+    color: lightTheme.colors.iconMenu,
   },
   textTab: {
     fontSize: 13,
-    color: "#505359",
+    color: lightTheme.colors.iconMenu,
   },
   textTabSelected: {
     fontSize: 13,
-    color: "#4F98FE",
+    color: lightTheme.colors.primary,
     fontWeight: "bold",
   },
 });

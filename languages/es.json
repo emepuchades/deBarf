@@ -36,7 +36,8 @@
       "verifyEmail": "Usuario registrado correctamente.",
       "fillFields": "Por favor, completa todos los campos.",
       "acceptPrivacyPolicy": "Debes aceptar la política de privacidad.",
-      "error": "Error"
+      "error": "Error",
+      "check": "Consulta nuestra " 
     },
     "login": {
       "title": "Inicia sesión",
@@ -86,6 +87,30 @@
     "settings": {
       "section_header": "Políticas y Términos",
       "terms_conditions": "Términos y Condiciones"
+    },
+    "terms": {
+      "title": "Términos y Condiciones - BARF App",
+      "version": "Versión 1.0 | 25 de Julio de 2016",
+      "usageTitle": "1. Uso de la Aplicación",
+      "usageText": "Esta aplicación proporciona información sobre alimentación BARF para mascotas. No sustituye el consejo de un veterinario.",
+      "close": "CERRAR LA APLICACIÓN",
+      "accept": "ACEPTAR Y CONTINUAR"
+    },
+    "faq": {
+      "title": "Preguntas Frecuentes",
+      "q1": "¿Cómo funciona la app?",
+      "a1": "La app te ayuda a calcular y gestionar la dieta BARF de tu mascota.",
+      "q2": "¿Es necesario consultar con un veterinario?",
+      "a2": "Sí, siempre se recomienda consultar con un veterinario antes de cambiar la dieta de tu mascota.",
+      "close": "CERRAR"
+    },
+    "privacy": {
+      "title": "POLÍTICA DE PRIVACIDAD",
+      "version": "Versión 1.0 | 25 de Julio de 2016",
+      "sectionTitle": "¿QUÉ INCLUYE ESTE DOCUMENTO?",
+      "bodyText": "Para el óptimo funcionamiento de esta app, es necesario recoger y procesar cierta información obtenida del dispositivo en el que se ha instalado. Esta información permite mejorar la app, adaptar el contenido de forma óptima para cada usuario o contactar con el usuario en caso de que sea necesario. Para demostrar que nos importa la privacidad de nuestros usuarios...",
+      "close": "CERRAR LA APLICACIÓN",
+      "accept": "ACEPTAR Y CONTINUAR"
     },
     "screen": {
       "recipes": "Recetas",

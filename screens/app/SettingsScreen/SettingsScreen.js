@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -8,26 +8,33 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
-import { styleSettings } from "./settingsScreen.style";
 import { useTranslation } from "react-i18next";
+import PrivacyPolicyModal from "../../auth/PrivacyPolicy/PrivacyPolicy";
+import Terms from "../../../components/Terms/Terms";
+import Faq from "../../../components/FAQ/Faq";
+import { styleSettings } from "./settingsScreen.style";
+
+const MenuItem = ({ icon, title, hasChevron = false, onPress }) => (
+  <TouchableOpacity style={styles.menuItem} onPress={onPress}>
+    <View style={styles.menuItemContent}>
+      {icon}
+      <Text style={styles.menuItemText}>{title}</Text>
+    </View>
+    {hasChevron && <AntDesign name="right" size={20} color="#666" />}
+  </TouchableOpacity>
+);
+
+const SectionHeader = ({ title }) => (
+  <Text style={styles.sectionHeader}>{title}</Text>
+);
 
 export default function SettingsScreen() {
   const navigation = useNavigation();
   const { t } = useTranslation();
+  const [modalVisible, setModalVisible] = useState(null);
 
-  const MenuItem = ({ icon, title, hasChevron = false, onPress }) => (
-    <TouchableOpacity style={styles.menuItem} onPress={onPress}>
-      <View style={styles.menuItemContent}>
-        {icon}
-        <Text style={styles.menuItemText}>{title}</Text>
-      </View>
-      {hasChevron && <AntDesign name="right" size={20} color="#666" />}
-    </TouchableOpacity>
-  );
-
-  const SectionHeader = ({ title }) => (
-    <Text style={styles.sectionHeader}>{title}</Text>
-  );
+  const openModal = (modalName) => setModalVisible(modalName);
+  const closeModal = () => setModalVisible(null);
 
   return (
     <View style={styles.container}>
@@ -45,17 +52,33 @@ export default function SettingsScreen() {
         <SectionHeader title={t("settings.section_header")} />
         <MenuItem
           title={t("settings.terms_conditions")}
-          onPress={() => navigation.navigate("PushNotifications")}
+          onPress={() => openModal("terms")}
         />
         <MenuItem
           title={t("drawer.privacy_policy")}
-          onPress={() => navigation.navigate("LiveEvents")}
+          onPress={() => openModal("privacy")}
         />
         <MenuItem
           title={t("drawer.faq")}
-          onPress={() => navigation.navigate("LiveEvents")}
+          onPress={() => openModal("faq")}
         />
       </ScrollView>
+
+      <PrivacyPolicyModal
+        isVisible={modalVisible === "privacy"}
+        onClose={closeModal}
+        onAccept={closeModal}
+      />
+      <Terms
+        isVisible={modalVisible === "terms"}
+        onClose={closeModal}
+        onAccept={closeModal}
+      />
+      <Faq
+        isVisible={modalVisible === "faq"}
+        onClose={closeModal}
+        onAccept={closeModal}
+      />
     </View>
   );
 }
